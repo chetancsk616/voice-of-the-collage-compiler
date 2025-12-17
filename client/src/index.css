@@ -1,0 +1,43 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html, body, #root { height: 100%; }
+
+/* Vibe aesthetic */
+body {
+  @apply bg-gradient-to-br from-slate-950 via-purple-900 to-slate-900;
+}
+
+/* Neon glow effect */
+.neon-glow {
+  @apply shadow-lg shadow-purple-500/50;
+}
+
+.neon-border {
+  @apply border-purple-500/50;
+}
+
+/* Smooth transitions */
+* {
+  @apply transition-all duration-200;
+}
+
+/* Code editor styling */
+textarea {
+  @apply bg-slate-800/50 backdrop-blur text-white font-mono;
+}
+
+/* Button vibe */
+button {
+  @apply bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-500 hover:to-pink-500;
+  @apply text-white font-semibold rounded-lg shadow-lg;
+  @apply hover:shadow-purple-500/50 hover:shadow-xl;
+}
+
+/* Card vibe */
+.vibe-card {
+  @apply bg-slate-800/30 backdrop-blur-md border border-purple-500/30 rounded-xl;
+  @apply hover:border-purple-500/60 hover:bg-slate-800/50;
+}
+

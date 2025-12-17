@@ -1,0 +1,40 @@
+{
+  "questionId": "Q027",
+  "title": "Find First and Last Position",
+  "difficulty": "Medium",
+  "expectedAlgorithm": "Modified Binary Search",
+  "algorithmDescription": "Find first and last occurrence of target in sorted array using binary search",
+  "allowedApproaches": ["two_binary_searches", "modified_binary_search"],
+  "disallowedPatterns": ["linear_scan", "single_pass"],
+  "expectedTimeComplexity": "O(log n)",
+  "expectedSpaceComplexity": "O(1)",
+  "paradigm": "Binary Search",
+  "constraints": {
+    "minLineCount": 12,
+    "maxLineCount": 40,
+    "shouldReadInput": true,
+    "shouldUseLoops": true,
+    "shouldUseRecursion": false
+  },
+  "detailedDescription": "Find starting and ending position of target in sorted array with duplicates. Input: First line has n and target. Second line has n sorted integers (may have duplicates). Output: Two indices representing first and last occurrence, or -1 -1 if not found. Use modified binary search.",
+  "hints": [
+    "Perform two binary searches: one for leftmost, one for rightmost",
+    "For leftmost: when found, continue searching left half",
+    "For rightmost: when found, continue searching right half",
+    "Both searches should be O(log n)"
+  ],
+  "commonMistakes": [
+    "Using linear search after finding first occurrence",
+    "Not handling duplicates correctly",
+    "Single binary search not finding bounds",
+    "Incorrect boundary updates"
+  ],
+  "solutionApproach": "First binary search finds leftmost occurrence: when target found, update result and continue searching left (high=mid-1). Second binary search finds rightmost: when found, update result and search right (low=mid+1).",
+  "testCaseCriteria": "Must find both positions in O(log n) time. Should handle arrays with all duplicates, no target, and single occurrence.",
+  "rubric": {
+    "correctOutput": 35,
+    "modifiedBinarySearch": 30,
+    "timeComplexity": 20,
+    "codeClarity": 15
+  }
+}

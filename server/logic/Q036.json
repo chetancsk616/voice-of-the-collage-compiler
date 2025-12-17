@@ -1,0 +1,40 @@
+{
+  "questionId": "Q036",
+  "title": "Count Set Bits",
+  "difficulty": "Easy",
+  "expectedAlgorithm": "Bit Manipulation",
+  "algorithmDescription": "Count number of 1 bits in binary representation using bit operations",
+  "allowedApproaches": ["brian_kernighan", "bit_counting"],
+  "disallowedPatterns": ["string_conversion", "division_by_2"],
+  "expectedTimeComplexity": "O(log n)",
+  "expectedSpaceComplexity": "O(1)",
+  "paradigm": "Bit Manipulation",
+  "constraints": {
+    "minLineCount": 5,
+    "maxLineCount": 25,
+    "shouldReadInput": true,
+    "shouldUseLoops": true,
+    "shouldUseRecursion": false
+  },
+  "detailedDescription": "Count number of 1 bits (set bits) in binary representation of integer. Input: A non-negative integer n. Output: Count of 1 bits. Use bit manipulation techniques. Brian Kernighan's algorithm: n & (n-1) removes rightmost set bit.",
+  "hints": [
+    "Brian Kernighan: n & (n-1) clears rightmost set bit",
+    "Count iterations until n becomes 0",
+    "Alternative: check each bit with n & 1, right shift",
+    "More efficient than converting to string"
+  ],
+  "commonMistakes": [
+    "Converting to binary string (inefficient)",
+    "Not handling 0 correctly",
+    "Infinite loop with signed integers",
+    "Not using bit operations"
+  ],
+  "solutionApproach": "Use Brian Kernighan's algorithm: initialize count=0. While n > 0: n = n & (n-1), increment count. Each iteration removes one set bit. Return count.",
+  "testCaseCriteria": "Must use bit manipulation. Should handle 0, powers of 2, and numbers with all bits set.",
+  "rubric": {
+    "correctOutput": 40,
+    "bitManipulation": 35,
+    "efficiency": 15,
+    "codeClarity": 10
+  }
+}

@@ -1,0 +1,40 @@
+{
+  "questionId": "Q012",
+  "title": "Reverse Linked List",
+  "difficulty": "Medium",
+  "expectedAlgorithm": "Linked List Manipulation",
+  "algorithmDescription": "Reverse a singly linked list by changing node pointers",
+  "allowedApproaches": ["iterative_reversal", "recursive_reversal"],
+  "disallowedPatterns": ["array_conversion", "creating_new_list"],
+  "expectedTimeComplexity": "O(n)",
+  "expectedSpaceComplexity": "O(1)",
+  "paradigm": "Linked List",
+  "constraints": {
+    "minLineCount": 10,
+    "maxLineCount": 35,
+    "shouldReadInput": true,
+    "shouldUseLoops": true,
+    "shouldUseRecursion": false
+  },
+  "detailedDescription": "Reverse a singly linked list in-place. Input: First line has number of nodes, second line has space-separated node values. Output: Values of reversed list in space-separated format. Must modify pointers, not create new list or use auxiliary array.",
+  "hints": [
+    "Use three pointers: prev, current, next",
+    "Iterate through list, reversing next pointer of each node",
+    "Track previous node to connect reversed portion",
+    "Update head to point to last node"
+  ],
+  "commonMistakes": [
+    "Creating new list instead of in-place reversal",
+    "Losing reference to rest of list",
+    "Not updating head pointer",
+    "Using O(n) extra space"
+  ],
+  "solutionApproach": "Initialize prev=null, curr=head. While curr is not null: save next node, reverse current's next to prev, move prev to curr, move curr to next. Return prev as new head.",
+  "testCaseCriteria": "Must reverse list in-place with O(1) space. Should handle empty list and single node.",
+  "rubric": {
+    "correctOutput": 35,
+    "inPlaceReversal": 30,
+    "spaceComplexity": 20,
+    "codeClarity": 15
+  }
+}

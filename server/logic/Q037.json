@@ -1,0 +1,40 @@
+{
+  "questionId": "Q037",
+  "title": "Single Number",
+  "difficulty": "Easy",
+  "expectedAlgorithm": "XOR Bit Manipulation",
+  "algorithmDescription": "Find element appearing once when all others appear twice using XOR",
+  "allowedApproaches": ["xor_technique", "bit_manipulation"],
+  "disallowedPatterns": ["hash_map", "sorting"],
+  "expectedTimeComplexity": "O(n)",
+  "expectedSpaceComplexity": "O(1)",
+  "paradigm": "Bit Manipulation",
+  "constraints": {
+    "minLineCount": 5,
+    "maxLineCount": 20,
+    "shouldReadInput": true,
+    "shouldUseLoops": true,
+    "shouldUseRecursion": false
+  },
+  "detailedDescription": "Given array where every element appears twice except one, find that single element. Input: First line has n. Second line has n integers. Output: The single number. Use XOR properties: a XOR a = 0, a XOR 0 = a. Must use O(1) space.",
+  "hints": [
+    "XOR of two same numbers is 0",
+    "XOR of number with 0 is the number itself",
+    "XOR all elements: pairs cancel out, single remains",
+    "XOR is commutative and associative"
+  ],
+  "commonMistakes": [
+    "Using hash map (violates space constraint)",
+    "Sorting array (violates space constraint)",
+    "Not understanding XOR properties",
+    "Overcomplicating with conditionals"
+  ],
+  "solutionApproach": "Initialize result=0. XOR result with each array element. All pairs cancel to 0, leaving only the single number. Return result. One pass, O(1) space.",
+  "testCaseCriteria": "Must use O(1) space. Should demonstrate XOR technique. Works for any value as single number.",
+  "rubric": {
+    "correctOutput": 40,
+    "xorTechnique": 35,
+    "spaceComplexity": 15,
+    "codeClarity": 10
+  }
+}

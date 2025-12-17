@@ -1,0 +1,40 @@
+{
+  "questionId": "Q019",
+  "title": "Merge K Sorted Lists",
+  "difficulty": "Hard",
+  "expectedAlgorithm": "Min Heap Merge",
+  "algorithmDescription": "Merge k sorted linked lists using min heap for efficiency",
+  "allowedApproaches": ["min_heap_merge", "priority_queue"],
+  "disallowedPatterns": ["merge_all_then_sort", "repeated_two_way_merge"],
+  "expectedTimeComplexity": "O(N log k)",
+  "expectedSpaceComplexity": "O(k)",
+  "paradigm": "Heap",
+  "constraints": {
+    "minLineCount": 15,
+    "maxLineCount": 50,
+    "shouldReadInput": true,
+    "shouldUseLoops": true,
+    "shouldUseRecursion": false
+  },
+  "detailedDescription": "Merge k sorted linked lists into one sorted list. Input: First line has k (number of lists). Next k lines have space-separated sorted integers (each list). Output: Single merged sorted list. Use min-heap containing one element from each list for optimal performance.",
+  "hints": [
+    "Use min-heap to track smallest element from each list",
+    "Initialize heap with first element from each list",
+    "Extract min, add to result, insert next element from same list",
+    "Better than merging lists pairwise repeatedly"
+  ],
+  "commonMistakes": [
+    "Merging all elements then sorting (O(N log N) not optimal)",
+    "Merging lists pairwise without optimization",
+    "Not tracking which list each element came from",
+    "Incorrect heap implementation"
+  ],
+  "solutionApproach": "Create min-heap with first element from each list (store value and list index). While heap not empty: extract min, add to result, insert next element from same list into heap. Result is merged sorted list.",
+  "testCaseCriteria": "Must efficiently merge k lists. Output must be fully sorted. Time complexity should be O(N log k) where N is total elements.",
+  "rubric": {
+    "correctOutput": 35,
+    "heapImplementation": 30,
+    "timeComplexity": 20,
+    "codeClarity": 15
+  }
+}

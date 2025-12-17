@@ -1,0 +1,40 @@
+{
+  "questionId": "Q011",
+  "title": "Longest Common Subsequence",
+  "difficulty": "Hard",
+  "expectedAlgorithm": "Dynamic Programming",
+  "algorithmDescription": "Find length of longest common subsequence between two strings using DP",
+  "allowedApproaches": ["2d_dp_table", "memoization"],
+  "disallowedPatterns": ["brute_force", "greedy_approach"],
+  "expectedTimeComplexity": "O(m*n)",
+  "expectedSpaceComplexity": "O(m*n)",
+  "paradigm": "Dynamic Programming",
+  "constraints": {
+    "minLineCount": 12,
+    "maxLineCount": 40,
+    "shouldReadInput": true,
+    "shouldUseLoops": true,
+    "shouldUseRecursion": false
+  },
+  "detailedDescription": "Find the length of the longest common subsequence (LCS) between two strings. A subsequence is a sequence derived by deleting some or no elements without changing order. Input: Two strings on separate lines. Output: Length of LCS. Example: LCS of 'ABCDGH' and 'AEDFHR' is 'ADH' (length 3).",
+  "hints": [
+    "Use 2D DP table: dp[i][j] = LCS length of first i chars of string1 and first j chars of string2",
+    "If chars match: dp[i][j] = dp[i-1][j-1] + 1",
+    "If chars don't match: dp[i][j] = max(dp[i-1][j], dp[i][j-1])",
+    "Initialize first row and column to 0"
+  ],
+  "commonMistakes": [
+    "Confusing subsequence with substring",
+    "Incorrect DP transition formula",
+    "Not handling empty strings",
+    "Off-by-one errors in table indexing"
+  ],
+  "solutionApproach": "Create (m+1)x(n+1) DP table. For each position: if characters match, take diagonal value + 1; else take max of left and top. Return dp[m][n].",
+  "testCaseCriteria": "Must correctly compute LCS length for various string pairs including empty strings, identical strings, and strings with no common subsequence.",
+  "rubric": {
+    "correctOutput": 35,
+    "dpTableImplementation": 30,
+    "transitionLogic": 20,
+    "codeClarity": 15
+  }
+}

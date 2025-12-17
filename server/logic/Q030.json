@@ -1,0 +1,40 @@
+{
+  "questionId": "Q030",
+  "title": "Container With Most Water",
+  "difficulty": "Medium",
+  "expectedAlgorithm": "Two Pointers",
+  "algorithmDescription": "Find maximum water container area using two pointer technique",
+  "allowedApproaches": ["two_pointer_technique", "greedy_two_pointer"],
+  "disallowedPatterns": ["nested_loops", "brute_force"],
+  "expectedTimeComplexity": "O(n)",
+  "expectedSpaceComplexity": "O(1)",
+  "paradigm": "Two Pointers",
+  "constraints": {
+    "minLineCount": 8,
+    "maxLineCount": 30,
+    "shouldReadInput": true,
+    "shouldUseLoops": true,
+    "shouldUseRecursion": false
+  },
+  "detailedDescription": "Given n heights, find two lines that form container with maximum water. Area = min(height[i], height[j]) * (j - i). Input: First line has n. Second line has n heights. Output: Maximum water area. Use two pointers starting at ends.",
+  "hints": [
+    "Start with pointers at both ends (maximum width)",
+    "Area limited by shorter line",
+    "Move pointer at shorter line inward (might find taller line)",
+    "Track maximum area seen"
+  ],
+  "commonMistakes": [
+    "Checking all pairs (O(n²))",
+    "Moving wrong pointer",
+    "Incorrect area calculation",
+    "Not considering width decrease"
+  ],
+  "solutionApproach": "Two pointers: left=0, right=n-1. Calculate area with min height and width. Move pointer with smaller height inward. Repeat until pointers meet, tracking max area.",
+  "testCaseCriteria": "Must achieve O(n) time. Should find optimal container area efficiently.",
+  "rubric": {
+    "correctOutput": 40,
+    "twoPointerImplementation": 30,
+    "timeComplexity": 20,
+    "codeClarity": 10
+  }
+}

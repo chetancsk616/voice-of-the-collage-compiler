@@ -1,0 +1,40 @@
+{
+  "questionId": "Q029",
+  "title": "Longest Substring Without Repeating Characters",
+  "difficulty": "Medium",
+  "expectedAlgorithm": "Variable Sliding Window",
+  "algorithmDescription": "Find length of longest substring without repeating characters using sliding window",
+  "allowedApproaches": ["sliding_window_with_hashset", "variable_window"],
+  "disallowedPatterns": ["nested_loops", "brute_force"],
+  "expectedTimeComplexity": "O(n)",
+  "expectedSpaceComplexity": "O(min(m, n))",
+  "paradigm": "Sliding Window",
+  "constraints": {
+    "minLineCount": 10,
+    "maxLineCount": 35,
+    "shouldReadInput": true,
+    "shouldUseLoops": true,
+    "shouldUseRecursion": false
+  },
+  "detailedDescription": "Find length of longest substring without repeating characters. Input: A string. Output: Length of longest substring with all unique characters. Example: 'abcabcbb' → 3 ('abc'). Use sliding window with hash set.",
+  "hints": [
+    "Use hash set to track characters in current window",
+    "Expand window by adding characters if not in set",
+    "When duplicate found, shrink window from left until duplicate removed",
+    "Track maximum window size seen"
+  ],
+  "commonMistakes": [
+    "Using nested loops (O(n²))",
+    "Not removing characters when shrinking window",
+    "Incorrect window size calculation",
+    "Not handling empty string"
+  ],
+  "solutionApproach": "Two pointers: left and right. Expand right, add char to set. If duplicate, shrink from left until duplicate removed. Track max window size (right - left + 1).",
+  "testCaseCriteria": "Must achieve O(n) time. Should handle all unique characters, all same character, and empty string.",
+  "rubric": {
+    "correctOutput": 35,
+    "slidingWindowImplementation": 30,
+    "hashSetUsage": 20,
+    "codeClarity": 15
+  }
+}

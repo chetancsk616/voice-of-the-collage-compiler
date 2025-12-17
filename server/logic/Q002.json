@@ -1,0 +1,62 @@
+{
+  "questionId": "Q002",
+  "title": "Sum of Numbers",
+  "difficulty": "Easy",
+  "expectedAlgorithm": "Basic Addition",
+  "algorithmDescription": "Read two integers and compute their arithmetic sum",
+  "allowedApproaches": ["direct_addition", "arithmetic_operation"],
+  "disallowedPatterns": ["hardcoding", "ignoring_input"],
+  "expectedTimeComplexity": "O(1)",
+  "expectedSpaceComplexity": "O(1)",
+  "paradigm": "Simple Logic",
+  "constraints": {
+    "minLineCount": 3,
+    "maxLineCount": 10,
+    "shouldReadInput": true,
+    "shouldUseLoops": false,
+    "shouldUseRecursion": false
+  },
+  "detailedDescription": "Write a program that reads two integers from standard input (one per line) and outputs their sum. The solution must read both inputs and perform addition, not hardcode the result.",
+  "hints": [
+    "Use appropriate input reading function for your language",
+    "Convert input to appropriate data type (integer)",
+    "Use the + operator to add the numbers",
+    "Print the result"
+  ],
+  "commonMistakes": [
+    "Hardcoding the result instead of reading input",
+    "Not converting strings to integers",
+    "Only reading one number",
+    "Using wrong operators (subtraction instead of addition)"
+  ],
+  "solutionApproach": "Read two integers, perform addition, output the result. A simple 3-4 line solution should work.",
+  "testCaseCriteria": "Must correctly add any two integers provided as input",
+  "rubric": {
+    "correctInput": 30,
+    "correctComputation": 40,
+    "properOutput": 20,
+    "efficiency": 10
+  },
+  "testCases": [
+    {
+      "input": "5\n3",
+      "expectedOutput": "8",
+      "description": "Basic addition: 5 + 3 = 8"
+    },
+    {
+      "input": "10\n20",
+      "expectedOutput": "30",
+      "description": "Two-digit numbers: 10 + 20 = 30"
+    },
+    {
+      "input": "0\n0",
+      "expectedOutput": "0",
+      "description": "Edge case: 0 + 0 = 0"
+    },
+    {
+      "input": "-5\n5",
+      "expectedOutput": "0",
+      "description": "Negative number: -5 + 5 = 0"
+    }
+  ]
+}

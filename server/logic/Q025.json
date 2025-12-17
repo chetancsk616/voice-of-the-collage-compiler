@@ -1,0 +1,40 @@
+{
+  "questionId": "Q025",
+  "title": "N-Queens Problem",
+  "difficulty": "Hard",
+  "expectedAlgorithm": "Backtracking with Constraints",
+  "algorithmDescription": "Solve N-Queens puzzle using backtracking with constraint checking",
+  "allowedApproaches": ["backtracking_with_pruning", "constraint_based_backtracking"],
+  "disallowedPatterns": ["brute_force_all_positions", "random_placement"],
+  "expectedTimeComplexity": "O(n!)",
+  "expectedSpaceComplexity": "O(n²)",
+  "paradigm": "Backtracking",
+  "constraints": {
+    "minLineCount": 20,
+    "maxLineCount": 60,
+    "shouldReadInput": true,
+    "shouldUseLoops": true,
+    "shouldUseRecursion": true
+  },
+  "detailedDescription": "Solve N-Queens problem: place n queens on n×n chessboard so no two queens attack each other. Queens attack on same row, column, or diagonal. Input: Integer n (board size). Output: Number of valid solutions, followed by one solution as n lines of n characters ('Q' for queen, '.' for empty). Use backtracking with constraint checking.",
+  "hints": [
+    "Place one queen per row to avoid row conflicts",
+    "Check column and diagonal conflicts before placing",
+    "Use backtracking: try each column, recurse, backtrack if fails",
+    "Track used columns, diagonals for O(1) conflict checking"
+  ],
+  "commonMistakes": [
+    "Not checking diagonal attacks",
+    "Inefficient conflict checking",
+    "Not backtracking properly",
+    "Missing some valid solutions"
+  ],
+  "solutionApproach": "Recursive backtracking placing row by row. For each row, try each column: if safe (no column/diagonal conflict), place queen, recurse to next row. If successful, found solution. Backtrack by removing queen. Track used columns and diagonals for efficiency.",
+  "testCaseCriteria": "Must find valid N-Queens solutions. Queens must not attack each other. Should demonstrate backtracking with pruning.",
+  "rubric": {
+    "correctOutput": 30,
+    "backtrackingImplementation": 30,
+    "constraintChecking": 25,
+    "codeClarity": 15
+  }
+}

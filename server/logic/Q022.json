@@ -1,0 +1,40 @@
+{
+  "questionId": "Q022",
+  "title": "Two Sum",
+  "difficulty": "Easy",
+  "expectedAlgorithm": "Hash Table Lookup",
+  "algorithmDescription": "Find two numbers that sum to target using hash table for O(n) solution",
+  "allowedApproaches": ["hash_table", "hash_map"],
+  "disallowedPatterns": ["nested_loops", "sorting_first"],
+  "expectedTimeComplexity": "O(n)",
+  "expectedSpaceComplexity": "O(n)",
+  "paradigm": "Hash Table",
+  "constraints": {
+    "minLineCount": 8,
+    "maxLineCount": 30,
+    "shouldReadInput": true,
+    "shouldUseLoops": true,
+    "shouldUseRecursion": false
+  },
+  "detailedDescription": "Given array of integers and target sum, find indices of two numbers that add up to target. Input: First line has n and target. Second line has n integers. Output: Two indices (0-based) of numbers that sum to target. Use hash table for O(n) solution. Assume exactly one solution exists.",
+  "hints": [
+    "Use hash table to store seen numbers and their indices",
+    "For each number x, check if (target - x) exists in hash table",
+    "If found, return current index and stored index",
+    "Single pass through array"
+  ],
+  "commonMistakes": [
+    "Using nested loops (O(n²))",
+    "Sorting array first (destroys indices)",
+    "Not handling duplicate values correctly",
+    "Using same element twice"
+  ],
+  "solutionApproach": "Create hash table. Iterate through array: for each number, calculate complement (target - number). If complement in hash table, return indices. Otherwise, store current number and index in hash table.",
+  "testCaseCriteria": "Must find correct indices in O(n) time. Should handle various array sizes and targets. Must use hash table.",
+  "rubric": {
+    "correctOutput": 40,
+    "hashTableUsage": 30,
+    "timeComplexity": 20,
+    "codeClarity": 10
+  }
+}

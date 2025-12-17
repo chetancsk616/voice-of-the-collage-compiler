@@ -1,0 +1,40 @@
+{
+  "questionId": "Q016",
+  "title": "Implement Queue using Stacks",
+  "difficulty": "Medium",
+  "expectedAlgorithm": "Two-Stack Queue",
+  "algorithmDescription": "Implement FIFO queue using two LIFO stacks",
+  "allowedApproaches": ["two_stack_approach", "amortized_queue"],
+  "disallowedPatterns": ["using_arrays", "using_deque"],
+  "expectedTimeComplexity": "O(1) amortized",
+  "expectedSpaceComplexity": "O(n)",
+  "paradigm": "Queue",
+  "constraints": {
+    "minLineCount": 15,
+    "maxLineCount": 45,
+    "shouldReadInput": true,
+    "shouldUseLoops": true,
+    "shouldUseRecursion": false
+  },
+  "detailedDescription": "Implement a queue using only two stacks. Support enqueue, dequeue, and front operations. Input: Number of operations followed by commands (enqueue x, dequeue, front). Output: Results of dequeue and front operations. Must use only stack operations (push/pop).",
+  "hints": [
+    "Use two stacks: inbox (for enqueue) and outbox (for dequeue)",
+    "Enqueue pushes to inbox",
+    "Dequeue: if outbox empty, transfer all from inbox to outbox, then pop",
+    "Amortized O(1) time per operation"
+  ],
+  "commonMistakes": [
+    "Transferring elements on every operation",
+    "Not maintaining FIFO order",
+    "Using array or built-in queue",
+    "Incorrect handling of empty queue"
+  ],
+  "solutionApproach": "Two stacks: inbox and outbox. Enqueue pushes to inbox. Dequeue: if outbox empty, pop all from inbox and push to outbox, then pop from outbox. Front: peek outbox top after ensuring it's populated.",
+  "testCaseCriteria": "Must implement queue using only stack operations. Should maintain correct FIFO order through various enqueue/dequeue sequences.",
+  "rubric": {
+    "correctOutput": 35,
+    "twoStackImplementation": 30,
+    "fifoOrder": 20,
+    "codeClarity": 15
+  }
+}

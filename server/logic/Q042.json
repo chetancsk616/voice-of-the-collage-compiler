@@ -1,0 +1,41 @@
+{
+  "questionId": "Q042",
+  "title": "Spiral Matrix Traversal",
+  "difficulty": "Medium",
+  "expectedAlgorithm": "Matrix Simulation",
+  "algorithmDescription": "Traverse matrix in spiral order using boundary simulation",
+  "allowedApproaches": ["boundary_simulation", "layer_by_layer"],
+  "disallowedPatterns": ["recursive_only", "direction_rotation"],
+  "expectedTimeComplexity": "O(m * n)",
+  "expectedSpaceComplexity": "O(1)",
+  "paradigm": "Matrix",
+  "constraints": {
+    "minLineCount": 15,
+    "maxLineCount": 45,
+    "shouldReadInput": true,
+    "shouldUseLoops": true,
+    "shouldUseRecursion": false
+  },
+  "detailedDescription": "Traverse m×n matrix in spiral order (clockwise from outside to inside). Input: First line has m and n. Next m lines have n space-separated integers. Output: Elements in spiral order, space-separated. Maintain boundaries: top, bottom, left, right.",
+  "hints": [
+    "Track four boundaries: top, bottom, left, right",
+    "Traverse right on top row, then increment top",
+    "Traverse down on right column, then decrement right",
+    "Traverse left on bottom row, then decrement bottom",
+    "Traverse up on left column, then increment left"
+  ],
+  "commonMistakes": [
+    "Not updating boundaries correctly",
+    "Missing elements at boundaries",
+    "Incorrect loop termination conditions",
+    "Not handling single row/column matrices"
+  ],
+  "solutionApproach": "Initialize boundaries. While boundaries valid: traverse right across top, down right side, left across bottom (if rows remain), up left side (if columns remain). Update boundaries after each direction.",
+  "testCaseCriteria": "Must visit all elements in correct spiral order. Should handle rectangular matrices and edge cases (1×n, n×1, 1×1).",
+  "rubric": {
+    "correctOutput": 35,
+    "spiralLogic": 30,
+    "boundaryHandling": 20,
+    "codeClarity": 15
+  }
+}

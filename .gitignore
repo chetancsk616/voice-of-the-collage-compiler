@@ -1,0 +1,21 @@
+node_modules/
+client/node_modules/
+server/node_modules/
+dist/
+client/dist/
+.env
+.env.*
+.DS_Store
+npm-debug.log
+.vscode/
+server/tmp/
+
+# Exclude organization folders (not for GitHub)
+unused/
+markdown/
+
+# Documentation files (keep main README)
+!README.md
+CLEANUP_SUMMARY.md
+QUICK_REFERENCE.md
+PROJECT_COMPLETION_CERTIFICATE.md

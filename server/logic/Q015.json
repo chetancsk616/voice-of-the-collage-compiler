@@ -1,0 +1,40 @@
+{
+  "questionId": "Q015",
+  "title": "Min Stack",
+  "difficulty": "Medium",
+  "expectedAlgorithm": "Stack with Minimum Tracking",
+  "algorithmDescription": "Implement stack that supports push, pop, top, and retrieving minimum element in O(1)",
+  "allowedApproaches": ["auxiliary_stack", "min_tracking_stack"],
+  "disallowedPatterns": ["linear_scan_for_min", "sorting"],
+  "expectedTimeComplexity": "O(1)",
+  "expectedSpaceComplexity": "O(n)",
+  "paradigm": "Stack",
+  "constraints": {
+    "minLineCount": 15,
+    "maxLineCount": 50,
+    "shouldReadInput": true,
+    "shouldUseLoops": true,
+    "shouldUseRecursion": false
+  },
+  "detailedDescription": "Design a stack that supports push, pop, top, and getMin operations in O(1) time. Input: Number of operations followed by operation commands (push x, pop, top, getMin). Output: Results of top and getMin operations. Use auxiliary stack to track minimums.",
+  "hints": [
+    "Use two stacks: main stack and min stack",
+    "Min stack stores minimum at each level",
+    "Push to min stack only if value <= current min",
+    "Pop from min stack when popped value equals current min"
+  ],
+  "commonMistakes": [
+    "Scanning entire stack to find minimum (O(n))",
+    "Not maintaining min stack correctly",
+    "Incorrect handling of duplicate minimums",
+    "Not synchronizing main and min stacks"
+  ],
+  "solutionApproach": "Maintain two stacks. Main stack stores all elements. Min stack stores minimums. On push, if value <= min stack top, push to both. On pop, if popped equals min stack top, pop from both. getMin returns min stack top.",
+  "testCaseCriteria": "All operations must run in O(1) time. Must correctly track minimum through various push/pop sequences.",
+  "rubric": {
+    "correctOutput": 35,
+    "constantTimeOperations": 30,
+    "minTracking": 20,
+    "codeClarity": 15
+  }
+}

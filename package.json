@@ -1,0 +1,25 @@
+{
+  "name": "ai-web-compiler",
+  "version": "1.0.0",
+  "private": true,
+  "workspaces": [
+    "client",
+    "server"
+  ],
+  "scripts": {
+    "dev": "concurrently \"npm run dev --prefix client\" \"npm run dev --prefix server\"",
+    "build": "npm run build --prefix client",
+    "start": "node server/index.js",
+    "lint": "npm run -w client lint && npm run -w server lint",
+    "lint:fix": "npm run -w client lint:fix && npm run -w server lint:fix",
+    "format": "npm run -w client format && npm run -w server format"
+  },
+  "devDependencies": {
+    "husky": "^8.0.0",
+    "lint-staged": "^13.0.0"
+  },
+  "dependencies": {
+    "concurrently": "^8.0.0",
+    "dotenv": "^16.0.0"
+  }
+}

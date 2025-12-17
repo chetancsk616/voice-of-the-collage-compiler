@@ -1,0 +1,507 @@
+{
+  "questions": [
+    {
+      "id": 1,
+      "title": "Hello World",
+      "difficulty": "Easy",
+      "description": "Write a program that prints 'Hello, World!' to the console.",
+      "prompt": "Create a program that outputs exactly 'Hello, World!'",
+      "sampleInput": "None",
+      "sampleOutput": "Hello, World!",
+      "sampleTestCases": [
+        {
+          "input": "None",
+          "output": "Hello, World!"
+        }
+      ],
+      "languages": ["python3", "node", "c"],
+      "solutions": {
+        "python3": "print(\"Hello, World!\")",
+        "node": "console.log(\"Hello, World!\");",
+        "c": "#include <stdio.h>\nint main() {\n  printf(\"Hello, World!\\n\");\n  return 0;\n}"
+      },
+      "hiddenTestCases": [
+        {
+          "input": "",
+          "output": "Hello, World!"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "title": "Sum of Numbers",
+      "difficulty": "Easy",
+      "description": "Write a program that takes two numbers as input and prints their sum.",
+      "prompt": "Read two integers from input and print their sum",
+      "sampleInput": "5\n3",
+      "sampleOutput": "8",
+      "sampleTestCases": [
+        {
+          "input": "5\n3",
+          "output": "8"
+        },
+        {
+          "input": "10\n20",
+          "output": "30"
+        }
+      ],
+      "languages": ["python3", "node", "c"],
+      "solutions": {
+        "python3": "a = int(input())\nb = int(input())\nprint(a + b)",
+        "node": "const readline = require('readline');\nconst rl = readline.createInterface({ input: process.stdin });\nlet inputs = [];\nrl.on('line', (line) => {\n  inputs.push(parseInt(line));\n  if (inputs.length === 2) {\n    console.log(inputs[0] + inputs[1]);\n    rl.close();\n  }\n});",
+        "c": "#include <stdio.h>\nint main() {\n  int a, b;\n  scanf(\"%d\", &a);\n  scanf(\"%d\", &b);\n  printf(\"%d\\n\", a + b);\n  return 0;\n}"
+      },
+      "hiddenTestCases": [
+        {
+          "input": "5\n3",
+          "output": "8"
+        },
+        {
+          "input": "10\n20",
+          "output": "30"
+        },
+        {
+          "input": "100\n50",
+          "output": "150"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "title": "Count Digits",
+      "difficulty": "Medium",
+      "description": "Write a program that counts the number of digits in a given number.",
+      "prompt": "Read an integer and print the count of digits in it",
+      "sampleInput": "12345",
+      "sampleOutput": "5",
+      "sampleTestCases": [
+        {
+          "input": "12345",
+          "output": "5"
+        },
+        {
+          "input": "99",
+          "output": "2"
+        }
+      ],
+      "languages": ["python3", "node", "c"],
+      "solutions": {
+        "python3": "n = input().strip()\nprint(len(n))",
+        "node": "const readline = require('readline');\nconst rl = readline.createInterface({ input: process.stdin });\nrl.on('line', (line) => {\n  console.log(line.trim().length);\n  rl.close();\n});",
+        "c": "#include <stdio.h>\n#include <string.h>\nint main() {\n  char num[100];\n  scanf(\"%s\", num);\n  printf(\"%d\\n\", (int)strlen(num));\n  return 0;\n}"
+      },
+      "hiddenTestCases": [
+        {
+          "input": "12345",
+          "output": "5"
+        },
+        {
+          "input": "99",
+          "output": "2"
+        },
+        {
+          "input": "1000",
+          "output": "4"
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "title": "Check Even or Odd",
+      "difficulty": "Easy",
+      "description": "Write a program that determines if a number is even or odd.",
+      "prompt": "Read a number and print 'Even' if it's even, 'Odd' if it's odd",
+      "sampleInput": "4",
+      "sampleOutput": "Even",
+      "sampleTestCases": [
+        {
+          "input": "4",
+          "output": "Even"
+        },
+        {
+          "input": "7",
+          "output": "Odd"
+        }
+      ],
+      "languages": ["python3", "node", "c"],
+      "solutions": {
+        "python3": "n = int(input())\nif n % 2 == 0:\n    print(\"Even\")\nelse:\n    print(\"Odd\")",
+        "node": "const readline = require('readline');\nconst rl = readline.createInterface({ input: process.stdin });\nrl.on('line', (line) => {\n  const n = parseInt(line);\n  console.log(n % 2 === 0 ? \"Even\" : \"Odd\");\n  rl.close();\n});",
+        "c": "#include <stdio.h>\nint main() {\n  int n;\n  scanf(\"%d\", &n);\n  if (n % 2 == 0)\n    printf(\"Even\\n\");\n  else\n    printf(\"Odd\\n\");\n  return 0;\n}"
+      },
+      "hiddenTestCases": [
+        {
+          "input": "4",
+          "output": "Even"
+        },
+        {
+          "input": "7",
+          "output": "Odd"
+        },
+        {
+          "input": "0",
+          "output": "Even"
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "title": "Factorial",
+      "difficulty": "Medium",
+      "description": "Write a program that calculates the factorial of a number.",
+      "prompt": "Read an integer n and print its factorial (n!)",
+      "sampleInput": "5",
+      "sampleOutput": "120",
+      "sampleTestCases": [
+        {
+          "input": "5",
+          "output": "120"
+        },
+        {
+          "input": "6",
+          "output": "720"
+        }
+      ],
+      "languages": ["python3", "node", "c"],
+      "solutions": {
+        "python3": "n = int(input())\nfact = 1\nfor i in range(1, n + 1):\n    fact *= i\nprint(fact)",
+        "node": "const readline = require('readline');\nconst rl = readline.createInterface({ input: process.stdin });\nrl.on('line', (line) => {\n  const n = parseInt(line);\n  let fact = 1;\n  for (let i = 1; i <= n; i++)\n    fact *= i;\n  console.log(fact);\n  rl.close();\n});",
+        "c": "#include <stdio.h>\nint main() {\n  int n;\n  scanf(\"%d\", &n);\n  int fact = 1;\n  for (int i = 1; i <= n; i++)\n    fact *= i;\n  printf(\"%d\\n\", fact);\n  return 0;\n}"
+      },
+      "hiddenTestCases": [
+        {
+          "input": "5",
+          "output": "120"
+        },
+        {
+          "input": "0",
+          "output": "1"
+        },
+        {
+          "input": "6",
+          "output": "720"
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "title": "Binary Tree Height",
+      "difficulty": "Medium",
+      "description": "Calculate the height of a binary tree. The height is the number of edges on the longest path from root to leaf.",
+      "prompt": "Implement a function to find the height of a binary tree using recursion",
+      "languages": ["python3", "node", "c"]
+    },
+    {
+      "id": 7,
+      "title": "Binary Tree Inorder Traversal",
+      "difficulty": "Medium",
+      "description": "Perform inorder traversal of a binary tree (left-root-right order).",
+      "prompt": "Traverse a binary tree in inorder and print the sequence",
+      "languages": ["python3", "node", "c"]
+    },
+    {
+      "id": 8,
+      "title": "Graph BFS Traversal",
+      "difficulty": "Medium",
+      "description": "Traverse a graph level by level using Breadth-First Search algorithm.",
+      "prompt": "Implement BFS to traverse graph starting from a given vertex",
+      "languages": ["python3", "node", "c"]
+    },
+    {
+      "id": 9,
+      "title": "Graph DFS Traversal",
+      "difficulty": "Medium",
+      "description": "Traverse a graph exploring as far as possible before backtracking using Depth-First Search.",
+      "prompt": "Implement DFS to traverse graph starting from a given vertex",
+      "languages": ["python3", "node", "c"]
+    },
+    {
+      "id": 10,
+      "title": "Fibonacci with Memoization",
+      "difficulty": "Medium",
+      "description": "Calculate the nth Fibonacci number efficiently using dynamic programming with memoization.",
+      "prompt": "Find nth Fibonacci number in O(n) time using DP",
+      "languages": ["python3", "node", "c"]
+    },
+    {
+      "id": 11,
+      "title": "Longest Common Subsequence",
+      "difficulty": "Hard",
+      "description": "Find the length of the longest common subsequence between two strings using dynamic programming.",
+      "prompt": "Calculate LCS length of two strings using 2D DP table",
+      "languages": ["python3", "node", "c"]
+    },
+    {
+      "id": 12,
+      "title": "Reverse Linked List",
+      "difficulty": "Medium",
+      "description": "Reverse a singly linked list in-place by changing node pointers.",
+      "prompt": "Reverse linked list using iterative approach with O(1) space",
+      "languages": ["python3", "node", "c"]
+    },
+    {
+      "id": 13,
+      "title": "Detect Cycle in Linked List",
+      "difficulty": "Medium",
+      "description": "Detect if a linked list contains a cycle using Floyd's cycle detection algorithm (slow and fast pointers).",
+      "prompt": "Use two pointers to detect cycle in O(1) space",
+      "languages": ["python3", "node", "c"]
+    },
+    {
+      "id": 14,
+      "title": "Valid Parentheses",
+      "difficulty": "Easy",
+      "description": "Check if a string has valid matching parentheses using a stack data structure.",
+      "prompt": "Validate brackets (), {}, [] using stack",
+      "languages": ["python3", "node", "c"]
+    },
+    {
+      "id": 15,
+      "title": "Min Stack",
+      "difficulty": "Medium",
+      "description": "Design a stack that supports push, pop, top, and retrieving minimum element in O(1) time.",
+      "prompt": "Implement stack with constant time getMin operation",
+      "languages": ["python3", "node", "c"]
+    },
+    {
+      "id": 16,
+      "title": "Implement Queue using Stacks",
+      "difficulty": "Medium",
+      "description": "Implement a FIFO queue using only two LIFO stacks.",
+      "prompt": "Create queue with enqueue, dequeue using two stacks",
+      "languages": ["python3", "node", "c"]
+    },
+    {
+      "id": 17,
+      "title": "Circular Queue",
+      "difficulty": "Medium",
+      "description": "Implement a fixed-size circular queue with efficient space utilization using array.",
+      "prompt": "Design circular queue with O(1) operations",
+      "languages": ["python3", "node", "c"]
+    },
+    {
+      "id": 18,
+      "title": "Kth Largest Element",
+      "difficulty": "Medium",
+      "description": "Find the kth largest element in an unsorted array using min heap or quick select.",
+      "prompt": "Find kth largest in O(n log k) using heap",
+      "languages": ["python3", "node", "c"]
+    },
+    {
+      "id": 19,
+      "title": "Merge K Sorted Lists",
+      "difficulty": "Hard",
+      "description": "Merge k sorted linked lists into one sorted list using min heap for efficiency.",
+      "prompt": "Merge multiple sorted lists in O(N log k) time",
+      "languages": ["python3", "node", "c"]
+    },
+    {
+      "id": 20,
+      "title": "Merge Sort",
+      "difficulty": "Medium",
+      "description": "Sort an array using merge sort algorithm with divide and conquer approach.",
+      "prompt": "Implement merge sort with O(n log n) time",
+      "languages": ["python3", "node", "c"]
+    },
+    {
+      "id": 21,
+      "title": "Quick Sort",
+      "difficulty": "Medium",
+      "description": "Sort an array using quick sort algorithm with partitioning and pivot selection.",
+      "prompt": "Implement quick sort with in-place partitioning",
+      "languages": ["python3", "node", "c"]
+    },
+    {
+      "id": 22,
+      "title": "Two Sum",
+      "difficulty": "Easy",
+      "description": "Find two numbers in an array that add up to a target sum using hash table for O(n) solution.",
+      "prompt": "Find indices of two numbers summing to target",
+      "languages": ["python3", "node", "c"]
+    },
+    {
+      "id": 23,
+      "title": "Group Anagrams",
+      "difficulty": "Medium",
+      "description": "Group anagrams together from a list of strings using hash table with sorted string keys.",
+      "prompt": "Group strings that are anagrams of each other",
+      "languages": ["python3", "node", "c"]
+    },
+    {
+      "id": 24,
+      "title": "Generate Permutations",
+      "difficulty": "Medium",
+      "description": "Generate all permutations of a given array using recursive backtracking algorithm.",
+      "prompt": "Find all permutations using backtracking",
+      "languages": ["python3", "node", "c"]
+    },
+    {
+      "id": 25,
+      "title": "N-Queens Problem",
+      "difficulty": "Hard",
+      "description": "Solve N-Queens puzzle by placing n queens on n×n chessboard so no two queens attack each other.",
+      "prompt": "Use backtracking with constraint checking",
+      "languages": ["python3", "node", "c"]
+    },
+    {
+      "id": 26,
+      "title": "Binary Search",
+      "difficulty": "Easy",
+      "description": "Search for a target element in a sorted array using binary search algorithm.",
+      "prompt": "Find target in sorted array with O(log n) time",
+      "languages": ["python3", "node", "c"]
+    },
+    {
+      "id": 27,
+      "title": "Find First and Last Position",
+      "difficulty": "Medium",
+      "description": "Find starting and ending position of target in sorted array with duplicates using modified binary search.",
+      "prompt": "Find both bounds in O(log n) using two binary searches",
+      "languages": ["python3", "node", "c"]
+    },
+    {
+      "id": 28,
+      "title": "Maximum Sum Subarray of Size K",
+      "difficulty": "Medium",
+      "description": "Find maximum sum of any contiguous subarray of size k using sliding window technique.",
+      "prompt": "Use sliding window for O(n) solution",
+      "languages": ["python3", "node", "c"]
+    },
+    {
+      "id": 29,
+      "title": "Longest Substring Without Repeating Characters",
+      "difficulty": "Medium",
+      "description": "Find length of longest substring without repeating characters using sliding window with hash set.",
+      "prompt": "Use variable sliding window technique",
+      "languages": ["python3", "node", "c"]
+    },
+    {
+      "id": 30,
+      "title": "Container With Most Water",
+      "difficulty": "Medium",
+      "description": "Find maximum water container area using two pointer technique from both ends.",
+      "prompt": "Use two pointers to find max area in O(n)",
+      "languages": ["python3", "node", "c"]
+    },
+    {
+      "id": 31,
+      "title": "Three Sum",
+      "difficulty": "Medium",
+      "description": "Find all unique triplets that sum to zero using sorting and two pointers.",
+      "prompt": "Find triplets summing to zero in O(n²) time",
+      "languages": ["python3", "node", "c"]
+    },
+    {
+      "id": 32,
+      "title": "Implement Trie",
+      "difficulty": "Medium",
+      "description": "Implement prefix tree (Trie) supporting insert, search, and startsWith operations.",
+      "prompt": "Build Trie data structure with O(m) operations",
+      "languages": ["python3", "node", "c"]
+    },
+    {
+      "id": 33,
+      "title": "Word Search in Trie",
+      "difficulty": "Hard",
+      "description": "Find all dictionary words that exist in 2D board using Trie with DFS backtracking.",
+      "prompt": "Combine Trie with backtracking for efficient search",
+      "languages": ["python3", "node", "c"]
+    },
+    {
+      "id": 34,
+      "title": "Activity Selection",
+      "difficulty": "Medium",
+      "description": "Select maximum number of non-overlapping activities using greedy approach by sorting end times.",
+      "prompt": "Greedy activity selection in O(n log n)",
+      "languages": ["python3", "node", "c"]
+    },
+    {
+      "id": 35,
+      "title": "Huffman Coding",
+      "difficulty": "Hard",
+      "description": "Build optimal Huffman tree for data compression using greedy algorithm with min heap.",
+      "prompt": "Create prefix-free encoding tree greedily",
+      "languages": ["python3", "node", "c"]
+    },
+    {
+      "id": 36,
+      "title": "Count Set Bits",
+      "difficulty": "Easy",
+      "description": "Count number of 1 bits in binary representation using bit manipulation techniques.",
+      "prompt": "Use Brian Kernighan's algorithm or bit operations",
+      "languages": ["python3", "node", "c"]
+    },
+    {
+      "id": 37,
+      "title": "Single Number",
+      "difficulty": "Easy",
+      "description": "Find element appearing once when all others appear twice using XOR properties.",
+      "prompt": "Use XOR for O(1) space solution",
+      "languages": ["python3", "node", "c"]
+    },
+    {
+      "id": 38,
+      "title": "Maximum Subarray Sum",
+      "difficulty": "Medium",
+      "description": "Find maximum sum of contiguous subarray using Kadane's algorithm.",
+      "prompt": "Implement Kadane's algorithm for O(n) solution",
+      "languages": ["python3", "node", "c"]
+    },
+    {
+      "id": 39,
+      "title": "Count Inversions",
+      "difficulty": "Hard",
+      "description": "Count inversions in array using modified merge sort divide and conquer approach.",
+      "prompt": "Count inversions during merge sort in O(n log n)",
+      "languages": ["python3", "node", "c"]
+    },
+    {
+      "id": 40,
+      "title": "Union Find - Detect Cycle",
+      "difficulty": "Medium",
+      "description": "Detect cycle in undirected graph using Union Find (Disjoint Set Union) data structure.",
+      "prompt": "Use path compression and union by rank",
+      "languages": ["python3", "node", "c"]
+    },
+    {
+      "id": 41,
+      "title": "Number of Connected Components",
+      "difficulty": "Medium",
+      "description": "Count connected components in undirected graph using Union Find data structure.",
+      "prompt": "Track component count with union operations",
+      "languages": ["python3", "node", "c"]
+    },
+    {
+      "id": 42,
+      "title": "Spiral Matrix Traversal",
+      "difficulty": "Medium",
+      "description": "Traverse matrix in spiral order (clockwise from outside to inside) using boundary simulation.",
+      "prompt": "Maintain four boundaries and traverse in spiral",
+      "languages": ["python3", "node", "c"]
+    },
+    {
+      "id": 43,
+      "title": "Rotate Matrix 90 Degrees",
+      "difficulty": "Medium",
+      "description": "Rotate n×n matrix 90 degrees clockwise in-place with O(1) extra space.",
+      "prompt": "Transpose then reverse rows for rotation",
+      "languages": ["python3", "node", "c"]
+    },
+    {
+      "id": 44,
+      "title": "Longest Palindromic Substring",
+      "difficulty": "Medium",
+      "description": "Find longest palindromic substring using expand around center technique.",
+      "prompt": "Expand from each center for O(n²) solution",
+      "languages": ["python3", "node", "c"]
+    },
+    {
+      "id": 45,
+      "title": "KMP Pattern Matching",
+      "difficulty": "Hard",
+      "description": "Find pattern occurrences in text using Knuth-Morris-Pratt algorithm with LPS array.",
+      "prompt": "Build LPS array for O(n+m) pattern matching",
+      "languages": ["python3", "node", "c"]
+    }
+  ]
+}

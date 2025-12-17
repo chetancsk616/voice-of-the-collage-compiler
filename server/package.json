@@ -1,0 +1,32 @@
+{
+  "name": "ai-web-compiler-server",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "node --watch index.js",
+    "start": "node index.js",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "lint": "eslint . --ext .js --ignore-path .eslintignore",
+    "lint:fix": "eslint . --ext .js --ignore-path .eslintignore --fix",
+    "format": "prettier --write ."
+  },
+  "dependencies": {
+    "axios": "^1.6.0",
+    "body-parser": "^1.20.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.0",
+    "express": "^4.18.0",
+    "esprima": "^4.0.1",
+    "uuid": "^9.0.0"
+  },
+  "devDependencies": {
+    "eslint": "^8.0.0",
+    "eslint-config-prettier": "^9.0.0",
+    "eslint-plugin-node": "^11.0.0",
+    "eslint-plugin-prettier": "^5.0.0",
+    "jest": "^30.2.0",
+    "prettier": "^3.0.0",
+    "supertest": "^7.1.4"
+  }
+}

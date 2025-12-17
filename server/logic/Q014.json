@@ -1,0 +1,40 @@
+{
+  "questionId": "Q014",
+  "title": "Valid Parentheses",
+  "difficulty": "Easy",
+  "expectedAlgorithm": "Stack-based Matching",
+  "algorithmDescription": "Check if string has valid matching parentheses using stack",
+  "allowedApproaches": ["stack_matching", "balanced_brackets"],
+  "disallowedPatterns": ["counter_based", "regex_matching"],
+  "expectedTimeComplexity": "O(n)",
+  "expectedSpaceComplexity": "O(n)",
+  "paradigm": "Stack",
+  "constraints": {
+    "minLineCount": 8,
+    "maxLineCount": 30,
+    "shouldReadInput": true,
+    "shouldUseLoops": true,
+    "shouldUseRecursion": false
+  },
+  "detailedDescription": "Determine if input string has valid parentheses. Valid means every opening bracket has corresponding closing bracket in correct order. Support (), {}, []. Input: A string containing brackets. Output: 'valid' or 'invalid'. Example: '({[]})' is valid, '([)]' is invalid.",
+  "hints": [
+    "Use stack to track opening brackets",
+    "Push opening brackets onto stack",
+    "On closing bracket, check if it matches stack top",
+    "String is valid if stack is empty at end"
+  ],
+  "commonMistakes": [
+    "Not handling different bracket types",
+    "Not checking stack emptiness at end",
+    "Popping from empty stack",
+    "Not matching bracket types correctly"
+  ],
+  "solutionApproach": "Iterate through string. Push opening brackets to stack. On closing bracket, pop stack and verify it matches. After iteration, check if stack is empty.",
+  "testCaseCriteria": "Must correctly validate various bracket combinations including nested, multiple types, and invalid sequences.",
+  "rubric": {
+    "correctOutput": 40,
+    "stackUsage": 30,
+    "edgeCaseHandling": 20,
+    "codeClarity": 10
+  }
+}

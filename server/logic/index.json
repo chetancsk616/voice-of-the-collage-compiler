@@ -1,0 +1,274 @@
+{
+  "questions": [
+    {
+      "questionId": "Q001",
+      "title": "Hello World",
+      "difficulty": "Easy",
+      "file": "Q001.json"
+    },
+    {
+      "questionId": "Q002",
+      "title": "Sum of Numbers",
+      "difficulty": "Easy",
+      "file": "Q002.json"
+    },
+    {
+      "questionId": "Q003",
+      "title": "Count Digits",
+      "difficulty": "Medium",
+      "file": "Q003.json"
+    },
+    {
+      "questionId": "Q004",
+      "title": "Check Even or Odd",
+      "difficulty": "Easy",
+      "file": "Q004.json"
+    },
+    {
+      "questionId": "Q005",
+      "title": "Factorial",
+      "difficulty": "Medium",
+      "file": "Q005.json"
+    },
+    {
+      "questionId": "Q006",
+      "title": "Binary Tree Height",
+      "difficulty": "Medium",
+      "file": "Q006.json"
+    },
+    {
+      "questionId": "Q007",
+      "title": "Binary Tree Inorder Traversal",
+      "difficulty": "Medium",
+      "file": "Q007.json"
+    },
+    {
+      "questionId": "Q008",
+      "title": "Graph BFS Traversal",
+      "difficulty": "Medium",
+      "file": "Q008.json"
+    },
+    {
+      "questionId": "Q009",
+      "title": "Graph DFS Traversal",
+      "difficulty": "Medium",
+      "file": "Q009.json"
+    },
+    {
+      "questionId": "Q010",
+      "title": "Fibonacci with Memoization",
+      "difficulty": "Medium",
+      "file": "Q010.json"
+    },
+    {
+      "questionId": "Q011",
+      "title": "Longest Common Subsequence",
+      "difficulty": "Hard",
+      "file": "Q011.json"
+    },
+    {
+      "questionId": "Q012",
+      "title": "Reverse Linked List",
+      "difficulty": "Medium",
+      "file": "Q012.json"
+    },
+    {
+      "questionId": "Q013",
+      "title": "Detect Cycle in Linked List",
+      "difficulty": "Medium",
+      "file": "Q013.json"
+    },
+    {
+      "questionId": "Q014",
+      "title": "Valid Parentheses",
+      "difficulty": "Easy",
+      "file": "Q014.json"
+    },
+    {
+      "questionId": "Q015",
+      "title": "Min Stack",
+      "difficulty": "Medium",
+      "file": "Q015.json"
+    },
+    {
+      "questionId": "Q016",
+      "title": "Implement Queue using Stacks",
+      "difficulty": "Medium",
+      "file": "Q016.json"
+    },
+    {
+      "questionId": "Q017",
+      "title": "Circular Queue",
+      "difficulty": "Medium",
+      "file": "Q017.json"
+    },
+    {
+      "questionId": "Q018",
+      "title": "Kth Largest Element",
+      "difficulty": "Medium",
+      "file": "Q018.json"
+    },
+    {
+      "questionId": "Q019",
+      "title": "Merge K Sorted Lists",
+      "difficulty": "Hard",
+      "file": "Q019.json"
+    },
+    {
+      "questionId": "Q020",
+      "title": "Merge Sort",
+      "difficulty": "Medium",
+      "file": "Q020.json"
+    },
+    {
+      "questionId": "Q021",
+      "title": "Quick Sort",
+      "difficulty": "Medium",
+      "file": "Q021.json"
+    },
+    {
+      "questionId": "Q022",
+      "title": "Two Sum",
+      "difficulty": "Easy",
+      "file": "Q022.json"
+    },
+    {
+      "questionId": "Q023",
+      "title": "Group Anagrams",
+      "difficulty": "Medium",
+      "file": "Q023.json"
+    },
+    {
+      "questionId": "Q024",
+      "title": "Generate Permutations",
+      "difficulty": "Medium",
+      "file": "Q024.json"
+    },
+    {
+      "questionId": "Q025",
+      "title": "N-Queens Problem",
+      "difficulty": "Hard",
+      "file": "Q025.json"
+    },
+    {
+      "questionId": "Q026",
+      "title": "Binary Search",
+      "difficulty": "Easy",
+      "file": "Q026.json"
+    },
+    {
+      "questionId": "Q027",
+      "title": "Find First and Last Position",
+      "difficulty": "Medium",
+      "file": "Q027.json"
+    },
+    {
+      "questionId": "Q028",
+      "title": "Maximum Sum Subarray of Size K",
+      "difficulty": "Medium",
+      "file": "Q028.json"
+    },
+    {
+      "questionId": "Q029",
+      "title": "Longest Substring Without Repeating Characters",
+      "difficulty": "Medium",
+      "file": "Q029.json"
+    },
+    {
+      "questionId": "Q030",
+      "title": "Container With Most Water",
+      "difficulty": "Medium",
+      "file": "Q030.json"
+    },
+    {
+      "questionId": "Q031",
+      "title": "Three Sum",
+      "difficulty": "Medium",
+      "file": "Q031.json"
+    },
+    {
+      "questionId": "Q032",
+      "title": "Implement Trie",
+      "difficulty": "Medium",
+      "file": "Q032.json"
+    },
+    {
+      "questionId": "Q033",
+      "title": "Word Search in Trie",
+      "difficulty": "Hard",
+      "file": "Q033.json"
+    },
+    {
+      "questionId": "Q034",
+      "title": "Activity Selection",
+      "difficulty": "Medium",
+      "file": "Q034.json"
+    },
+    {
+      "questionId": "Q035",
+      "title": "Huffman Coding",
+      "difficulty": "Hard",
+      "file": "Q035.json"
+    },
+    {
+      "questionId": "Q036",
+      "title": "Count Set Bits",
+      "difficulty": "Easy",
+      "file": "Q036.json"
+    },
+    {
+      "questionId": "Q037",
+      "title": "Single Number",
+      "difficulty": "Easy",
+      "file": "Q037.json"
+    },
+    {
+      "questionId": "Q038",
+      "title": "Maximum Subarray Sum",
+      "difficulty": "Medium",
+      "file": "Q038.json"
+    },
+    {
+      "questionId": "Q039",
+      "title": "Count Inversions",
+      "difficulty": "Hard",
+      "file": "Q039.json"
+    },
+    {
+      "questionId": "Q040",
+      "title": "Union Find - Detect Cycle",
+      "difficulty": "Medium",
+      "file": "Q040.json"
+    },
+    {
+      "questionId": "Q041",
+      "title": "Number of Connected Components",
+      "difficulty": "Medium",
+      "file": "Q041.json"
+    },
+    {
+      "questionId": "Q042",
+      "title": "Spiral Matrix Traversal",
+      "difficulty": "Medium",
+      "file": "Q042.json"
+    },
+    {
+      "questionId": "Q043",
+      "title": "Rotate Matrix 90 Degrees",
+      "difficulty": "Medium",
+      "file": "Q043.json"
+    },
+    {
+      "questionId": "Q044",
+      "title": "Longest Palindromic Substring",
+      "difficulty": "Medium",
+      "file": "Q044.json"
+    },
+    {
+      "questionId": "Q045",
+      "title": "KMP Pattern Matching",
+      "difficulty": "Hard",
+      "file": "Q045.json"
+    }
+  ]
+}

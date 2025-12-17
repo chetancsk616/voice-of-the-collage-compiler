@@ -1,0 +1,40 @@
+{
+  "questionId": "Q024",
+  "title": "Generate Permutations",
+  "difficulty": "Medium",
+  "expectedAlgorithm": "Backtracking",
+  "algorithmDescription": "Generate all permutations of array using backtracking algorithm",
+  "allowedApproaches": ["recursive_backtracking", "swap_based_backtracking"],
+  "disallowedPatterns": ["iterative_only", "built_in_permutation"],
+  "expectedTimeComplexity": "O(n! * n)",
+  "expectedSpaceComplexity": "O(n)",
+  "paradigm": "Backtracking",
+  "constraints": {
+    "minLineCount": 12,
+    "maxLineCount": 40,
+    "shouldReadInput": true,
+    "shouldUseLoops": true,
+    "shouldUseRecursion": true
+  },
+  "detailedDescription": "Generate all permutations of given array using backtracking. Input: First line has n, second line has n distinct integers. Output: All permutations, one per line. Use recursive backtracking: try each element at each position, recursively generate rest, backtrack.",
+  "hints": [
+    "Use recursion with current permutation state",
+    "Try placing each unused element at current position",
+    "When permutation complete (length = n), add to results",
+    "Backtrack by removing element and trying next"
+  ],
+  "commonMistakes": [
+    "Not backtracking properly",
+    "Including duplicate permutations",
+    "Not marking elements as used/unused",
+    "Incorrect base case"
+  ],
+  "solutionApproach": "Recursive backtracking: if current permutation length equals n, add to results. Otherwise, try each unused element: mark as used, add to permutation, recurse, then backtrack (remove element, mark unused).",
+  "testCaseCriteria": "Must generate all n! permutations. No duplicates. Should use backtracking approach.",
+  "rubric": {
+    "correctOutput": 35,
+    "backtrackingImplementation": 30,
+    "recursion": 20,
+    "codeClarity": 15
+  }
+}

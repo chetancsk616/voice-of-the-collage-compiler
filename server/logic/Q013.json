@@ -1,0 +1,40 @@
+{
+  "questionId": "Q013",
+  "title": "Detect Cycle in Linked List",
+  "difficulty": "Medium",
+  "expectedAlgorithm": "Floyd's Cycle Detection",
+  "algorithmDescription": "Detect if linked list contains a cycle using slow and fast pointers",
+  "allowedApproaches": ["two_pointer_technique", "floyds_algorithm"],
+  "disallowedPatterns": ["hash_set_tracking", "marking_visited"],
+  "expectedTimeComplexity": "O(n)",
+  "expectedSpaceComplexity": "O(1)",
+  "paradigm": "Linked List",
+  "constraints": {
+    "minLineCount": 10,
+    "maxLineCount": 35,
+    "shouldReadInput": true,
+    "shouldUseLoops": true,
+    "shouldUseRecursion": false
+  },
+  "detailedDescription": "Detect if a linked list has a cycle using Floyd's cycle detection algorithm (tortoise and hare). Input: Number of nodes, node values, and position where tail connects (-1 for no cycle). Output: 'true' if cycle exists, 'false' otherwise. Must use O(1) space.",
+  "hints": [
+    "Use two pointers: slow (moves 1 step) and fast (moves 2 steps)",
+    "If fast meets slow, cycle exists",
+    "If fast reaches null, no cycle",
+    "Floyd's algorithm: constant space solution"
+  ],
+  "commonMistakes": [
+    "Using hash set (violates space constraint)",
+    "Not handling empty or single node list",
+    "Incorrect pointer advancement",
+    "Not checking for null before moving fast pointer"
+  ],
+  "solutionApproach": "Initialize slow and fast pointers at head. Move slow by 1, fast by 2 steps each iteration. If they meet, cycle exists. If fast reaches null, no cycle.",
+  "testCaseCriteria": "Must correctly detect cycles using O(1) space. Should handle lists with and without cycles, including edge cases.",
+  "rubric": {
+    "correctOutput": 35,
+    "twoPointerImplementation": 30,
+    "spaceComplexity": 20,
+    "codeClarity": 15
+  }
+}

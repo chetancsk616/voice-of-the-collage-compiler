@@ -1,0 +1,57 @@
+{
+  "questionId": "Q007",
+  "title": "Binary Tree Inorder Traversal",
+  "difficulty": "Medium",
+  "expectedAlgorithm": "Tree Traversal",
+  "algorithmDescription": "Perform inorder traversal of binary tree (left-root-right)",
+  "allowedApproaches": ["recursive_inorder", "iterative_with_stack"],
+  "disallowedPatterns": ["preorder_traversal", "postorder_traversal"],
+  "expectedTimeComplexity": "O(n)",
+  "expectedSpaceComplexity": "O(h)",
+  "paradigm": "Tree Traversal",
+  "constraints": {
+    "minLineCount": 5,
+    "maxLineCount": 35,
+    "shouldReadInput": true,
+    "shouldUseLoops": true,
+    "shouldUseRecursion": true
+  },
+  "detailedDescription": "Write a program to perform inorder traversal of a binary tree. Inorder traversal visits nodes in order: left subtree, root, right subtree. For a BST, this produces sorted output. Input: Number of nodes followed by level-order values (use -1 for null). Output: Space-separated inorder sequence.",
+  "hints": [
+    "Inorder: traverse left, visit root, traverse right",
+    "For BST, inorder gives sorted sequence",
+    "Can implement recursively or iteratively with stack",
+    "Build tree from input first"
+  ],
+  "commonMistakes": [
+    "Implementing preorder instead of inorder",
+    "Not handling null nodes properly",
+    "Incorrect tree construction from input",
+    "Wrong output format"
+  ],
+  "solutionApproach": "Construct binary tree from level-order input. Implement inorder traversal recursively: recursively traverse left subtree, print current node, recursively traverse right subtree.",
+  "testCaseCriteria": "Must produce correct inorder sequence for various tree structures. For BST input, output should be sorted.",
+  "rubric": {
+    "correctOutput": 35,
+    "properTraversal": 25,
+    "treeConstruction": 20,
+    "codeClarity": 20
+  },
+  "testCases": [
+    {
+      "input": "1\n5",
+      "expectedOutput": "5",
+      "description": "Single node tree"
+    },
+    {
+      "input": "3\n2 1 3",
+      "expectedOutput": "1 2 3",
+      "description": "BST inorder produces sorted output"
+    },
+    {
+      "input": "7\n4 2 6 1 3 5 7",
+      "expectedOutput": "1 2 3 4 5 6 7",
+      "description": "Complete BST produces sorted sequence"
+    }
+  ]
+}

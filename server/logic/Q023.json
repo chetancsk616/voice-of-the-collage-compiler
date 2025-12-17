@@ -1,0 +1,40 @@
+{
+  "questionId": "Q023",
+  "title": "Group Anagrams",
+  "difficulty": "Medium",
+  "expectedAlgorithm": "Hash Table Grouping",
+  "algorithmDescription": "Group anagrams together using hash table with sorted string keys",
+  "allowedApproaches": ["hash_map_grouping", "sorted_key_hashing"],
+  "disallowedPatterns": ["nested_comparison", "brute_force"],
+  "expectedTimeComplexity": "O(n * k log k)",
+  "expectedSpaceComplexity": "O(n * k)",
+  "paradigm": "Hash Table",
+  "constraints": {
+    "minLineCount": 10,
+    "maxLineCount": 35,
+    "shouldReadInput": true,
+    "shouldUseLoops": true,
+    "shouldUseRecursion": false
+  },
+  "detailedDescription": "Group anagrams from list of strings. Anagrams are words formed by rearranging letters. Input: First line has n (number of strings), next n lines have one string each. Output: Groups of anagrams (each group on separate line). Use hash table with sorted string as key for efficiency.",
+  "hints": [
+    "Anagrams have same letters when sorted",
+    "Use sorted string as hash key",
+    "Hash table maps sorted string to list of original strings",
+    "All strings with same sorted form are anagrams"
+  ],
+  "commonMistakes": [
+    "Comparing every string with every other (O(n²))",
+    "Not handling empty strings",
+    "Incorrect key generation",
+    "Not grouping all anagrams together"
+  ],
+  "solutionApproach": "Create hash table. For each string: sort its characters to create key, add original string to list at that key. After processing all strings, output each group from hash table.",
+  "testCaseCriteria": "Must correctly group all anagrams. Should handle various string lengths. Time complexity better than O(n²).",
+  "rubric": {
+    "correctOutput": 35,
+    "hashTableGrouping": 30,
+    "sortedKeyLogic": 20,
+    "codeClarity": 15
+  }
+}

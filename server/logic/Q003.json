@@ -1,0 +1,62 @@
+{
+  "questionId": "Q003",
+  "title": "Count Digits",
+  "difficulty": "Medium",
+  "expectedAlgorithm": "String Length / Digit Counting",
+  "algorithmDescription": "Count the number of digits in a given integer",
+  "allowedApproaches": ["string_length", "loop_counting", "log_based"],
+  "disallowedPatterns": ["hardcoding", "regex_only"],
+  "expectedTimeComplexity": "O(log n)",
+  "expectedSpaceComplexity": "O(1)",
+  "paradigm": "Simple Logic",
+  "constraints": {
+    "minLineCount": 2,
+    "maxLineCount": 15,
+    "shouldReadInput": true,
+    "shouldUseLoops": false,
+    "shouldUseRecursion": false
+  },
+  "detailedDescription": "Write a program that reads an integer and outputs the count of digits in that number. For example, 12345 has 5 digits, and 99 has 2 digits.",
+  "hints": [
+    "Convert number to string and measure length (simple approach)",
+    "Alternatively, use modulo operator in a loop to count digits",
+    "Or use logarithm: log10(n) + 1 gives digit count",
+    "Handle edge cases like 0 or single-digit numbers"
+  ],
+  "commonMistakes": [
+    "Not handling negative signs correctly",
+    "Off-by-one errors in counting",
+    "Using regex complexity when simpler methods exist",
+    "Not stripping input whitespace"
+  ],
+  "solutionApproach": "Simplest: convert to string, return length. Alternative: loop and divide by 10 repeatedly.",
+  "testCaseCriteria": "Must correctly count digits for any non-negative integer input",
+  "rubric": {
+    "correctCounting": 50,
+    "inputHandling": 20,
+    "codeEfficiency": 20,
+    "edgeCases": 10
+  },
+  "testCases": [
+    {
+      "input": "12345",
+      "expectedOutput": "5",
+      "description": "Five digit number"
+    },
+    {
+      "input": "99",
+      "expectedOutput": "2",
+      "description": "Two digit number"
+    },
+    {
+      "input": "0",
+      "expectedOutput": "1",
+      "description": "Edge case: zero has 1 digit"
+    },
+    {
+      "input": "7",
+      "expectedOutput": "1",
+      "description": "Single digit"
+    }
+  ]
+}

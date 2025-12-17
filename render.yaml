@@ -1,0 +1,19 @@
+services:
+  # Frontend & API Service
+  - type: web
+    name: ai-web-compiler
+    runtime: node
+    region: oregon # Change to your preferred region
+    plan: free # Change to 'starter' or 'standard' for production
+    branch: main
+    rootDir: .
+    buildCommand: npm install && npm run build
+    startCommand: npm run start
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: GROQ_API_KEY
+        sync: false # Must be set manually in dashboard for security
+    # Auto-deploy on push to main
+    autoDeploy: true

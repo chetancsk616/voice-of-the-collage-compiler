@@ -1,0 +1,40 @@
+{
+  "questionId": "Q017",
+  "title": "Circular Queue",
+  "difficulty": "Medium",
+  "expectedAlgorithm": "Array-based Circular Queue",
+  "algorithmDescription": "Implement fixed-size circular queue with efficient space utilization",
+  "allowedApproaches": ["modulo_indexing", "circular_array"],
+  "disallowedPatterns": ["linked_list_implementation", "dynamic_resizing"],
+  "expectedTimeComplexity": "O(1)",
+  "expectedSpaceComplexity": "O(k)",
+  "paradigm": "Queue",
+  "constraints": {
+    "minLineCount": 15,
+    "maxLineCount": 50,
+    "shouldReadInput": true,
+    "shouldUseLoops": true,
+    "shouldUseRecursion": false
+  },
+  "detailedDescription": "Implement a circular queue with fixed capacity k. Support enqueue, dequeue, front, rear, isEmpty, and isFull operations. Input: Queue size k, then number of operations followed by commands. Output: Results of operations. Use array with circular indexing (modulo).",
+  "hints": [
+    "Use array of size k with front and rear pointers",
+    "Circular indexing: (index + 1) % k",
+    "Track size or use dummy slot to distinguish full/empty",
+    "All operations should be O(1)"
+  ],
+  "commonMistakes": [
+    "Not handling circular wraparound correctly",
+    "Confusing full and empty conditions",
+    "Linear time operations",
+    "Not maintaining queue capacity"
+  ],
+  "solutionApproach": "Use array of size k, front and rear indices, and count. Enqueue: check if full, add at rear, increment rear circularly. Dequeue: check if empty, remove from front, increment front circularly. Use modulo for circular indexing.",
+  "testCaseCriteria": "All operations must be O(1). Must correctly handle full and empty states. Should properly wrap around array.",
+  "rubric": {
+    "correctOutput": 35,
+    "circularIndexing": 30,
+    "constantTimeOps": 20,
+    "codeClarity": 15
+  }
+}

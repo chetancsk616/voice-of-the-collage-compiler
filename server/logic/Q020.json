@@ -1,0 +1,40 @@
+{
+  "questionId": "Q020",
+  "title": "Merge Sort",
+  "difficulty": "Medium",
+  "expectedAlgorithm": "Divide and Conquer Sorting",
+  "algorithmDescription": "Sort array using merge sort algorithm with divide and conquer approach",
+  "allowedApproaches": ["recursive_merge_sort", "merge_sort"],
+  "disallowedPatterns": ["built_in_sort", "bubble_sort", "selection_sort"],
+  "expectedTimeComplexity": "O(n log n)",
+  "expectedSpaceComplexity": "O(n)",
+  "paradigm": "Sorting",
+  "constraints": {
+    "minLineCount": 15,
+    "maxLineCount": 45,
+    "shouldReadInput": true,
+    "shouldUseLoops": true,
+    "shouldUseRecursion": true
+  },
+  "detailedDescription": "Implement merge sort algorithm to sort an array. Input: First line has n (array size), second line has n space-separated integers. Output: Sorted array in ascending order. Use divide and conquer: recursively divide array in half, sort each half, then merge sorted halves.",
+  "hints": [
+    "Divide: split array into two halves recursively until single elements",
+    "Conquer: merge two sorted arrays into one sorted array",
+    "Use temporary array for merging",
+    "Base case: array of size 1 is already sorted"
+  ],
+  "commonMistakes": [
+    "Using built-in sort function",
+    "Incorrect merge logic",
+    "Not handling array boundaries correctly",
+    "Not using recursion properly"
+  ],
+  "solutionApproach": "Recursively divide array in half until base case (size 1). Merge function combines two sorted subarrays: compare elements from each, add smaller to result. Continue until both subarrays exhausted.",
+  "testCaseCriteria": "Must correctly sort arrays using merge sort algorithm. Should demonstrate O(n log n) behavior. Must use divide and conquer.",
+  "rubric": {
+    "correctOutput": 35,
+    "mergeSortImplementation": 30,
+    "recursiveDivide": 20,
+    "codeClarity": 15
+  }
+}

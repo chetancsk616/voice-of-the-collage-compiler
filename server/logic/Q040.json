@@ -1,0 +1,40 @@
+{
+  "questionId": "Q040",
+  "title": "Union Find - Detect Cycle",
+  "difficulty": "Medium",
+  "expectedAlgorithm": "Union Find",
+  "algorithmDescription": "Detect cycle in undirected graph using Union Find data structure",
+  "allowedApproaches": ["union_find", "disjoint_set"],
+  "disallowedPatterns": ["dfs_cycle_detection", "bfs_cycle_detection"],
+  "expectedTimeComplexity": "O(E * α(V))",
+  "expectedSpaceComplexity": "O(V)",
+  "paradigm": "Union Find",
+  "constraints": {
+    "minLineCount": 15,
+    "maxLineCount": 50,
+    "shouldReadInput": true,
+    "shouldUseLoops": true,
+    "shouldUseRecursion": false
+  },
+  "detailedDescription": "Detect if undirected graph contains cycle using Union Find (Disjoint Set Union). Input: Number of vertices and edges, followed by edge pairs. Output: 'true' if cycle exists, 'false' otherwise. If both vertices of edge in same set, cycle exists.",
+  "hints": [
+    "Union Find with path compression and union by rank",
+    "For each edge: find parent of both vertices",
+    "If parents same, cycle exists",
+    "Otherwise, union the two sets"
+  ],
+  "commonMistakes": [
+    "Using DFS/BFS instead of Union Find",
+    "Not implementing path compression",
+    "Not using union by rank (inefficient)",
+    "Handling directed graph logic"
+  ],
+  "solutionApproach": "Initialize parent and rank arrays. For each edge (u,v): find parent of u and v. If same parent, cycle exists. Otherwise, union their sets. Use path compression in find and union by rank.",
+  "testCaseCriteria": "Must use Union Find data structure. Should efficiently detect cycles. Handle disconnected graphs.",
+  "rubric": {
+    "correctOutput": 35,
+    "unionFindImplementation": 30,
+    "pathCompression": 20,
+    "codeClarity": 15
+  }
+}

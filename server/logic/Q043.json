@@ -1,0 +1,40 @@
+{
+  "questionId": "Q043",
+  "title": "Rotate Matrix 90 Degrees",
+  "difficulty": "Medium",
+  "expectedAlgorithm": "Matrix Manipulation",
+  "algorithmDescription": "Rotate n×n matrix 90 degrees clockwise in-place",
+  "allowedApproaches": ["transpose_and_reverse", "layer_rotation"],
+  "disallowedPatterns": ["extra_matrix", "copying_to_new_array"],
+  "expectedTimeComplexity": "O(n²)",
+  "expectedSpaceComplexity": "O(1)",
+  "paradigm": "Matrix",
+  "constraints": {
+    "minLineCount": 12,
+    "maxLineCount": 40,
+    "shouldReadInput": true,
+    "shouldUseLoops": true,
+    "shouldUseRecursion": false
+  },
+  "detailedDescription": "Rotate n×n matrix 90 degrees clockwise in-place. Input: First line has n. Next n lines have n space-separated integers. Output: Rotated matrix (n lines). Must modify in-place with O(1) extra space. Method: transpose then reverse each row.",
+  "hints": [
+    "90° clockwise rotation = transpose + reverse each row",
+    "Transpose: swap matrix[i][j] with matrix[j][i]",
+    "Then reverse each row",
+    "In-place operations only"
+  ],
+  "commonMistakes": [
+    "Creating new matrix (violates space constraint)",
+    "Incorrect transpose (swapping already swapped elements)",
+    "Reversing columns instead of rows",
+    "Not handling n=1 case"
+  ],
+  "solutionApproach": "Step 1: Transpose matrix (swap elements across diagonal). Step 2: Reverse each row. This achieves 90° clockwise rotation in-place with O(1) extra space.",
+  "testCaseCriteria": "Must rotate correctly in-place. Should use O(1) extra space. Handle various matrix sizes.",
+  "rubric": {
+    "correctOutput": 35,
+    "inPlaceRotation": 30,
+    "spaceComplexity": 20,
+    "codeClarity": 15
+  }
+}

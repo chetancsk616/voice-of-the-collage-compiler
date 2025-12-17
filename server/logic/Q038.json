@@ -1,0 +1,40 @@
+{
+  "questionId": "Q038",
+  "title": "Maximum Subarray Sum",
+  "difficulty": "Medium",
+  "expectedAlgorithm": "Kadane's Algorithm",
+  "algorithmDescription": "Find maximum sum of contiguous subarray using Kadane's algorithm",
+  "allowedApproaches": ["kadanes_algorithm", "dynamic_programming"],
+  "disallowedPatterns": ["nested_loops", "brute_force"],
+  "expectedTimeComplexity": "O(n)",
+  "expectedSpaceComplexity": "O(1)",
+  "paradigm": "Divide and Conquer",
+  "constraints": {
+    "minLineCount": 8,
+    "maxLineCount": 30,
+    "shouldReadInput": true,
+    "shouldUseLoops": true,
+    "shouldUseRecursion": false
+  },
+  "detailedDescription": "Find maximum sum of any contiguous subarray. Input: First line has n. Second line has n integers (may be negative). Output: Maximum subarray sum. Use Kadane's algorithm for O(n) solution. Handle all-negative arrays.",
+  "hints": [
+    "Kadane's algorithm: track current sum and max sum",
+    "Add current element to current sum",
+    "If current sum < 0, reset to 0 (or current element)",
+    "Update max sum at each step"
+  ],
+  "commonMistakes": [
+    "Using nested loops (O(n²))",
+    "Not handling all-negative arrays",
+    "Resetting current sum incorrectly",
+    "Not tracking maximum properly"
+  ],
+  "solutionApproach": "Initialize maxSum and currentSum to first element. For each element: currentSum = max(element, currentSum + element). Update maxSum = max(maxSum, currentSum). Return maxSum.",
+  "testCaseCriteria": "Must achieve O(n) time. Should handle all-negative arrays, single element, and mixed positive/negative.",
+  "rubric": {
+    "correctOutput": 40,
+    "kadanesAlgorithm": 30,
+    "edgeCaseHandling": 20,
+    "codeClarity": 10
+  }
+}

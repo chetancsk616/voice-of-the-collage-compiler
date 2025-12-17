@@ -1,0 +1,62 @@
+{
+  "questionId": "Q010",
+  "title": "Fibonacci with Memoization",
+  "difficulty": "Medium",
+  "expectedAlgorithm": "Dynamic Programming",
+  "algorithmDescription": "Calculate Fibonacci number using memoization to avoid redundant calculations",
+  "allowedApproaches": ["memoization", "tabulation", "bottom_up_dp"],
+  "disallowedPatterns": ["naive_recursion", "exponential_solution"],
+  "expectedTimeComplexity": "O(n)",
+  "expectedSpaceComplexity": "O(n)",
+  "paradigm": "Dynamic Programming",
+  "constraints": {
+    "minLineCount": 8,
+    "maxLineCount": 30,
+    "shouldReadInput": true,
+    "shouldUseLoops": true,
+    "shouldUseRecursion": false
+  },
+  "detailedDescription": "Calculate the nth Fibonacci number efficiently using dynamic programming. Fibonacci sequence: 0, 1, 1, 2, 3, 5, 8, 13... where F(n) = F(n-1) + F(n-2). Input: A single integer n. Output: The nth Fibonacci number. Use memoization or tabulation to achieve O(n) time complexity.",
+  "hints": [
+    "Store previously computed values to avoid recomputation",
+    "Can use array/dict for memoization",
+    "Bottom-up approach: compute F(0), F(1), ..., F(n)",
+    "Space optimization: only need last two values"
+  ],
+  "commonMistakes": [
+    "Using naive recursion (exponential time)",
+    "Not handling base cases (F(0)=0, F(1)=1)",
+    "Integer overflow for large n",
+    "Off-by-one errors in indexing"
+  ],
+  "solutionApproach": "Use bottom-up DP: initialize array with base cases F(0)=0, F(1)=1. Iterate from 2 to n, computing F(i) = F(i-1) + F(i-2). Return F(n).",
+  "testCaseCriteria": "Must efficiently compute Fibonacci for values up to n=50. Should complete in reasonable time.",
+  "rubric": {
+    "correctOutput": 35,
+    "dpImplementation": 30,
+    "timeComplexity": 20,
+    "codeClarity": 15
+  },
+  "testCases": [
+    {
+      "input": "0",
+      "expectedOutput": "0",
+      "description": "F(0) = 0"
+    },
+    {
+      "input": "1",
+      "expectedOutput": "1",
+      "description": "F(1) = 1"
+    },
+    {
+      "input": "10",
+      "expectedOutput": "55",
+      "description": "F(10) = 55"
+    },
+    {
+      "input": "20",
+      "expectedOutput": "6765",
+      "description": "F(20) = 6765"
+    }
+  ]
+}

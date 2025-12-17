@@ -1,0 +1,40 @@
+{
+  "questionId": "Q031",
+  "title": "Three Sum",
+  "difficulty": "Medium",
+  "expectedAlgorithm": "Two Pointers with Sorting",
+  "algorithmDescription": "Find all unique triplets that sum to zero using sorting and two pointers",
+  "allowedApproaches": ["sort_and_two_pointer", "two_pointer_triplet"],
+  "disallowedPatterns": ["three_nested_loops", "brute_force"],
+  "expectedTimeComplexity": "O(n²)",
+  "expectedSpaceComplexity": "O(1)",
+  "paradigm": "Two Pointers",
+  "constraints": {
+    "minLineCount": 15,
+    "maxLineCount": 45,
+    "shouldReadInput": true,
+    "shouldUseLoops": true,
+    "shouldUseRecursion": false
+  },
+  "detailedDescription": "Find all unique triplets [a, b, c] where a + b + c = 0. Input: First line has n. Second line has n integers. Output: All unique triplets (one per line). Sort array first, then for each element, use two pointers to find pairs summing to its negative.",
+  "hints": [
+    "Sort array first",
+    "Fix first element, use two pointers for remaining two",
+    "Skip duplicates to avoid duplicate triplets",
+    "Two pointers converge based on sum comparison"
+  ],
+  "commonMistakes": [
+    "Three nested loops (O(n³))",
+    "Not handling duplicates",
+    "Not sorting array first",
+    "Including same triplet multiple times"
+  ],
+  "solutionApproach": "Sort array. For each i from 0 to n-3: target = -nums[i]. Use two pointers (left=i+1, right=n-1) to find pairs summing to target. Skip duplicates for all three positions.",
+  "testCaseCriteria": "Must find all unique triplets in O(n²) time. No duplicate triplets in output.",
+  "rubric": {
+    "correctOutput": 35,
+    "twoPointerImplementation": 25,
+    "duplicateHandling": 20,
+    "codeClarity": 20
+  }
+}

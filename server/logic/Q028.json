@@ -1,0 +1,40 @@
+{
+  "questionId": "Q028",
+  "title": "Maximum Sum Subarray of Size K",
+  "difficulty": "Medium",
+  "expectedAlgorithm": "Sliding Window",
+  "algorithmDescription": "Find maximum sum of contiguous subarray of size k using sliding window",
+  "allowedApproaches": ["sliding_window", "fixed_window"],
+  "disallowedPatterns": ["nested_loops", "recalculate_each_window"],
+  "expectedTimeComplexity": "O(n)",
+  "expectedSpaceComplexity": "O(1)",
+  "paradigm": "Sliding Window",
+  "constraints": {
+    "minLineCount": 8,
+    "maxLineCount": 30,
+    "shouldReadInput": true,
+    "shouldUseLoops": true,
+    "shouldUseRecursion": false
+  },
+  "detailedDescription": "Find maximum sum of any contiguous subarray of size k. Input: First line has n and k. Second line has n integers. Output: Maximum sum of subarray of size k. Use sliding window technique to achieve O(n) time complexity.",
+  "hints": [
+    "Calculate sum of first k elements",
+    "Slide window: subtract leftmost, add new rightmost",
+    "Track maximum sum seen",
+    "No need to recalculate entire window sum"
+  ],
+  "commonMistakes": [
+    "Recalculating sum for each window (O(n*k))",
+    "Not handling k > n case",
+    "Off-by-one errors in window boundaries",
+    "Not tracking maximum properly"
+  ],
+  "solutionApproach": "Calculate sum of first k elements. Slide window from index k to n: subtract arr[i-k], add arr[i], update max. This gives O(n) time by reusing previous sum.",
+  "testCaseCriteria": "Must achieve O(n) time complexity. Should handle negative numbers, k=1, k=n cases.",
+  "rubric": {
+    "correctOutput": 40,
+    "slidingWindowImplementation": 30,
+    "timeComplexity": 20,
+    "codeClarity": 10
+  }
+}

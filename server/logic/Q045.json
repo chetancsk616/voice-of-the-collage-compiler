@@ -1,0 +1,40 @@
+{
+  "questionId": "Q045",
+  "title": "KMP Pattern Matching",
+  "difficulty": "Hard",
+  "expectedAlgorithm": "KMP Algorithm",
+  "algorithmDescription": "Find pattern occurrences in text using Knuth-Morris-Pratt algorithm",
+  "allowedApproaches": ["kmp_algorithm", "lps_array"],
+  "disallowedPatterns": ["naive_pattern_matching", "built_in_find"],
+  "expectedTimeComplexity": "O(n + m)",
+  "expectedSpaceComplexity": "O(m)",
+  "paradigm": "String",
+  "constraints": {
+    "minLineCount": 20,
+    "maxLineCount": 60,
+    "shouldReadInput": true,
+    "shouldUseLoops": true,
+    "shouldUseRecursion": false
+  },
+  "detailedDescription": "Find all occurrences of pattern in text using KMP algorithm. Input: Text string on first line, pattern on second line. Output: Indices where pattern occurs (space-separated), or -1 if not found. KMP uses LPS (Longest Proper Prefix which is also Suffix) array to avoid redundant comparisons.",
+  "hints": [
+    "Build LPS array for pattern: tracks longest proper prefix that is also suffix",
+    "LPS helps skip already matched characters on mismatch",
+    "When mismatch: use LPS to determine next comparison position",
+    "No backtracking in text needed"
+  ],
+  "commonMistakes": [
+    "Using naive O(n*m) pattern matching",
+    "Incorrect LPS array construction",
+    "Not utilizing LPS on mismatch",
+    "Using built-in string find function"
+  ],
+  "solutionApproach": "Build LPS array for pattern. Scan text with two pointers (text and pattern). On match, advance both. On mismatch: if pattern pointer > 0, use LPS to reset pattern pointer; else advance text pointer. Record matches when pattern fully matched.",
+  "testCaseCriteria": "Must use KMP algorithm. Should achieve O(n+m) time. Find all occurrences correctly.",
+  "rubric": {
+    "correctOutput": 30,
+    "kmpImplementation": 30,
+    "lpsConstruction": 25,
+    "codeClarity": 15
+  }
+}

@@ -1,0 +1,40 @@
+{
+  "questionId": "Q018",
+  "title": "Kth Largest Element",
+  "difficulty": "Medium",
+  "expectedAlgorithm": "Min Heap / Quick Select",
+  "algorithmDescription": "Find kth largest element in unsorted array using heap or quick select",
+  "allowedApproaches": ["min_heap", "quick_select", "max_heap"],
+  "disallowedPatterns": ["full_sorting", "nested_loops"],
+  "expectedTimeComplexity": "O(n log k)",
+  "expectedSpaceComplexity": "O(k)",
+  "paradigm": "Heap",
+  "constraints": {
+    "minLineCount": 10,
+    "maxLineCount": 40,
+    "shouldReadInput": true,
+    "shouldUseLoops": true,
+    "shouldUseRecursion": false
+  },
+  "detailedDescription": "Find the kth largest element in an unsorted array. Input: First line has n and k. Second line has n space-separated integers. Output: The kth largest element. Use min-heap of size k for O(n log k) solution, or quick select for O(n) average.",
+  "hints": [
+    "Min-heap approach: maintain heap of size k with k largest elements",
+    "Heap root is kth largest",
+    "For each element, if > heap root and heap size = k, replace root",
+    "Quick select is O(n) average but more complex"
+  ],
+  "commonMistakes": [
+    "Sorting entire array (O(n log n) not optimal)",
+    "Using max heap incorrectly",
+    "Not maintaining heap size k",
+    "Confusing kth largest with kth smallest"
+  ],
+  "solutionApproach": "Use min-heap of size k. Iterate through array: add element to heap. If heap size > k, remove minimum. After processing all elements, heap root is kth largest.",
+  "testCaseCriteria": "Must efficiently find kth largest. Should handle duplicates. Better than O(n log n) time complexity.",
+  "rubric": {
+    "correctOutput": 35,
+    "heapUsage": 30,
+    "timeComplexity": 20,
+    "codeClarity": 15
+  }
+}

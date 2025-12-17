@@ -1,0 +1,46 @@
+{
+  "questionId": "Q001",
+  "title": "Hello World",
+  "difficulty": "Easy",
+  "expectedAlgorithm": "Simple Output",
+  "algorithmDescription": "A straightforward program that outputs a fixed string to console",
+  "allowedApproaches": ["print_constant"],
+  "disallowedPatterns": ["user_input_required"],
+  "expectedTimeComplexity": "O(1)",
+  "expectedSpaceComplexity": "O(1)",
+  "paradigm": "Simple Logic",
+  "constraints": {
+    "minLineCount": 1,
+    "maxLineCount": 5,
+    "shouldReadInput": false,
+    "shouldUseLoops": false,
+    "shouldUseRecursion": false
+  },
+  "detailedDescription": "Write a program that prints the exact string 'Hello, World!' to standard output. No input processing required.",
+  "hints": [
+    "Use the appropriate print function for your language",
+    "The output must be exactly 'Hello, World!' (case-sensitive)",
+    "No variables or complex logic needed"
+  ],
+  "commonMistakes": [
+    "Forgetting the comma in 'Hello, World!'",
+    "Using different capitalization",
+    "Adding extra whitespace or newlines",
+    "Attempting to read input when not required"
+  ],
+  "solutionApproach": "Use a single print/output statement with the exact string. No processing needed.",
+  "testCaseCriteria": "Must output exactly 'Hello, World!' with proper newline handling",
+  "rubric": {
+    "correctOutput": 40,
+    "properFormat": 30,
+    "codeClarity": 20,
+    "efficiency": 10
+  },
+  "testCases": [
+    {
+      "input": "",
+      "expectedOutput": "Hello, World!",
+      "description": "Basic test - no input required, fixed output"
+    }
+  ]
+}

@@ -1,0 +1,52 @@
+{
+  "questionId": "Q008",
+  "title": "Graph BFS Traversal",
+  "difficulty": "Medium",
+  "expectedAlgorithm": "Breadth-First Search",
+  "algorithmDescription": "Traverse graph level by level using BFS algorithm",
+  "allowedApproaches": ["queue_based_bfs", "level_order_bfs"],
+  "disallowedPatterns": ["dfs_traversal", "random_traversal"],
+  "expectedTimeComplexity": "O(V + E)",
+  "expectedSpaceComplexity": "O(V)",
+  "paradigm": "Graph Traversal",
+  "constraints": {
+    "minLineCount": 10,
+    "maxLineCount": 40,
+    "shouldReadInput": true,
+    "shouldUseLoops": true,
+    "shouldUseRecursion": false
+  },
+  "detailedDescription": "Implement Breadth-First Search (BFS) for a graph. Input: First line has number of vertices and edges. Next lines have edge pairs. Then starting vertex. Output: BFS traversal order starting from given vertex. Use queue to explore vertices level by level.",
+  "hints": [
+    "Use queue data structure for BFS",
+    "Mark vertices as visited to avoid cycles",
+    "Enqueue starting vertex, then process neighbors level by level",
+    "Use adjacency list for graph representation"
+  ],
+  "commonMistakes": [
+    "Using stack instead of queue (becomes DFS)",
+    "Not marking vertices as visited",
+    "Revisiting already visited vertices",
+    "Incorrect graph construction from input"
+  ],
+  "solutionApproach": "Build adjacency list from input. Use queue for BFS: enqueue start vertex, mark visited. While queue not empty: dequeue vertex, print it, enqueue all unvisited neighbors.",
+  "testCaseCriteria": "Must produce correct BFS order. Should handle disconnected graphs. Must not revisit vertices.",
+  "rubric": {
+    "correctOutput": 35,
+    "queueImplementation": 25,
+    "visitedTracking": 20,
+    "codeClarity": 20
+  },
+  "testCases": [
+    {
+      "input": "4 4\n0 1\n0 2\n1 3\n2 3\n0",
+      "expectedOutput": "0 1 2 3",
+      "description": "Basic BFS from vertex 0"
+    },
+    {
+      "input": "5 4\n0 1\n0 2\n1 3\n2 4\n0",
+      "expectedOutput": "0 1 2 3 4",
+      "description": "BFS explores level by level"
+    }
+  ]
+}

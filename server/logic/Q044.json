@@ -1,0 +1,40 @@
+{
+  "questionId": "Q044",
+  "title": "Longest Palindromic Substring",
+  "difficulty": "Medium",
+  "expectedAlgorithm": "Expand Around Center",
+  "algorithmDescription": "Find longest palindromic substring using expand around center technique",
+  "allowedApproaches": ["expand_around_center", "dynamic_programming"],
+  "disallowedPatterns": ["brute_force_all_substrings", "nested_three_loops"],
+  "expectedTimeComplexity": "O(n²)",
+  "expectedSpaceComplexity": "O(1)",
+  "paradigm": "String",
+  "constraints": {
+    "minLineCount": 12,
+    "maxLineCount": 40,
+    "shouldReadInput": true,
+    "shouldUseLoops": true,
+    "shouldUseRecursion": false
+  },
+  "detailedDescription": "Find longest palindromic substring in given string. Input: A string. Output: The longest palindromic substring (if multiple, any one). Use expand around center: for each position, expand outward while characters match. Consider both odd and even length palindromes.",
+  "hints": [
+    "Each character can be center of odd-length palindrome",
+    "Each pair of adjacent characters can be center of even-length palindrome",
+    "Expand around each possible center",
+    "Track longest palindrome found"
+  ],
+  "commonMistakes": [
+    "Checking all substrings (O(n³))",
+    "Not considering even-length palindromes",
+    "Incorrect expansion logic",
+    "Not handling single character strings"
+  ],
+  "solutionApproach": "For each index i: expand around i (odd-length) and around i,i+1 (even-length). While characters match, expand outward. Track longest palindrome. Return substring with max length.",
+  "testCaseCriteria": "Must find correct longest palindrome. Should handle both odd and even length. O(n²) time acceptable.",
+  "rubric": {
+    "correctOutput": 35,
+    "expandAroundCenter": 30,
+    "bothParities": 20,
+    "codeClarity": 15
+  }
+}

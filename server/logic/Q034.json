@@ -1,0 +1,40 @@
+{
+  "questionId": "Q034",
+  "title": "Activity Selection",
+  "difficulty": "Medium",
+  "expectedAlgorithm": "Greedy Algorithm",
+  "algorithmDescription": "Select maximum number of non-overlapping activities using greedy approach",
+  "allowedApproaches": ["sort_by_end_time", "greedy_selection"],
+  "disallowedPatterns": ["dynamic_programming", "brute_force_combinations"],
+  "expectedTimeComplexity": "O(n log n)",
+  "expectedSpaceComplexity": "O(n)",
+  "paradigm": "Greedy",
+  "constraints": {
+    "minLineCount": 10,
+    "maxLineCount": 35,
+    "shouldReadInput": true,
+    "shouldUseLoops": true,
+    "shouldUseRecursion": false
+  },
+  "detailedDescription": "Given n activities with start and end times, select maximum number of non-overlapping activities. Input: First line has n. Next n lines have start and end times. Output: Maximum number of activities that can be selected. Sort by end time, greedily select non-overlapping activities.",
+  "hints": [
+    "Sort activities by end time",
+    "Greedily select activity that ends earliest",
+    "Next activity must start after current ends",
+    "This greedy approach gives optimal solution"
+  ],
+  "commonMistakes": [
+    "Sorting by start time instead of end time",
+    "Using dynamic programming (overcomplicating)",
+    "Not handling overlapping boundaries correctly",
+    "Incorrect activity comparison"
+  ],
+  "solutionApproach": "Sort activities by end time. Select first activity. For remaining activities: if start time >= last selected end time, select it. Count total selected activities.",
+  "testCaseCriteria": "Must achieve optimal selection. Should handle various overlapping patterns.",
+  "rubric": {
+    "correctOutput": 40,
+    "greedyApproach": 30,
+    "sortingLogic": 20,
+    "codeClarity": 10
+  }
+}

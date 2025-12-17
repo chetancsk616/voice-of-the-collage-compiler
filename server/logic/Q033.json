@@ -1,0 +1,41 @@
+{
+  "questionId": "Q033",
+  "title": "Word Search in Trie",
+  "difficulty": "Hard",
+  "expectedAlgorithm": "Trie with DFS",
+  "algorithmDescription": "Find all words from dictionary that exist in 2D board using Trie and backtracking",
+  "allowedApproaches": ["trie_with_backtracking", "trie_dfs"],
+  "disallowedPatterns": ["searching_each_word_separately", "brute_force"],
+  "expectedTimeComplexity": "O(m * n * 4^k)",
+  "expectedSpaceComplexity": "O(w * l)",
+  "paradigm": "Trie",
+  "constraints": {
+    "minLineCount": 25,
+    "maxLineCount": 70,
+    "shouldReadInput": true,
+    "shouldUseLoops": true,
+    "shouldUseRecursion": true
+  },
+  "detailedDescription": "Find all dictionary words that can be formed in 2D board (horizontal/vertical adjacent cells). Input: Board dimensions, board grid, number of words, word list. Output: All found words from dictionary. Build Trie from words, then DFS from each cell.",
+  "hints": [
+    "Build Trie from all dictionary words first",
+    "DFS from each board cell, following Trie paths",
+    "Mark cells visited during current path",
+    "When reaching end-of-word node, add to results",
+    "More efficient than searching each word separately"
+  ],
+  "commonMistakes": [
+    "Searching each word separately (slower)",
+    "Not marking visited cells",
+    "Not backtracking properly",
+    "Adding duplicate words to results"
+  ],
+  "solutionApproach": "Build Trie from dictionary. For each board cell: DFS with current Trie node. If cell char matches child, recurse to neighbors with child node. Mark visited, backtrack. Collect words at end nodes.",
+  "testCaseCriteria": "Must find all valid words efficiently. Should handle overlapping words and various board sizes.",
+  "rubric": {
+    "correctOutput": 30,
+    "trieImplementation": 25,
+    "dfsBacktracking": 25,
+    "codeClarity": 20
+  }
+}

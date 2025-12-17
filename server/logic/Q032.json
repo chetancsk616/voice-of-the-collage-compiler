@@ -1,0 +1,40 @@
+{
+  "questionId": "Q032",
+  "title": "Implement Trie",
+  "difficulty": "Medium",
+  "expectedAlgorithm": "Trie Data Structure",
+  "algorithmDescription": "Implement prefix tree (Trie) supporting insert, search, and startsWith operations",
+  "allowedApproaches": ["trie_with_children_array", "trie_with_hashmap"],
+  "disallowedPatterns": ["array_storage", "hash_set_only"],
+  "expectedTimeComplexity": "O(m)",
+  "expectedSpaceComplexity": "O(total characters)",
+  "paradigm": "Trie",
+  "constraints": {
+    "minLineCount": 20,
+    "maxLineCount": 60,
+    "shouldReadInput": true,
+    "shouldUseLoops": true,
+    "shouldUseRecursion": false
+  },
+  "detailedDescription": "Implement Trie with insert, search, and startsWith methods. Input: Number of operations followed by commands (insert word, search word, startsWith prefix). Output: Results of search and startsWith as true/false. Each node has children and isEndOfWord flag.",
+  "hints": [
+    "Each node has 26 children (for a-z) or hashmap",
+    "Insert: traverse/create path for each character",
+    "Search: traverse path, check if last node is end of word",
+    "StartsWith: traverse path, return true if path exists"
+  ],
+  "commonMistakes": [
+    "Not marking end of word correctly",
+    "Confusing search and startsWith logic",
+    "Not handling null children properly",
+    "Inefficient child node storage"
+  ],
+  "solutionApproach": "TrieNode has children array/map and isEndOfWord flag. Insert: traverse trie, create nodes as needed, mark last as end. Search: traverse, check end flag. StartsWith: just check if path exists.",
+  "testCaseCriteria": "All operations must be O(m) where m is word length. Should correctly distinguish between search and prefix matching.",
+  "rubric": {
+    "correctOutput": 35,
+    "trieStructure": 30,
+    "allOperations": 20,
+    "codeClarity": 15
+  }
+}

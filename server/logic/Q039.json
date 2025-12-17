@@ -1,0 +1,40 @@
+{
+  "questionId": "Q039",
+  "title": "Count Inversions",
+  "difficulty": "Hard",
+  "expectedAlgorithm": "Modified Merge Sort",
+  "algorithmDescription": "Count inversions in array using modified merge sort divide and conquer",
+  "allowedApproaches": ["merge_sort_inversion_count", "divide_and_conquer"],
+  "disallowedPatterns": ["nested_loops", "brute_force"],
+  "expectedTimeComplexity": "O(n log n)",
+  "expectedSpaceComplexity": "O(n)",
+  "paradigm": "Divide and Conquer",
+  "constraints": {
+    "minLineCount": 20,
+    "maxLineCount": 60,
+    "shouldReadInput": true,
+    "shouldUseLoops": true,
+    "shouldUseRecursion": true
+  },
+  "detailedDescription": "Count inversions in array. Inversion: pair (i, j) where i < j but arr[i] > arr[j]. Input: First line has n. Second line has n integers. Output: Total inversion count. Use modified merge sort to count inversions during merge step in O(n log n) time.",
+  "hints": [
+    "Inversions in array = inversions in left half + inversions in right half + cross inversions",
+    "Count cross inversions during merge step",
+    "When element from right is smaller, it forms inversions with all remaining left elements",
+    "Merge sort naturally provides sorted subarrays for comparison"
+  ],
+  "commonMistakes": [
+    "Using nested loops (O(n²))",
+    "Not counting cross inversions correctly",
+    "Incorrect merge logic",
+    "Not handling sorted arrays"
+  ],
+  "solutionApproach": "Modified merge sort: recursively count inversions in left and right halves. During merge: when taking from right subarray, count remaining elements in left as inversions. Sum all three counts.",
+  "testCaseCriteria": "Must achieve O(n log n) time. Should correctly count all inversions. Handle sorted and reverse sorted arrays.",
+  "rubric": {
+    "correctOutput": 35,
+    "modifiedMergeSort": 30,
+    "inversionCounting": 20,
+    "codeClarity": 15
+  }
+}

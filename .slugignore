@@ -1,0 +1,10 @@
+# Render build optimization - exclude these from deployment
+*.md
+.git
+.gitignore
+.vscode
+.husky
+*.log
+.DS_Store
+server/tmp/
+client/node_modules/.cache

@@ -1,0 +1,41 @@
+{
+  "questionId": "Q035",
+  "title": "Huffman Coding",
+  "difficulty": "Hard",
+  "expectedAlgorithm": "Greedy with Min Heap",
+  "algorithmDescription": "Build optimal Huffman tree for data compression using greedy algorithm",
+  "allowedApproaches": ["min_heap_greedy", "priority_queue_huffman"],
+  "disallowedPatterns": ["fixed_encoding", "non_optimal_tree"],
+  "expectedTimeComplexity": "O(n log n)",
+  "expectedSpaceComplexity": "O(n)",
+  "paradigm": "Greedy",
+  "constraints": {
+    "minLineCount": 20,
+    "maxLineCount": 60,
+    "shouldReadInput": true,
+    "shouldUseLoops": true,
+    "shouldUseRecursion": false
+  },
+  "detailedDescription": "Build Huffman tree for optimal prefix-free encoding. Input: Number of characters, then character-frequency pairs. Output: Total encoding cost (sum of frequency * depth for all chars). Use min heap to build tree greedily by combining lowest frequency nodes.",
+  "hints": [
+    "Use min heap with character frequencies",
+    "Repeatedly extract two minimum nodes",
+    "Create parent with combined frequency",
+    "Insert parent back to heap",
+    "Continue until one node remains (root)"
+  ],
+  "commonMistakes": [
+    "Not using min heap (incorrect tree)",
+    "Wrong cost calculation",
+    "Not combining nodes correctly",
+    "Incorrect parent frequency"
+  ],
+  "solutionApproach": "Insert all characters with frequencies to min heap. While heap size > 1: extract two min nodes, create parent with sum of frequencies, insert parent. Calculate total cost by traversing tree.",
+  "testCaseCriteria": "Must build optimal Huffman tree. Total cost should be minimum possible. Should demonstrate greedy construction.",
+  "rubric": {
+    "correctOutput": 35,
+    "huffmanTreeConstruction": 30,
+    "minHeapUsage": 20,
+    "codeClarity": 15
+  }
+}
