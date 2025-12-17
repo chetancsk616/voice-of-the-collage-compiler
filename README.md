@@ -147,6 +147,7 @@ curl -X POST http://localhost:4000/api/submit \
 
 ### Response Format
 
+```json
 {
   "score": 85,
   "marks": {
@@ -401,6 +402,3 @@ ai-based-compiler-ast/
 **Last Updated**: December 18, 2025  
 **Version**: 1.0.0  
 **Status**: ✅ Production Ready
-#   a i - b a s e d - c o m p i l e r - a s t 
- 
- 
