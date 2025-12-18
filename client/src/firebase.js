@@ -3,22 +3,21 @@ import { getAuth } from 'firebase/auth';
 import { getFirestore } from 'firebase/firestore';
 import { getAnalytics } from 'firebase/analytics';
 
-// Your web app's Firebase configuration
-// Replace these values with your actual Firebase project config
-// Import the functions you need from the SDKs you need
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
-
-// Your web app's Firebase configuration
+// Firebase configuration via environment variables (Vite)
+// Ensure these are defined in client/.env (see .env.example)
 const firebaseConfig = {
-  apiKey: 'AIzaSyBcDSyVg1tvYqHJteOUyE8r7cb5swSTnVg',
-  authDomain: 'aicompiler-45c59.firebaseapp.com',
-  databaseURL:
-    'https://aicompiler-45c59-default-rtdb.asia-southeast1.firebasedatabase.app',
-  projectId: 'aicompiler-45c59',
-  storageBucket: 'aicompiler-45c59.firebasestorage.app',
-  messagingSenderId: '334749977360',
-  appId: '1:334749977360:web:6a693a232e993ae87fb395',
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
+  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+  appId: import.meta.env.VITE_FIREBASE_APP_ID,
+  ...(import.meta.env.VITE_FIREBASE_DATABASE_URL
+    ? { databaseURL: import.meta.env.VITE_FIREBASE_DATABASE_URL }
+    : {}),
+  ...(import.meta.env.VITE_FIREBASE_MEASUREMENT_ID
+    ? { measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID }
+    : {}),
 };
 
 // Initialize Firebase
