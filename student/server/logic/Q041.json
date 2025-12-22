@@ -1,40 +1,49 @@
 {
-  "questionId": "Q041",
-  "title": "Number of Connected Components",
-  "difficulty": "Medium",
-  "expectedAlgorithm": "Union Find",
-  "algorithmDescription": "Find number of connected components in undirected graph using Union Find",
-  "allowedApproaches": ["union_find_components", "disjoint_set"],
-  "disallowedPatterns": ["dfs_components", "bfs_components"],
-  "expectedTimeComplexity": "O(E * α(V))",
-  "expectedSpaceComplexity": "O(V)",
-  "paradigm": "Union Find",
-  "constraints": {
-    "minLineCount": 15,
-    "maxLineCount": 50,
-    "shouldReadInput": true,
-    "shouldUseLoops": true,
-    "shouldUseRecursion": false
-  },
-  "detailedDescription": "Count connected components in undirected graph using Union Find. Input: Number of vertices and edges, followed by edge pairs. Output: Number of connected components. Initially each vertex is separate component. Each union reduces component count by 1.",
-  "hints": [
-    "Start with component count = number of vertices",
-    "For each edge, union the two vertices",
-    "If vertices in different sets, union reduces component count",
-    "Use find with path compression"
-  ],
-  "commonMistakes": [
-    "Not initializing component count correctly",
-    "Decrementing count when vertices already in same set",
-    "Not implementing union find properly",
-    "Using DFS instead of Union Find"
-  ],
-  "solutionApproach": "Initialize Union Find, components=n. For each edge: find parents of both vertices. If different parents, union them and decrement components. Return final component count.",
-  "testCaseCriteria": "Must use Union Find. Should correctly count components. Handle fully connected and completely disconnected graphs.",
-  "rubric": {
-    "correctOutput": 35,
-    "unionFindImplementation": 30,
-    "componentCounting": 20,
-    "codeClarity": 15
-  }
+    "questionId": "Q041",
+    "title": "Number of Connected Components",
+    "difficulty": "Medium",
+    "expectedAlgorithm": "Union Find",
+    "algorithmDescription": "Find number of connected components in undirected graph using Union Find",
+    "allowedApproaches": [
+        "union_find_components",
+        "disjoint_set"
+    ],
+    "disallowedPatterns": [
+        "dfs_components",
+        "bfs_components"
+    ],
+    "expectedTimeComplexity": "O(E * \u00ce\u00b1(V))",
+    "expectedSpaceComplexity": "O(V)",
+    "paradigm": "Union Find",
+    "constraints": {
+        "minLineCount": 15,
+        "maxLineCount": 50,
+        "shouldReadInput": true,
+        "shouldUseLoops": true,
+        "shouldUseRecursion": false
+    },
+    "detailedDescription": "Count connected components in undirected graph using Union Find. Input: Number of vertices and edges, followed by edge pairs. Output: Number of connected components. Initially each vertex is separate component. Each union reduces component count by 1.",
+    "hints": [
+        "Start with component count = number of vertices",
+        "For each edge, union the two vertices",
+        "If vertices in different sets, union reduces component count",
+        "Use find with path compression"
+    ],
+    "commonMistakes": [
+        "Not initializing component count correctly",
+        "Decrementing count when vertices already in same set",
+        "Not implementing union find properly",
+        "Using DFS instead of Union Find"
+    ],
+    "solutionApproach": "Initialize Union Find, components=n. For each edge: find parents of both vertices. If different parents, union them and decrement components. Return final component count.",
+    "testCaseCriteria": "Must use Union Find. Should correctly count components. Handle fully connected and completely disconnected graphs.",
+    "rubric": {
+        "correctOutput": 35,
+        "unionFindImplementation": 30,
+        "componentCounting": 20,
+        "codeClarity": 15
+    },
+    "sampleLanguage": "python",
+    "sampleCode": "v, e = map(int, input().split())\nparent = list(range(v))\nrank = [0] * v\ncomponents = v\n\n\ndef find(x):\n    if parent[x] != x:\n        parent[x] = find(parent[x])\n    return parent[x]\n\n\ndef union(a, b):\n    global components\n    ra, rb = find(a), find(b)\n    if ra == rb:\n        return\n    if rank[ra] < rank[rb]:\n        parent[ra] = rb\n    elif rank[ra] > rank[rb]:\n        parent[rb] = ra\n    else:\n        parent[rb] = ra\n        rank[ra] += 1\n    components -= 1\n\n\nfor _ in range(e):\n    u, w = map(int, input().split())\n    union(u, w)\nprint(components)",
+    "expectedCode": "v, e = map(int, input().split())\nparent = list(range(v))\nrank = [0] * v\ncomponents = v\n\n\ndef find(x):\n    if parent[x] != x:\n        parent[x] = find(parent[x])\n    return parent[x]\n\n\ndef union(a, b):\n    global components\n    ra, rb = find(a), find(b)\n    if ra == rb:\n        return\n    if rank[ra] < rank[rb]:\n        parent[ra] = rb\n    elif rank[ra] > rank[rb]:\n        parent[rb] = ra\n    else:\n        parent[rb] = ra\n        rank[ra] += 1\n    components -= 1\n\n\nfor _ in range(e):\n    u, w = map(int, input().split())\n    union(u, w)\nprint(components)"
 }

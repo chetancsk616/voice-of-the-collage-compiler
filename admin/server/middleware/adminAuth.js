@@ -32,10 +32,16 @@ if (!admin.apps.length) {
     }
     
     if (credential) {
-      admin.initializeApp({
-        credential: credential
-      });
+      const databaseURL =
+        process.env.FIREBASE_DATABASE_URL || process.env.VITE_FIREBASE_DATABASE_URL;
+
+      admin.initializeApp(
+        databaseURL ? { credential, databaseURL } : { credential }
+      );
       console.log('✅ Firebase Admin SDK initialized');
+      if (!databaseURL) {
+        console.warn('⚠️  FIREBASE_DATABASE_URL missing; Realtime DB features will fail');
+      }
     }
   } catch (error) {
     console.error('❌ Firebase Admin initialization error:', error.message);

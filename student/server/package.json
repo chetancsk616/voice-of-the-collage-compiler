@@ -8,6 +8,7 @@
     "start": "node index.js",
     "test": "jest",
     "test:watch": "jest --watch",
+    "e2e:evaluate": "node scripts/e2e-evaluate.js",
     "lint": "eslint . --ext .js --ignore-path .eslintignore",
     "lint:fix": "eslint . --ext .js --ignore-path .eslintignore --fix",
     "format": "prettier --write ."

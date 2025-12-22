@@ -4,6 +4,8 @@ const {
   extractFeaturesAST,
   normalizeLanguage: normalizeAstLanguage,
 } = require('../ast/core/extractorAdapter');
+const { generateTAC } = require('../ast/tacGenerator');
+const { compareTAC } = require('../ast/tacComparator');
 
 // In-memory cache for loaded reference logic
 const logicCache = new Map();
@@ -255,6 +257,26 @@ function loadReferenceLogicFromFile(questionId) {
     logic.sampleIntermediate = sampleIR;
     logic.expectedIntermediate = expectedIR;
 
+    // Build TAC representations for sample/expected deterministically
+    try {
+      if (logic.sampleCode) {
+        const sT = generateTAC(
+          logic.sampleCode,
+          logic.sampleLanguage || logic.language || 'python'
+        );
+        logic.sampleTAC = sT;
+      }
+      if (logic.expectedCode) {
+        const eT = generateTAC(
+          logic.expectedCode,
+          logic.sampleLanguage || logic.language || 'python'
+        );
+        logic.expectedTAC = eT;
+      }
+    } catch (e) {
+      console.warn('[ReferenceLogicLoader] TAC generation failed:', e.message);
+    }
+
     console.log(
       `[ReferenceLogicLoader] Successfully loaded logic for ${questionId}`
     );
@@ -416,7 +438,7 @@ function getAllQuestionIds() {
  * - Never throws errors, returns structured feedback
  * - Computes logicScore (0-100) for deterministic scoring
  */
-function compareAgainstReference(studentFeatures, questionId) {
+function compareAgainstReference(studentFeatures, questionId, studentCode = '', studentLanguage = 'python') {
   // Input validation
   if (!studentFeatures || typeof studentFeatures !== 'object') {
     console.error('[Comparator] Invalid studentFeatures, using safe defaults');
@@ -449,11 +471,16 @@ function compareAgainstReference(studentFeatures, questionId) {
     timeComplexityMatch: false,
     spaceComplexityMatch: false,
     violatesDisallowedPatterns: false,
-    logicScore: 100, // Start at 100, deduct for issues
+    logicScore: 0, // Set from TAC only
     issues: [],
     warnings: [],
     successes: [],
     details: {},
+    tac: {
+      tacMatch: false,
+      similarityScore: 0,
+      mismatchReasons: [],
+    },
     // Phase 5 fields (initialized; populated below)
     detectedTimeComplexity: studentFeatures.estimatedTimeComplexity,
     expectedTimeComplexity: referenceLogic.expectedTimeComplexity,
@@ -776,126 +803,41 @@ function compareAgainstReference(studentFeatures, questionId) {
     }
   }
 
-  // AST/intermediate representation similarity check
-  const referenceIntermediate =
-    referenceLogic.sampleIntermediate || referenceLogic.expectedIntermediate;
-  if (referenceIntermediate && referenceIntermediate.features) {
-    const astSimilarity = computeAstFeatureSimilarity(
-      studentFeatures,
-      referenceIntermediate.features
-    );
-    comparison.details.astSimilarity = astSimilarity;
-
-    if (astSimilarity !== null) {
-      const difficulty = (referenceLogic.difficulty || 'medium').toLowerCase();
-      const highThreshold = difficulty === 'hard' ? 0.75 : difficulty === 'medium' ? 0.65 : 0.5;
-      const warnThreshold = difficulty === 'hard' ? 0.55 : difficulty === 'medium' ? 0.45 : 0.3;
-
-      if (astSimilarity >= highThreshold) {
-        comparison.successes.push({
-          type: 'ast_similarity_high',
-          message: `AST similarity high (${astSimilarity}) with reference sample`,
-        });
-      } else if (astSimilarity >= warnThreshold) {
-        comparison.warnings.push({
-          type: 'ast_similarity_partial',
-          severity: 'low',
-          message: `AST similarity partial (${astSimilarity})`,
-        });
-      } else {
-        comparison.issues.push({
-          type: 'ast_similarity_low',
-          severity: 'medium',
-          message: `AST similarity low (${astSimilarity}) compared to reference sample`,
-        });
-        if (difficulty !== 'easy') {
-          comparison.matched = false;
-        }
-      }
-    }
-  }
-
-  // Calculate logic score (0-100) based on comparison results with difficulty awareness
-  // Start at 100, deduct for issues based on difficulty level
-  let logicScore = 100;
-  
-  // Get difficulty level (default to Medium if not specified)
-  const difficulty = referenceLogic?.difficulty?.toLowerCase() || 'medium';
-  
-  // Deduct for critical issues
-  const criticalIssues = comparison.issues.filter((i) => i.severity === 'high');
-  logicScore -= criticalIssues.length * 20; // -20 per critical issue (always strict)
-
-  // Deduct for medium issues (adjust based on difficulty)
-  const mediumIssues = comparison.issues.filter((i) => i.severity === 'medium');
-  if (difficulty === 'easy') {
-    logicScore -= mediumIssues.length * 5; // Be lenient for easy problems
-  } else if (difficulty === 'hard') {
-    logicScore -= mediumIssues.length * 15; // Be strict for hard problems
-  } else {
-    logicScore -= mediumIssues.length * 10; // Standard deduction for medium
-  }
-
-  // Deduct for warnings (adjust significantly based on difficulty)
-  if (difficulty === 'easy') {
-    // For easy problems, ignore warnings if code is simple and works
-    if (comparison.successes.length > 0 && comparison.issues.length === 0) {
-      // No deduction for warnings on easy problems if there are successes and no issues
-      logicScore -= 0;
+  // TAC comparison (PRIMARY logic judge)
+  try {
+    const refTac = referenceLogic.expectedTAC || referenceLogic.sampleTAC || null;
+    const stuTac = generateTAC(studentCode || '', studentLanguage || (referenceLogic.sampleLanguage || 'python'));
+    if (refTac && stuTac) {
+      const cmp = compareTAC(stuTac.instructions, refTac.instructions);
+      comparison.tac.tacMatch = cmp.tacMatch;
+      comparison.tac.similarityScore = cmp.similarity;
+      comparison.tac.mismatchReasons = cmp.mismatchReasons;
+      // Logic score is ONLY TAC-based (0..100)
+      comparison.logicScore = Math.round(cmp.similarity * 100);
+      // Set overall matched based on TAC (deterministic)
+      comparison.matched = cmp.tacMatch;
+      comparison.algorithmMatch = cmp.tacMatch ? 'FULL' : (cmp.similarity >= 0.6 ? 'PARTIAL' : 'NONE');
     } else {
-      logicScore -= comparison.warnings.length * 2; // Minimal deduction
+      comparison.issues.push({ type: 'tac_missing', severity: 'medium', message: 'Reference or student TAC unavailable' });
+      comparison.logicScore = 0;
+      comparison.matched = false;
+      comparison.algorithmMatch = 'NONE';
     }
-  } else if (difficulty === 'hard') {
-    logicScore -= comparison.warnings.length * 7; // Stricter for hard problems
-  } else {
-    logicScore -= comparison.warnings.length * 4; // Moderate for medium problems
-  }
-
-  // Ensure score is between 0-100
-  logicScore = Math.max(0, Math.min(100, logicScore));
-  
-  // DEBUG LOGGING - Add detailed evaluation info
-  console.log('\n📊 LOGIC EVALUATION DEBUG:');
-  console.log('  Difficulty:', difficulty);
-  console.log('  Issues (High):', criticalIssues.length, criticalIssues.map(i => i.type));
-  console.log('  Issues (Medium):', mediumIssues.length, mediumIssues.map(i => i.type));
-  console.log('  Warnings (Low):', comparison.warnings.length, comparison.warnings.map(w => w.type));
-  console.log('  Successes:', comparison.successes.length, comparison.successes.map(s => s.type || s.message?.substring(0, 30)));
-  console.log('  Time Complexity Match:', comparison.timeComplexityMatch);
-  console.log('  Space Complexity Match:', comparison.spaceComplexityMatch);
-  console.log('  Logic Score (before boost):', logicScore);
-  
-  // Special case: For Easy problems with simple correct solutions, boost the score
-  if (difficulty === 'easy') {
-    console.log('  🎯 Easy Mode Active - Checking for boost...');
-    // If there are no critical issues and at least one success, ensure minimum 90% score
-    if (criticalIssues.length === 0 && comparison.successes.length > 0) {
-      const oldScore = logicScore;
-      logicScore = Math.max(logicScore, 90);
-      console.log('  ✓ Minimum 90% boost applied:', oldScore, '→', logicScore);
-    }
-    // If complexity matches perfectly and there are successes, give full marks
-    if (comparison.timeComplexityMatch && comparison.spaceComplexityMatch && comparison.successes.length > 0 && criticalIssues.length === 0) {
-      console.log('  ✓ Perfect complexity + successes → 100% boost applied!');
-      logicScore = 100;
-    }
-  }
-  
-  console.log('  Logic Score (FINAL):', logicScore);
-  console.log('  Algorithm Match will be:', comparison.issues.length === 0 ? 'FULL' : (comparison.issues.length <= 2 ? 'PARTIAL' : 'NONE'));
-  console.log('📊 END LOGIC EVALUATION DEBUG\n');
-
-  // Set algorithmMatch level with difficulty awareness
-  if (comparison.issues.length === 0) {
-    comparison.algorithmMatch = 'FULL';
-  } else if (difficulty === 'easy' && comparison.issues.length <= 3 && criticalIssues.length === 0) {
-    // For easy problems, be more forgiving
-    comparison.algorithmMatch = 'PARTIAL';
-  } else if (comparison.issues.length <= 2) {
-    comparison.algorithmMatch = 'PARTIAL';
-  } else {
+  } catch (e) {
+    comparison.issues.push({ type: 'tac_error', severity: 'high', message: e.message || 'TAC comparison failed' });
+    comparison.logicScore = 0;
+    comparison.matched = false;
     comparison.algorithmMatch = 'NONE';
   }
+
+  // TAC-only logic score already computed; log for debug
+  const difficulty = referenceLogic?.difficulty?.toLowerCase() || 'medium';
+  console.log('\n📊 LOGIC (TAC) EVALUATION DEBUG:');
+  console.log('  Difficulty:', difficulty);
+  console.log('  TAC Match:', comparison.tac.tacMatch);
+  console.log('  TAC Similarity:', comparison.tac.similarityScore);
+  console.log('  Logic Score (TAC only):', comparison.logicScore);
+  console.log('📊 END LOGIC (TAC) EVALUATION DEBUG\n');
 
   // Set complexity match flag
   comparison.complexityMatch =
@@ -920,8 +862,7 @@ function compareAgainstReference(studentFeatures, questionId) {
       i.type === 'brute_force_detected'
   );
 
-  // Add logic score
-  comparison.logicScore = logicScore;
+  // logicScore already set from TAC
 
   // Add student features for detailed reporting
   comparison.studentFeatures = studentFeatures;

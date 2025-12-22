@@ -77,13 +77,17 @@ export function AuthProvider({ children }) {
     return signInWithPopup(auth, provider);
   };
 
-  // Sign out and hard-redirect to unified login (called after modal confirmation)
+  // Sign out and redirect to unified login (called after modal confirmation)
   const performLogout = async () => {
     try {
       await signOut(auth);
     } finally {
       localStorage.setItem('loggedOut', 'true');
-      window.location.href = 'http://localhost:3000/';
+      localStorage.removeItem('awc.currentPage');
+      localStorage.removeItem('awc.questionId');
+      // Redirect to student root (will show auth modal)
+      const BASE = (import.meta.env.BASE_URL || '/student/').replace(/\/$/, '');
+      window.location.href = BASE + '/';
     }
   };
 

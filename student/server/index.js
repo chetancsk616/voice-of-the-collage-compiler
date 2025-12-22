@@ -409,7 +409,7 @@ app.post(`${API_PREFIX}/submit`, async (req, res) => {
         throw new Error('Cannot compare: missing features or reference logic');
       }
 
-      logicComparison = compareAgainstReference(logicFeatures, questionId);
+      logicComparison = compareAgainstReference(logicFeatures, questionId, code, language);
 
       const stage3Duration = Date.now() - stage3Start;
       evaluationResult.stages.compareLogic = {
@@ -906,6 +906,11 @@ process.on('unhandledRejection', (reason, promise) => {
   console.error('Unhandled Rejection at:', promise, 'reason:', reason);
 });
 
-app.listen(PORT, () => {
+const server = app.listen(PORT, () => {
   console.log(`Server listening on port ${PORT} (api prefix: ${API_PREFIX})`);
+});
+
+server.on('error', (err) => {
+  console.error('Server error:', err);
+  process.exit(1);
 });

@@ -1,41 +1,50 @@
 {
-  "questionId": "Q042",
-  "title": "Spiral Matrix Traversal",
-  "difficulty": "Medium",
-  "expectedAlgorithm": "Matrix Simulation",
-  "algorithmDescription": "Traverse matrix in spiral order using boundary simulation",
-  "allowedApproaches": ["boundary_simulation", "layer_by_layer"],
-  "disallowedPatterns": ["recursive_only", "direction_rotation"],
-  "expectedTimeComplexity": "O(m * n)",
-  "expectedSpaceComplexity": "O(1)",
-  "paradigm": "Matrix",
-  "constraints": {
-    "minLineCount": 15,
-    "maxLineCount": 45,
-    "shouldReadInput": true,
-    "shouldUseLoops": true,
-    "shouldUseRecursion": false
-  },
-  "detailedDescription": "Traverse m×n matrix in spiral order (clockwise from outside to inside). Input: First line has m and n. Next m lines have n space-separated integers. Output: Elements in spiral order, space-separated. Maintain boundaries: top, bottom, left, right.",
-  "hints": [
-    "Track four boundaries: top, bottom, left, right",
-    "Traverse right on top row, then increment top",
-    "Traverse down on right column, then decrement right",
-    "Traverse left on bottom row, then decrement bottom",
-    "Traverse up on left column, then increment left"
-  ],
-  "commonMistakes": [
-    "Not updating boundaries correctly",
-    "Missing elements at boundaries",
-    "Incorrect loop termination conditions",
-    "Not handling single row/column matrices"
-  ],
-  "solutionApproach": "Initialize boundaries. While boundaries valid: traverse right across top, down right side, left across bottom (if rows remain), up left side (if columns remain). Update boundaries after each direction.",
-  "testCaseCriteria": "Must visit all elements in correct spiral order. Should handle rectangular matrices and edge cases (1×n, n×1, 1×1).",
-  "rubric": {
-    "correctOutput": 35,
-    "spiralLogic": 30,
-    "boundaryHandling": 20,
-    "codeClarity": 15
-  }
+    "questionId": "Q042",
+    "title": "Spiral Matrix Traversal",
+    "difficulty": "Medium",
+    "expectedAlgorithm": "Matrix Simulation",
+    "algorithmDescription": "Traverse matrix in spiral order using boundary simulation",
+    "allowedApproaches": [
+        "boundary_simulation",
+        "layer_by_layer"
+    ],
+    "disallowedPatterns": [
+        "recursive_only",
+        "direction_rotation"
+    ],
+    "expectedTimeComplexity": "O(m * n)",
+    "expectedSpaceComplexity": "O(1)",
+    "paradigm": "Matrix",
+    "constraints": {
+        "minLineCount": 15,
+        "maxLineCount": 45,
+        "shouldReadInput": true,
+        "shouldUseLoops": true,
+        "shouldUseRecursion": false
+    },
+    "detailedDescription": "Traverse m\u00c3\u2014n matrix in spiral order (clockwise from outside to inside). Input: First line has m and n. Next m lines have n space-separated integers. Output: Elements in spiral order, space-separated. Maintain boundaries: top, bottom, left, right.",
+    "hints": [
+        "Track four boundaries: top, bottom, left, right",
+        "Traverse right on top row, then increment top",
+        "Traverse down on right column, then decrement right",
+        "Traverse left on bottom row, then decrement bottom",
+        "Traverse up on left column, then increment left"
+    ],
+    "commonMistakes": [
+        "Not updating boundaries correctly",
+        "Missing elements at boundaries",
+        "Incorrect loop termination conditions",
+        "Not handling single row/column matrices"
+    ],
+    "solutionApproach": "Initialize boundaries. While boundaries valid: traverse right across top, down right side, left across bottom (if rows remain), up left side (if columns remain). Update boundaries after each direction.",
+    "testCaseCriteria": "Must visit all elements in correct spiral order. Should handle rectangular matrices and edge cases (1\u00c3\u2014n, n\u00c3\u20141, 1\u00c3\u20141).",
+    "rubric": {
+        "correctOutput": 35,
+        "spiralLogic": 30,
+        "boundaryHandling": 20,
+        "codeClarity": 15
+    },
+    "sampleLanguage": "python",
+    "sampleCode": "m, n = map(int, input().split())\nmatrix = [list(map(int, input().split())) for _ in range(m)]\ntop, bottom, left, right = 0, m - 1, 0, n - 1\norder = []\nwhile top <= bottom and left <= right:\n    for c in range(left, right + 1):\n        order.append(str(matrix[top][c]))\n    top += 1\n    for r in range(top, bottom + 1):\n        order.append(str(matrix[r][right]))\n    right -= 1\n    if top <= bottom:\n        for c in range(right, left - 1, -1):\n            order.append(str(matrix[bottom][c]))\n        bottom -= 1\n    if left <= right:\n        for r in range(bottom, top - 1, -1):\n            order.append(str(matrix[r][left]))\n        left += 1\nprint(\" \\\".join(order))",
+    "expectedCode": "m, n = map(int, input().split())\nmatrix = [list(map(int, input().split())) for _ in range(m)]\ntop, bottom, left, right = 0, m - 1, 0, n - 1\norder = []\nwhile top <= bottom and left <= right:\n    for c in range(left, right + 1):\n        order.append(str(matrix[top][c]))\n    top += 1\n    for r in range(top, bottom + 1):\n        order.append(str(matrix[r][right]))\n    right -= 1\n    if top <= bottom:\n        for c in range(right, left - 1, -1):\n            order.append(str(matrix[bottom][c]))\n        bottom -= 1\n    if left <= right:\n        for r in range(bottom, top - 1, -1):\n            order.append(str(matrix[r][left]))\n        left += 1\nprint(\" \\\".join(order))"
 }

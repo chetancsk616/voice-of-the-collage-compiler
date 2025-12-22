@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { execute, askAI, submitCode } from './api';
 import Home from './Home';
 import { useAuth } from './AuthContext';
@@ -32,8 +33,12 @@ import {
 import LogoutConfirmModal from './components/LogoutConfirmModal';
 
 export default function App() {
+  // Router hooks
+  const location = useLocation();
+  const navigate = useNavigate();
+  
   // Auth State
-  const { user, logout, isAdmin } = useAuth();
+  const { user, loading: authLoading, logout, isAdmin } = useAuth();
   const [showAuthModal, setShowAuthModal] = useState(false);
   const [showLogoutConfirm, setShowLogoutConfirm] = useState(false);
 
@@ -104,14 +109,8 @@ export default function App() {
     setStdout('');
     setStderr('');
     setAiResponse('');
-    // Update URL to /codespace
-    const params = new URLSearchParams();
-    params.set('questionId', question.id);
-    params.set('language', savedLanguage);
-    const BASE = (import.meta.env.BASE_URL || '/student/').replace(/\/$/, '');
-    const url = `${BASE}/codespace?${params.toString()}`;
-    console.log('[Navigation] Pushing URL:', url);
-    window.history.pushState({}, '', url);
+    // Update URL to /codespace using navigate
+    navigate(`/codespace?questionId=${question.id}&language=${savedLanguage}`);
     // User can press Esc to manually enter fullscreen if desired
     console.log('[Navigation] Question loaded - Press Esc for fullscreen');
   }
@@ -167,8 +166,7 @@ export default function App() {
     // Exit fullscreen when leaving the codespace
     exitFullscreenMode();
     // Navigate to home page
-    const BASE = (import.meta.env.BASE_URL || '/student/').replace(/\/$/, '');
-    window.history.pushState({}, '', `${BASE}/`);
+    navigate('/');
   }
 
   async function enterFullscreenMode() {
@@ -923,8 +921,8 @@ export default function App() {
 
   // Initialize from URL or localStorage on mount
   useEffect(() => {
-    const pathname = window.location.pathname;
-    const params = new URLSearchParams(window.location.search);
+    const pathname = location.pathname; // Use react-router pathname (respects basename)
+    const params = new URLSearchParams(location.search);
     const questionId = params.get('questionId');
     const savedCode = params.get('code');
     const savedLanguage = params.get('language');
@@ -954,17 +952,33 @@ export default function App() {
       console.log('[Init] Not in codespace, loading from localStorage');
       // Restore from localStorage if no URL params or on home page
       try {
+        const localPage = localStorage.getItem('awc.currentPage');
+        const localQuestionId = localStorage.getItem('awc.questionId');
         const localCode = localStorage.getItem('awc.code');
         const localLang = localStorage.getItem('awc.language');
+        
+        if (localPage === 'compiler' && localQuestionId && questions.length > 0) {
+          const restoredQuestion = questions.find((q) => q.id === parseInt(localQuestionId));
+          if (restoredQuestion) {
+            setCurrentPage('compiler');
+            setCurrentQuestion(restoredQuestion);
+            if (localCode) setCode(localCode);
+            if (localLang) setLanguage(localLang);
+            navigate(`/codespace?questionId=${localQuestionId}&language=${localLang || 'python3'}`, { replace: true });
+            console.log('[Init] Page restored from localStorage');
+            return;
+          }
+        }
+        
         if (localCode) setCode(localCode);
         if (localLang) setLanguage(localLang);
       } catch (e) {}
-      // Ensure we're on home page
+      // Ensure we're on home page - only if not already there
       if (pathname !== '/') {
-        window.history.replaceState({}, '', '/');
+        navigate('/', { replace: true });
       }
     }
-  }, [questionsLoading, questions]);
+  }, [questionsLoading, questions, location.pathname, location.search, navigate]);
 
   // Update URL when code changes in compiler page
   useEffect(() => {
@@ -972,7 +986,9 @@ export default function App() {
       try {
         localStorage.setItem('awc.code', code);
         localStorage.setItem('awc.language', language);
-        // Update URL with current state
+        localStorage.setItem('awc.currentPage', 'compiler');
+        localStorage.setItem('awc.questionId', String(currentQuestion.id));
+        // Update URL with current state using navigate
         const params = new URLSearchParams();
         params.set('questionId', currentQuestion.id);
         params.set('language', language);
@@ -980,10 +996,15 @@ export default function App() {
         if (code !== currentQuestion.solutions[language]) {
           params.set('code', encodeURIComponent(code));
         }
-        window.history.replaceState({}, '', `/codespace?${params.toString()}`);
+        navigate(`/codespace?${params.toString()}`, { replace: true });
+      } catch (e) {}
+    } else if (currentPage === 'home') {
+      try {
+        localStorage.setItem('awc.currentPage', 'home');
+        localStorage.removeItem('awc.questionId');
       } catch (e) {}
     }
-  }, [code, language, currentPage, currentQuestion]);
+  }, [code, language, currentPage, currentQuestion, navigate])
 
   useEffect(() => {
     // Ensure fullscreen stays active in compiler page and re-enter if exited unexpectedly
@@ -1134,6 +1155,25 @@ export default function App() {
 
   // ============ RENDER ============
 
+  // Show loading while auth is being checked
+  if (authLoading) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-slate-950 via-purple-900 to-slate-900 flex items-center justify-center">
+        <div className="text-white text-xl">Loading...</div>
+      </div>
+    );
+  }
+
+  // If not authenticated, show auth modal
+  if (!user) {
+    return (
+      <>
+        <AuthModal show={true} onClose={() => {}} />
+      </>
+    );
+  }
+
+  // Authenticated - render full app
   return (
     <>
       <AuthModal show={showAuthModal} onClose={() => setShowAuthModal(false)} />

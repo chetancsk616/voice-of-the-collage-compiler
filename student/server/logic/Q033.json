@@ -1,41 +1,50 @@
 {
-  "questionId": "Q033",
-  "title": "Word Search in Trie",
-  "difficulty": "Hard",
-  "expectedAlgorithm": "Trie with DFS",
-  "algorithmDescription": "Find all words from dictionary that exist in 2D board using Trie and backtracking",
-  "allowedApproaches": ["trie_with_backtracking", "trie_dfs"],
-  "disallowedPatterns": ["searching_each_word_separately", "brute_force"],
-  "expectedTimeComplexity": "O(m * n * 4^k)",
-  "expectedSpaceComplexity": "O(w * l)",
-  "paradigm": "Trie",
-  "constraints": {
-    "minLineCount": 25,
-    "maxLineCount": 70,
-    "shouldReadInput": true,
-    "shouldUseLoops": true,
-    "shouldUseRecursion": true
-  },
-  "detailedDescription": "Find all dictionary words that can be formed in 2D board (horizontal/vertical adjacent cells). Input: Board dimensions, board grid, number of words, word list. Output: All found words from dictionary. Build Trie from words, then DFS from each cell.",
-  "hints": [
-    "Build Trie from all dictionary words first",
-    "DFS from each board cell, following Trie paths",
-    "Mark cells visited during current path",
-    "When reaching end-of-word node, add to results",
-    "More efficient than searching each word separately"
-  ],
-  "commonMistakes": [
-    "Searching each word separately (slower)",
-    "Not marking visited cells",
-    "Not backtracking properly",
-    "Adding duplicate words to results"
-  ],
-  "solutionApproach": "Build Trie from dictionary. For each board cell: DFS with current Trie node. If cell char matches child, recurse to neighbors with child node. Mark visited, backtrack. Collect words at end nodes.",
-  "testCaseCriteria": "Must find all valid words efficiently. Should handle overlapping words and various board sizes.",
-  "rubric": {
-    "correctOutput": 30,
-    "trieImplementation": 25,
-    "dfsBacktracking": 25,
-    "codeClarity": 20
-  }
+    "questionId": "Q033",
+    "title": "Word Search in Trie",
+    "difficulty": "Hard",
+    "expectedAlgorithm": "Trie with DFS",
+    "algorithmDescription": "Find all words from dictionary that exist in 2D board using Trie and backtracking",
+    "allowedApproaches": [
+        "trie_with_backtracking",
+        "trie_dfs"
+    ],
+    "disallowedPatterns": [
+        "searching_each_word_separately",
+        "brute_force"
+    ],
+    "expectedTimeComplexity": "O(m * n * 4^k)",
+    "expectedSpaceComplexity": "O(w * l)",
+    "paradigm": "Trie",
+    "constraints": {
+        "minLineCount": 25,
+        "maxLineCount": 70,
+        "shouldReadInput": true,
+        "shouldUseLoops": true,
+        "shouldUseRecursion": true
+    },
+    "detailedDescription": "Find all dictionary words that can be formed in 2D board (horizontal/vertical adjacent cells). Input: Board dimensions, board grid, number of words, word list. Output: All found words from dictionary. Build Trie from words, then DFS from each cell.",
+    "hints": [
+        "Build Trie from all dictionary words first",
+        "DFS from each board cell, following Trie paths",
+        "Mark cells visited during current path",
+        "When reaching end-of-word node, add to results",
+        "More efficient than searching each word separately"
+    ],
+    "commonMistakes": [
+        "Searching each word separately (slower)",
+        "Not marking visited cells",
+        "Not backtracking properly",
+        "Adding duplicate words to results"
+    ],
+    "solutionApproach": "Build Trie from dictionary. For each board cell: DFS with current Trie node. If cell char matches child, recurse to neighbors with child node. Mark visited, backtrack. Collect words at end nodes.",
+    "testCaseCriteria": "Must find all valid words efficiently. Should handle overlapping words and various board sizes.",
+    "rubric": {
+        "correctOutput": 30,
+        "trieImplementation": 25,
+        "dfsBacktracking": 25,
+        "codeClarity": 20
+    },
+    "sampleLanguage": "python",
+    "sampleCode": "m, n = map(int, input().split())\nboard = [input().split() for _ in range(m)]\nword_count = int(input())\nwords = [input().strip() for _ in range(word_count)]\n\nclass Node:\n    def __init__(self):\n        self.children = {}\n        self.word = None\n\n\nroot = Node()\nfor word in words:\n    node = root\n    for ch in word:\n        node = node.children.setdefault(ch, Node())\n    node.word = word\n\nfound = set()\nvisited = [[False] * n for _ in range(m)]\ndirs = [(1, 0), (-1, 0), (0, 1), (0, -1)]\n\n\ndef dfs(r, c, node):\n    ch = board[r][c]\n    if ch not in node.children:\n        return\n    nxt = node.children[ch]\n    if nxt.word:\n        found.add(nxt.word)\n    visited[r][c] = True\n    for dr, dc in dirs:\n        nr, nc = r + dr, c + dc\n        if 0 <= nr < m and 0 <= nc < n and not visited[nr][nc]:\n            dfs(nr, nc, nxt)\n    visited[r][c] = False\n\n\nfor i in range(m):\n    for j in range(n):\n        dfs(i, j, root)\nprint(\" \\\".join(sorted(found)))",
+    "expectedCode": "m, n = map(int, input().split())\nboard = [input().split() for _ in range(m)]\nword_count = int(input())\nwords = [input().strip() for _ in range(word_count)]\n\nclass Node:\n    def __init__(self):\n        self.children = {}\n        self.word = None\n\n\nroot = Node()\nfor word in words:\n    node = root\n    for ch in word:\n        node = node.children.setdefault(ch, Node())\n    node.word = word\n\nfound = set()\nvisited = [[False] * n for _ in range(m)]\ndirs = [(1, 0), (-1, 0), (0, 1), (0, -1)]\n\n\ndef dfs(r, c, node):\n    ch = board[r][c]\n    if ch not in node.children:\n        return\n    nxt = node.children[ch]\n    if nxt.word:\n        found.add(nxt.word)\n    visited[r][c] = True\n    for dr, dc in dirs:\n        nr, nc = r + dr, c + dc\n        if 0 <= nr < m and 0 <= nc < n and not visited[nr][nc]:\n            dfs(nr, nc, nxt)\n    visited[r][c] = False\n\n\nfor i in range(m):\n    for j in range(n):\n        dfs(i, j, root)\nprint(\" \\\".join(sorted(found)))"
 }

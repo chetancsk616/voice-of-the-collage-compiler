@@ -3,48 +3,73 @@
 
 const express = require('express');
 const router = express.Router();
-const fs = require('fs').promises;
-const path = require('path');
-const { authenticateUser, requireAdmin, grantAdminAccess, revokeAdminAccess } = require('../middleware/adminAuth');
+const {
+  authenticateUser,
+  requireAdmin,
+  grantAdminAccess,
+  revokeAdminAccess,
+  adminAuth: admin,
+} = require('../middleware/adminAuth');
 
-// Resolve question storage location (prefer admin/client/src/questions.json, fallback to student/client/src/questions.json)
-const QUESTION_PATHS = [
-  path.join(__dirname, '../../client/src/questions.json'),
-  path.join(__dirname, '../../../student/client/src/questions.json'),
-];
-
-async function getQuestionsPath() {
-  for (const candidate of QUESTION_PATHS) {
-    try {
-      await fs.access(candidate);
-      return candidate;
-    } catch (err) {
-      // continue to next candidate
-    }
+function getDb() {
+  if (!admin.apps.length) {
+    throw new Error('Firebase Admin not initialized');
   }
-  throw new Error('questions.json not found in expected locations');
+  return admin.database();
 }
 
-async function readQuestions() {
-  const questionsPath = await getQuestionsPath();
-  const questionsData = await fs.readFile(questionsPath, 'utf8');
-  const parsed = JSON.parse(questionsData);
+function normalizeQuestions(data) {
+  if (Array.isArray(data)) {
+    return data.map(q => ({ ...q, id: q?.id ?? q?.questionId })).sort((a, b) => Number(a.id) - Number(b.id));
+  }
+  return Object.entries(data || {})
+    .map(([id, q]) => ({ ...q, id: q?.id ?? q?.questionId ?? Number(id) }))
+    .sort((a, b) => Number(a.id) - Number(b.id));
+}
 
-  const normalized = Array.isArray(parsed)
-    ? parsed
-    : Array.isArray(parsed.questions)
-      ? parsed.questions
-      : [];
+async function readAllQuestions() {
+  try {
+    const snap = await getDb().ref('questions').once('value');
+    const data = snap.val();
+    if (!data) return [];
+    
+    // Handle both array and object formats
+    if (Array.isArray(data)) {
+      return normalizeQuestions(data);
+    }
+    
+    // If object, convert to array
+    const questions = Object.entries(data).map(([key, q]) => {
+      return { ...q, id: q?.id ?? q?.questionId ?? Number(key) };
+    });
+    return questions.sort((a, b) => Number(a.id) - Number(b.id));
+  } catch (err) {
+    console.error('Error reading questions from RTDB:', err);
+    return [];
+  }
+}
 
-  const write = async (updatedQuestions) => {
-    const payload = Array.isArray(parsed)
-      ? updatedQuestions
-      : { ...parsed, questions: updatedQuestions };
+async function readQuestionById(questionId) {
+  const snap = await getDb().ref(`questions/${questionId}`).once('value');
+  const val = snap.val();
+  return val ? { ...val, id: val.id ?? Number(questionId) } : null;
+}
 
-    await fs.writeFile(questionsPath, JSON.stringify(payload, null, 2));
-  };
+function logicKey(questionId) {
+  return `Q${String(questionId).padStart(3, '0')}`;
+}
 
-  return { questions: normalized, questionsPath, write };
+async function readReferenceLogic(questionId) {
+  const snap = await getDb().ref(`logicDetail/${logicKey(questionId)}`).once('value');
+  return snap.val() || null;
+}
+
+async function writeReferenceLogic(questionId, logic) {
+  await getDb().ref(`logicDetail/${logicKey(questionId)}`).set(logic);
+}
+
+async function deleteReferenceLogic(questionId) {
+  await getDb().ref(`logicDetail/${logicKey(questionId)}`).remove();
 }
 
 // Apply authentication and admin middleware to all routes
@@ -63,9 +88,8 @@ router.get('/questions', async (req, res) => {
   try {
     const { search, difficulty, tag } = req.query;
     
-    // Read questions from file
-    const { questions: rawQuestions } = await readQuestions();
-    let questions = rawQuestions.map((q) => ({
+    // Read questions from RTDB
+    let questions = (await readAllQuestions()).map((q) => ({
       ...q,
       requiresHiddenTests: q?.requiresHiddenTests !== false,
     }));
@@ -105,29 +129,18 @@ router.get('/questions', async (req, res) => {
 router.get('/questions/:id', async (req, res) => {
   try {
     const questionId = parseInt(req.params.id);
-    
-    // Read questions
-    const { questions } = await readQuestions();
-    
-    const question = questions.find(q => q.id === questionId);
+    const question = await readQuestionById(questionId);
+
     if (question) {
       question.requiresHiddenTests = question?.requiresHiddenTests !== false;
     }
-    
+
     if (!question) {
       return res.status(404).json({ error: 'Question not found' });
     }
-    
-    // Try to read reference logic if exists
-    let referenceLogic = null;
-    try {
-      const logicPath = path.join(__dirname, `../logic/q${questionId}.json`);
-      const logicData = await fs.readFile(logicPath, 'utf8');
-      referenceLogic = JSON.parse(logicData);
-    } catch (err) {
-      // Reference logic doesn't exist yet
-    }
-    
+
+    const referenceLogic = await readReferenceLogic(questionId);
+
     res.json({ 
       success: true, 
       question,
@@ -153,11 +166,11 @@ router.post('/questions', async (req, res) => {
     }
     
     // Read existing questions
-    const { questions, write } = await readQuestions();
+    const questions = await readAllQuestions();
     
     // Generate new ID
     const newId = questions.length > 0 
-      ? Math.max(...questions.map(q => q.id)) + 1 
+      ? Math.max(...questions.map(q => Number(q.id))) + 1 
       : 1;
     
     // Create new question
@@ -173,15 +186,12 @@ router.post('/questions', async (req, res) => {
       createdBy: req.user.email
     };
     
-    questions.push(newQuestion);
-    
-    // Save questions
-    await write(questions);
+    // Save question to RTDB
+    await getDb().ref(`questions/${newId}`).set(newQuestion);
     
     // Save reference logic if provided
     if (referenceLogic) {
-      const logicPath = path.join(__dirname, `../logic/q${newId}.json`);
-      await fs.writeFile(logicPath, JSON.stringify(referenceLogic, null, 2));
+      await writeReferenceLogic(newId, referenceLogic);
     }
     
     res.json({ 
@@ -204,43 +214,36 @@ router.put('/questions/:id', async (req, res) => {
     const questionId = parseInt(req.params.id);
     const { title, description, difficulty, tags, testCases, referenceLogic } = req.body;
     
-    // Read questions
-    const { questions, write } = await readQuestions();
-    
-    const questionIndex = questions.findIndex(q => q.id === questionId);
-    
-    if (questionIndex === -1) {
+    const existing = await readQuestionById(questionId);
+    if (!existing) {
       return res.status(404).json({ error: 'Question not found' });
     }
-    
-    // Update question
-    questions[questionIndex] = {
-      ...questions[questionIndex],
-      title: title || questions[questionIndex].title,
-      description: description || questions[questionIndex].description,
-      difficulty: difficulty || questions[questionIndex].difficulty,
-      tags: tags !== undefined ? tags : questions[questionIndex].tags,
-      testCases: testCases !== undefined ? testCases : questions[questionIndex].testCases,
+
+    const updatedQuestion = {
+      ...existing,
+      title: title || existing.title,
+      description: description || existing.description,
+      difficulty: difficulty || existing.difficulty,
+      tags: tags !== undefined ? tags : existing.tags,
+      testCases: testCases !== undefined ? testCases : existing.testCases,
       requiresHiddenTests:
         req.body?.requiresHiddenTests !== undefined
           ? req.body.requiresHiddenTests !== false
-          : questions[questionIndex].requiresHiddenTests !== false,
+          : existing.requiresHiddenTests !== false,
       updatedAt: new Date().toISOString(),
       updatedBy: req.user.email
     };
-    
-    // Save questions
-    await write(questions);
+
+    await getDb().ref(`questions/${questionId}`).set(updatedQuestion);
     
     // Update reference logic if provided
     if (referenceLogic) {
-      const logicPath = path.join(__dirname, `../logic/q${questionId}.json`);
-      await fs.writeFile(logicPath, JSON.stringify(referenceLogic, null, 2));
+      await writeReferenceLogic(questionId, referenceLogic);
     }
     
     res.json({ 
       success: true, 
-      question: questions[questionIndex],
+      question: updatedQuestion,
       message: 'Question updated successfully' 
     });
   } catch (error) {
@@ -257,28 +260,13 @@ router.delete('/questions/:id', async (req, res) => {
   try {
     const questionId = parseInt(req.params.id);
     
-    // Read questions
-    const { questions, write } = await readQuestions();
-    
-    const questionIndex = questions.findIndex(q => q.id === questionId);
-    
-    if (questionIndex === -1) {
+    const existing = await readQuestionById(questionId);
+    if (!existing) {
       return res.status(404).json({ error: 'Question not found' });
     }
-    
-    // Remove question
-    questions.splice(questionIndex, 1);
-    
-    // Save questions
-    await write(questions);
-    
-    // Try to delete reference logic if exists
-    try {
-      const logicPath = path.join(__dirname, `../logic/q${questionId}.json`);
-      await fs.unlink(logicPath);
-    } catch (err) {
-      // File doesn't exist, ignore
-    }
+
+    await getDb().ref(`questions/${questionId}`).remove();
+    await deleteReferenceLogic(questionId);
     
     res.json({ 
       success: true, 

@@ -1,40 +1,49 @@
 {
-  "questionId": "Q040",
-  "title": "Union Find - Detect Cycle",
-  "difficulty": "Medium",
-  "expectedAlgorithm": "Union Find",
-  "algorithmDescription": "Detect cycle in undirected graph using Union Find data structure",
-  "allowedApproaches": ["union_find", "disjoint_set"],
-  "disallowedPatterns": ["dfs_cycle_detection", "bfs_cycle_detection"],
-  "expectedTimeComplexity": "O(E * α(V))",
-  "expectedSpaceComplexity": "O(V)",
-  "paradigm": "Union Find",
-  "constraints": {
-    "minLineCount": 15,
-    "maxLineCount": 50,
-    "shouldReadInput": true,
-    "shouldUseLoops": true,
-    "shouldUseRecursion": false
-  },
-  "detailedDescription": "Detect if undirected graph contains cycle using Union Find (Disjoint Set Union). Input: Number of vertices and edges, followed by edge pairs. Output: 'true' if cycle exists, 'false' otherwise. If both vertices of edge in same set, cycle exists.",
-  "hints": [
-    "Union Find with path compression and union by rank",
-    "For each edge: find parent of both vertices",
-    "If parents same, cycle exists",
-    "Otherwise, union the two sets"
-  ],
-  "commonMistakes": [
-    "Using DFS/BFS instead of Union Find",
-    "Not implementing path compression",
-    "Not using union by rank (inefficient)",
-    "Handling directed graph logic"
-  ],
-  "solutionApproach": "Initialize parent and rank arrays. For each edge (u,v): find parent of u and v. If same parent, cycle exists. Otherwise, union their sets. Use path compression in find and union by rank.",
-  "testCaseCriteria": "Must use Union Find data structure. Should efficiently detect cycles. Handle disconnected graphs.",
-  "rubric": {
-    "correctOutput": 35,
-    "unionFindImplementation": 30,
-    "pathCompression": 20,
-    "codeClarity": 15
-  }
+    "questionId": "Q040",
+    "title": "Union Find - Detect Cycle",
+    "difficulty": "Medium",
+    "expectedAlgorithm": "Union Find",
+    "algorithmDescription": "Detect cycle in undirected graph using Union Find data structure",
+    "allowedApproaches": [
+        "union_find",
+        "disjoint_set"
+    ],
+    "disallowedPatterns": [
+        "dfs_cycle_detection",
+        "bfs_cycle_detection"
+    ],
+    "expectedTimeComplexity": "O(E * \u00ce\u00b1(V))",
+    "expectedSpaceComplexity": "O(V)",
+    "paradigm": "Union Find",
+    "constraints": {
+        "minLineCount": 15,
+        "maxLineCount": 50,
+        "shouldReadInput": true,
+        "shouldUseLoops": true,
+        "shouldUseRecursion": false
+    },
+    "detailedDescription": "Detect if undirected graph contains cycle using Union Find (Disjoint Set Union). Input: Number of vertices and edges, followed by edge pairs. Output: 'true' if cycle exists, 'false' otherwise. If both vertices of edge in same set, cycle exists.",
+    "hints": [
+        "Union Find with path compression and union by rank",
+        "For each edge: find parent of both vertices",
+        "If parents same, cycle exists",
+        "Otherwise, union the two sets"
+    ],
+    "commonMistakes": [
+        "Using DFS/BFS instead of Union Find",
+        "Not implementing path compression",
+        "Not using union by rank (inefficient)",
+        "Handling directed graph logic"
+    ],
+    "solutionApproach": "Initialize parent and rank arrays. For each edge (u,v): find parent of u and v. If same parent, cycle exists. Otherwise, union their sets. Use path compression in find and union by rank.",
+    "testCaseCriteria": "Must use Union Find data structure. Should efficiently detect cycles. Handle disconnected graphs.",
+    "rubric": {
+        "correctOutput": 35,
+        "unionFindImplementation": 30,
+        "pathCompression": 20,
+        "codeClarity": 15
+    },
+    "sampleLanguage": "python",
+    "sampleCode": "v, e = map(int, input().split())\nparent = list(range(v))\nrank = [0] * v\n\n\ndef find(x):\n    if parent[x] != x:\n        parent[x] = find(parent[x])\n    return parent[x]\n\n\ndef union(a, b):\n    ra, rb = find(a), find(b)\n    if ra == rb:\n        return False\n    if rank[ra] < rank[rb]:\n        parent[ra] = rb\n    elif rank[ra] > rank[rb]:\n        parent[rb] = ra\n    else:\n        parent[rb] = ra\n        rank[ra] += 1\n    return True\n\n\nhas_cycle = False\nfor _ in range(e):\n    u, w = map(int, input().split())\n    if not union(u, w):\n        has_cycle = True\nprint(\"true\" if has_cycle else \"false\")",
+    "expectedCode": "v, e = map(int, input().split())\nparent = list(range(v))\nrank = [0] * v\n\n\ndef find(x):\n    if parent[x] != x:\n        parent[x] = find(parent[x])\n    return parent[x]\n\n\ndef union(a, b):\n    ra, rb = find(a), find(b)\n    if ra == rb:\n        return False\n    if rank[ra] < rank[rb]:\n        parent[ra] = rb\n    elif rank[ra] > rank[rb]:\n        parent[rb] = ra\n    else:\n        parent[rb] = ra\n        rank[ra] += 1\n    return True\n\n\nhas_cycle = False\nfor _ in range(e):\n    u, w = map(int, input().split())\n    if not union(u, w):\n        has_cycle = True\nprint(\"true\" if has_cycle else \"false\")"
 }

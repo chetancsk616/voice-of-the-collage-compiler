@@ -1,40 +1,49 @@
 {
-  "questionId": "Q025",
-  "title": "N-Queens Problem",
-  "difficulty": "Hard",
-  "expectedAlgorithm": "Backtracking with Constraints",
-  "algorithmDescription": "Solve N-Queens puzzle using backtracking with constraint checking",
-  "allowedApproaches": ["backtracking_with_pruning", "constraint_based_backtracking"],
-  "disallowedPatterns": ["brute_force_all_positions", "random_placement"],
-  "expectedTimeComplexity": "O(n!)",
-  "expectedSpaceComplexity": "O(n²)",
-  "paradigm": "Backtracking",
-  "constraints": {
-    "minLineCount": 20,
-    "maxLineCount": 60,
-    "shouldReadInput": true,
-    "shouldUseLoops": true,
-    "shouldUseRecursion": true
-  },
-  "detailedDescription": "Solve N-Queens problem: place n queens on n×n chessboard so no two queens attack each other. Queens attack on same row, column, or diagonal. Input: Integer n (board size). Output: Number of valid solutions, followed by one solution as n lines of n characters ('Q' for queen, '.' for empty). Use backtracking with constraint checking.",
-  "hints": [
-    "Place one queen per row to avoid row conflicts",
-    "Check column and diagonal conflicts before placing",
-    "Use backtracking: try each column, recurse, backtrack if fails",
-    "Track used columns, diagonals for O(1) conflict checking"
-  ],
-  "commonMistakes": [
-    "Not checking diagonal attacks",
-    "Inefficient conflict checking",
-    "Not backtracking properly",
-    "Missing some valid solutions"
-  ],
-  "solutionApproach": "Recursive backtracking placing row by row. For each row, try each column: if safe (no column/diagonal conflict), place queen, recurse to next row. If successful, found solution. Backtrack by removing queen. Track used columns and diagonals for efficiency.",
-  "testCaseCriteria": "Must find valid N-Queens solutions. Queens must not attack each other. Should demonstrate backtracking with pruning.",
-  "rubric": {
-    "correctOutput": 30,
-    "backtrackingImplementation": 30,
-    "constraintChecking": 25,
-    "codeClarity": 15
-  }
+    "questionId": "Q025",
+    "title": "N-Queens Problem",
+    "difficulty": "Hard",
+    "expectedAlgorithm": "Backtracking with Constraints",
+    "algorithmDescription": "Solve N-Queens puzzle using backtracking with constraint checking",
+    "allowedApproaches": [
+        "backtracking_with_pruning",
+        "constraint_based_backtracking"
+    ],
+    "disallowedPatterns": [
+        "brute_force_all_positions",
+        "random_placement"
+    ],
+    "expectedTimeComplexity": "O(n!)",
+    "expectedSpaceComplexity": "O(n\u00c2\u00b2)",
+    "paradigm": "Backtracking",
+    "constraints": {
+        "minLineCount": 20,
+        "maxLineCount": 60,
+        "shouldReadInput": true,
+        "shouldUseLoops": true,
+        "shouldUseRecursion": true
+    },
+    "detailedDescription": "Solve N-Queens problem: place n queens on n\u00c3\u2014n chessboard so no two queens attack each other. Queens attack on same row, column, or diagonal. Input: Integer n (board size). Output: Number of valid solutions, followed by one solution as n lines of n characters ('Q' for queen, '.' for empty). Use backtracking with constraint checking.",
+    "hints": [
+        "Place one queen per row to avoid row conflicts",
+        "Check column and diagonal conflicts before placing",
+        "Use backtracking: try each column, recurse, backtrack if fails",
+        "Track used columns, diagonals for O(1) conflict checking"
+    ],
+    "commonMistakes": [
+        "Not checking diagonal attacks",
+        "Inefficient conflict checking",
+        "Not backtracking properly",
+        "Missing some valid solutions"
+    ],
+    "solutionApproach": "Recursive backtracking placing row by row. For each row, try each column: if safe (no column/diagonal conflict), place queen, recurse to next row. If successful, found solution. Backtrack by removing queen. Track used columns and diagonals for efficiency.",
+    "testCaseCriteria": "Must find valid N-Queens solutions. Queens must not attack each other. Should demonstrate backtracking with pruning.",
+    "rubric": {
+        "correctOutput": 30,
+        "backtrackingImplementation": 30,
+        "constraintChecking": 25,
+        "codeClarity": 15
+    },
+    "sampleLanguage": "python",
+    "sampleCode": "n = int(input())\ncols = set()\ndiag1 = set()\ndiag2 = set()\nboard = [[\".\"] * n for _ in range(n)]\nsolutions = 0\nfirst = None\n\n\ndef backtrack(r):\n    global solutions, first\n    nonlocal_vars = (r,)\n    if r == n:\n        global first_solution\n        nonlocal_vars = None\n        return None\n\n\nsolutions = 0\nfirst_solution = []\n\n\ndef place(row):\n    global solutions, first_solution\n    if row == n:\n        solutions += 1\n        if not first_solution:\n            first_solution = [\"\".join(r) for r in board]\n        return\n    for c in range(n):\n        if c in cols or (row - c) in diag1 or (row + c) in diag2:\n            continue\n        board[row][c] = \"Q\"\n        cols.add(c)\n        diag1.add(row - c)\n        diag2.add(row + c)\n        place(row + 1)\n        board[row][c] = \".\"\n        cols.remove(c)\n        diag1.remove(row - c)\n        diag2.remove(row + c)\n\n\nplace(0)\nprint(solutions)\nif first_solution:\n    print(\"\n\".join(first_solution))",
+    "expectedCode": "n = int(input())\ncols = set()\ndiag1 = set()\ndiag2 = set()\nboard = [[\".\"] * n for _ in range(n)]\nsolutions = 0\nfirst = None\n\n\ndef backtrack(r):\n    global solutions, first\n    nonlocal_vars = (r,)\n    if r == n:\n        global first_solution\n        nonlocal_vars = None\n        return None\n\n\nsolutions = 0\nfirst_solution = []\n\n\ndef place(row):\n    global solutions, first_solution\n    if row == n:\n        solutions += 1\n        if not first_solution:\n            first_solution = [\"\".join(r) for r in board]\n        return\n    for c in range(n):\n        if c in cols or (row - c) in diag1 or (row + c) in diag2:\n            continue\n        board[row][c] = \"Q\"\n        cols.add(c)\n        diag1.add(row - c)\n        diag2.add(row + c)\n        place(row + 1)\n        board[row][c] = \".\"\n        cols.remove(c)\n        diag1.remove(row - c)\n        diag2.remove(row + c)\n\n\nplace(0)\nprint(solutions)\nif first_solution:\n    print(\"\n\".join(first_solution))"
 }

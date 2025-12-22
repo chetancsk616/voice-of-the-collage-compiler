@@ -1,40 +1,50 @@
 {
-  "questionId": "Q021",
-  "title": "Quick Sort",
-  "difficulty": "Medium",
-  "expectedAlgorithm": "Partition-based Sorting",
-  "algorithmDescription": "Sort array using quick sort with partition and pivot selection",
-  "allowedApproaches": ["quick_sort", "partition_based"],
-  "disallowedPatterns": ["built_in_sort", "merge_sort", "bubble_sort"],
-  "expectedTimeComplexity": "O(n log n) average",
-  "expectedSpaceComplexity": "O(log n)",
-  "paradigm": "Sorting",
-  "constraints": {
-    "minLineCount": 15,
-    "maxLineCount": 45,
-    "shouldReadInput": true,
-    "shouldUseLoops": true,
-    "shouldUseRecursion": true
-  },
-  "detailedDescription": "Implement quick sort algorithm. Input: First line has n, second line has n space-separated integers. Output: Sorted array. Quick sort uses partitioning: select pivot, partition array so elements < pivot are left, > pivot are right. Recursively sort partitions.",
-  "hints": [
-    "Choose pivot (common: last element)",
-    "Partition: rearrange so elements < pivot are left, >= pivot are right",
-    "Recursively apply to left and right partitions",
-    "In-place sorting with O(log n) space for recursion"
-  ],
-  "commonMistakes": [
-    "Using built-in sort",
-    "Incorrect partition logic",
-    "Not handling partitioning indices correctly",
-    "Poor pivot selection leading to O(n²) worst case"
-  ],
-  "solutionApproach": "Select pivot (e.g., last element). Partition array: iterate through array, swap elements < pivot to left side. Place pivot at partition point. Recursively quick sort left and right partitions.",
-  "testCaseCriteria": "Must correctly sort using quick sort. Should demonstrate O(n log n) average case. Must use partitioning and recursion.",
-  "rubric": {
-    "correctOutput": 35,
-    "quickSortImplementation": 30,
-    "partitionLogic": 20,
-    "codeClarity": 15
-  }
+    "questionId": "Q021",
+    "title": "Quick Sort",
+    "difficulty": "Medium",
+    "expectedAlgorithm": "Partition-based Sorting",
+    "algorithmDescription": "Sort array using quick sort with partition and pivot selection",
+    "allowedApproaches": [
+        "quick_sort",
+        "partition_based"
+    ],
+    "disallowedPatterns": [
+        "built_in_sort",
+        "merge_sort",
+        "bubble_sort"
+    ],
+    "expectedTimeComplexity": "O(n log n) average",
+    "expectedSpaceComplexity": "O(log n)",
+    "paradigm": "Sorting",
+    "constraints": {
+        "minLineCount": 15,
+        "maxLineCount": 45,
+        "shouldReadInput": true,
+        "shouldUseLoops": true,
+        "shouldUseRecursion": true
+    },
+    "detailedDescription": "Implement quick sort algorithm. Input: First line has n, second line has n space-separated integers. Output: Sorted array. Quick sort uses partitioning: select pivot, partition array so elements < pivot are left, > pivot are right. Recursively sort partitions.",
+    "hints": [
+        "Choose pivot (common: last element)",
+        "Partition: rearrange so elements < pivot are left, >= pivot are right",
+        "Recursively apply to left and right partitions",
+        "In-place sorting with O(log n) space for recursion"
+    ],
+    "commonMistakes": [
+        "Using built-in sort",
+        "Incorrect partition logic",
+        "Not handling partitioning indices correctly",
+        "Poor pivot selection leading to O(n\u00c2\u00b2) worst case"
+    ],
+    "solutionApproach": "Select pivot (e.g., last element). Partition array: iterate through array, swap elements < pivot to left side. Place pivot at partition point. Recursively quick sort left and right partitions.",
+    "testCaseCriteria": "Must correctly sort using quick sort. Should demonstrate O(n log n) average case. Must use partitioning and recursion.",
+    "rubric": {
+        "correctOutput": 35,
+        "quickSortImplementation": 30,
+        "partitionLogic": 20,
+        "codeClarity": 15
+    },
+    "sampleLanguage": "python",
+    "sampleCode": "def partition(arr, low, high):\n    pivot = arr[high]\n    i = low\n    for j in range(low, high):\n        if arr[j] <= pivot:\n            arr[i], arr[j] = arr[j], arr[i]\n            i += 1\n    arr[i], arr[high] = arr[high], arr[i]\n    return i\n\n\ndef quick_sort(arr, low, high):\n    if low < high:\n        pi = partition(arr, low, high)\n        quick_sort(arr, low, pi - 1)\n        quick_sort(arr, pi + 1, high)\n\n\nn = int(input())\narr = list(map(int, input().split()))\nquick_sort(arr, 0, len(arr) - 1)\nprint(\" \\\".join(map(str, arr)))",
+    "expectedCode": "def partition(arr, low, high):\n    pivot = arr[high]\n    i = low\n    for j in range(low, high):\n        if arr[j] <= pivot:\n            arr[i], arr[j] = arr[j], arr[i]\n            i += 1\n    arr[i], arr[high] = arr[high], arr[i]\n    return i\n\n\ndef quick_sort(arr, low, high):\n    if low < high:\n        pi = partition(arr, low, high)\n        quick_sort(arr, low, pi - 1)\n        quick_sort(arr, pi + 1, high)\n\n\nn = int(input())\narr = list(map(int, input().split()))\nquick_sort(arr, 0, len(arr) - 1)\nprint(\" \\\".join(map(str, arr)))"
 }

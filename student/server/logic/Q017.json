@@ -1,40 +1,49 @@
 {
-  "questionId": "Q017",
-  "title": "Circular Queue",
-  "difficulty": "Medium",
-  "expectedAlgorithm": "Array-based Circular Queue",
-  "algorithmDescription": "Implement fixed-size circular queue with efficient space utilization",
-  "allowedApproaches": ["modulo_indexing", "circular_array"],
-  "disallowedPatterns": ["linked_list_implementation", "dynamic_resizing"],
-  "expectedTimeComplexity": "O(1)",
-  "expectedSpaceComplexity": "O(k)",
-  "paradigm": "Queue",
-  "constraints": {
-    "minLineCount": 15,
-    "maxLineCount": 50,
-    "shouldReadInput": true,
-    "shouldUseLoops": true,
-    "shouldUseRecursion": false
-  },
-  "detailedDescription": "Implement a circular queue with fixed capacity k. Support enqueue, dequeue, front, rear, isEmpty, and isFull operations. Input: Queue size k, then number of operations followed by commands. Output: Results of operations. Use array with circular indexing (modulo).",
-  "hints": [
-    "Use array of size k with front and rear pointers",
-    "Circular indexing: (index + 1) % k",
-    "Track size or use dummy slot to distinguish full/empty",
-    "All operations should be O(1)"
-  ],
-  "commonMistakes": [
-    "Not handling circular wraparound correctly",
-    "Confusing full and empty conditions",
-    "Linear time operations",
-    "Not maintaining queue capacity"
-  ],
-  "solutionApproach": "Use array of size k, front and rear indices, and count. Enqueue: check if full, add at rear, increment rear circularly. Dequeue: check if empty, remove from front, increment front circularly. Use modulo for circular indexing.",
-  "testCaseCriteria": "All operations must be O(1). Must correctly handle full and empty states. Should properly wrap around array.",
-  "rubric": {
-    "correctOutput": 35,
-    "circularIndexing": 30,
-    "constantTimeOps": 20,
-    "codeClarity": 15
-  }
+    "questionId": "Q017",
+    "title": "Circular Queue",
+    "difficulty": "Medium",
+    "expectedAlgorithm": "Array-based Circular Queue",
+    "algorithmDescription": "Implement fixed-size circular queue with efficient space utilization",
+    "allowedApproaches": [
+        "modulo_indexing",
+        "circular_array"
+    ],
+    "disallowedPatterns": [
+        "linked_list_implementation",
+        "dynamic_resizing"
+    ],
+    "expectedTimeComplexity": "O(1)",
+    "expectedSpaceComplexity": "O(k)",
+    "paradigm": "Queue",
+    "constraints": {
+        "minLineCount": 15,
+        "maxLineCount": 50,
+        "shouldReadInput": true,
+        "shouldUseLoops": true,
+        "shouldUseRecursion": false
+    },
+    "detailedDescription": "Implement a circular queue with fixed capacity k. Support enqueue, dequeue, front, rear, isEmpty, and isFull operations. Input: Queue size k, then number of operations followed by commands. Output: Results of operations. Use array with circular indexing (modulo).",
+    "hints": [
+        "Use array of size k with front and rear pointers",
+        "Circular indexing: (index + 1) % k",
+        "Track size or use dummy slot to distinguish full/empty",
+        "All operations should be O(1)"
+    ],
+    "commonMistakes": [
+        "Not handling circular wraparound correctly",
+        "Confusing full and empty conditions",
+        "Linear time operations",
+        "Not maintaining queue capacity"
+    ],
+    "solutionApproach": "Use array of size k, front and rear indices, and count. Enqueue: check if full, add at rear, increment rear circularly. Dequeue: check if empty, remove from front, increment front circularly. Use modulo for circular indexing.",
+    "testCaseCriteria": "All operations must be O(1). Must correctly handle full and empty states. Should properly wrap around array.",
+    "rubric": {
+        "correctOutput": 35,
+        "circularIndexing": 30,
+        "constantTimeOps": 20,
+        "codeClarity": 15
+    },
+    "sampleLanguage": "python",
+    "sampleCode": "k = int(input())\nm = int(input())\nqueue = [0] * k\nfront = 0\nrear = 0\nsize = 0\noutputs = []\n\nfor _ in range(m):\n    parts = input().split()\n    cmd = parts[0]\n    if cmd == \"enqueue\":\n        val = int(parts[1])\n        if size < k:\n            queue[rear] = val\n            rear = (rear + 1) % k\n            size += 1\n    elif cmd == \"dequeue\":\n        if size > 0:\n            front = (front + 1) % k\n            size -= 1\n    elif cmd == \"front\":\n        outputs.append(str(queue[front]) if size > 0 else \"\")\n    elif cmd == \"rear\":\n        outputs.append(str(queue[(rear - 1 + k) % k]) if size > 0 else \"\")\n    elif cmd == \"isEmpty\":\n        outputs.append(\"true\" if size == 0 else \"false\")\n    elif cmd == \"isFull\":\n        outputs.append(\"true\" if size == k else \"false\")\nprint(\"\n\".join(outputs))",
+    "expectedCode": "k = int(input())\nm = int(input())\nqueue = [0] * k\nfront = 0\nrear = 0\nsize = 0\noutputs = []\n\nfor _ in range(m):\n    parts = input().split()\n    cmd = parts[0]\n    if cmd == \"enqueue\":\n        val = int(parts[1])\n        if size < k:\n            queue[rear] = val\n            rear = (rear + 1) % k\n            size += 1\n    elif cmd == \"dequeue\":\n        if size > 0:\n            front = (front + 1) % k\n            size -= 1\n    elif cmd == \"front\":\n        outputs.append(str(queue[front]) if size > 0 else \"\")\n    elif cmd == \"rear\":\n        outputs.append(str(queue[(rear - 1 + k) % k]) if size > 0 else \"\")\n    elif cmd == \"isEmpty\":\n        outputs.append(\"true\" if size == 0 else \"false\")\n    elif cmd == \"isFull\":\n        outputs.append(\"true\" if size == k else \"false\")\nprint(\"\n\".join(outputs))"
 }

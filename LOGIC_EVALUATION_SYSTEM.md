@@ -10,7 +10,7 @@ The logic evaluation system analyzes student code submissions and compares them 
 ### Evaluation Pipeline (5 Stages)
 
 ```
-1. Load Reference Logic → 2. Extract Code Features → 3. Compare Logic → 4. Execute Tests → 5. Generate Verdict
+1. Load Reference Logic → 2. Extract Code Features → 3. TAC Logic Compare → 4. Execute Tests → 5. Generate Verdict
 ```
 
 ---
@@ -89,9 +89,20 @@ print(c)
 
 ---
 
-## Stage 3: Logic Comparison
+## Stage 3: TAC Logic Comparison (Primary)
 
-### Comparison Process
+The PRIMARY logic evaluation is deterministic TAC equivalence:
+
+- AST parse → TAC generation → TAC normalization → TAC comparison
+- No AI heuristics. No runtime-based logic judging.
+- Outputs:
+  - `tacMatch` (boolean)
+  - `similarityScore` (0–1)
+  - `mismatchReasons` (deterministic, line-based)
+
+Logic score is TAC-only: `logicScore = round(similarityScore * 100)`.
+
+### Comparison Process (secondary feature checks retained for reporting)
 
 ```javascript
 function compareLogic(studentFeatures, referenceLogic) {
@@ -100,7 +111,7 @@ function compareLogic(studentFeatures, referenceLogic) {
     issues: [],        // High/Medium severity problems
     warnings: [],      // Low severity issues
     successes: [],     // What the code does well
-    logicScore: 100,   // Starts at 100
+    logicScore: 0,      // Set from TAC only
     algorithmMatch: 'FULL'  // FULL, PARTIAL, or NONE
   };
 
@@ -155,13 +166,17 @@ function compareLogic(studentFeatures, referenceLogic) {
     }
   }
 
+  // TAC comparison happens in the evaluation engine and sets logicScore/tacMatch
   return comparison;
 }
 ```
 
-### Logic Score Calculation (Difficulty-Aware)
+### Logic Score Calculation (TAC-only)
 
-## Stage 3B: AST Intermediate Representation (New)
+`logicScore = round(similarityScore * 100)` derived purely from TAC comparison.
+Difficulty does not modify logicScore. Feature-based similarity is secondary and not used for scoring.
+
+## Stage 3B: AST Intermediate Representation (Secondary)
 
 ### What is Stored in the Database
 - Each question now supports **sampleCode** and **expectedCode** fields (optional but recommended)
@@ -171,15 +186,12 @@ function compareLogic(studentFeatures, referenceLogic) {
   - Cached on the reference logic object as `sampleIntermediate` / `expectedIntermediate`
 
 ### AST Similarity Check
-- Student feature vector is compared to the reference IR using a lightweight similarity metric
+- AST similarity is for diagnostics only; it does not affect logicScore.
 - Similarity thresholds are difficulty-aware:
   - Easy: high ≥ 0.50, warning ≥ 0.30
   - Medium: high ≥ 0.65, warning ≥ 0.45
   - Hard: high ≥ 0.75, warning ≥ 0.55
-- Outcomes:
-  - **High**: adds a success (`ast_similarity_high`)
-  - **Partial**: adds a low-severity warning (`ast_similarity_partial`)
-  - **Low**: adds a medium-severity issue (`ast_similarity_low`) and can flip `matched=false` for non-easy problems
+- Outcomes: annotations only (e.g., `ast_similarity_high`), no scoring impact.
 
 ### Sample/Expected Code Structure in Logic JSON
 ```json
@@ -214,58 +226,9 @@ function compareLogic(studentFeatures, referenceLogic) {
 ```
 
 
-#### Current Formula
+#### Current Formula (TAC)
 ```javascript
-let logicScore = 100;  // Start at perfect score
-
-// Get difficulty level
-const difficulty = referenceLogic.difficulty.toLowerCase(); // 'easy', 'medium', 'hard'
-
-// Deduct for critical issues (HIGH severity)
-const criticalIssues = comparison.issues.filter(i => i.severity === 'high');
-logicScore -= criticalIssues.length * 20;  // -20 per critical issue
-
-// Deduct for medium issues (MEDIUM severity) - DIFFICULTY AWARE
-const mediumIssues = comparison.issues.filter(i => i.severity === 'medium');
-if (difficulty === 'easy') {
-  logicScore -= mediumIssues.length * 5;   // Be lenient
-} else if (difficulty === 'hard') {
-  logicScore -= mediumIssues.length * 15;  // Be strict
-} else {
-  logicScore -= mediumIssues.length * 10;  // Standard
-}
-
-// Deduct for warnings (LOW severity) - DIFFICULTY AWARE
-if (difficulty === 'easy') {
-  if (comparison.successes.length > 0 && comparison.issues.length === 0) {
-    logicScore -= 0;  // NO DEDUCTION if code works
-  } else {
-    logicScore -= comparison.warnings.length * 2;  // Minimal
-  }
-} else if (difficulty === 'hard') {
-  logicScore -= comparison.warnings.length * 7;  // Strict
-} else {
-  logicScore -= comparison.warnings.length * 4;  // Moderate
-}
-
-// Ensure between 0-100
-logicScore = Math.max(0, Math.min(100, logicScore));
-
-// SPECIAL BOOST FOR EASY PROBLEMS
-if (difficulty === 'easy') {
-  // If no critical issues and at least one success → minimum 90%
-  if (criticalIssues.length === 0 && comparison.successes.length > 0) {
-    logicScore = Math.max(logicScore, 90);
-  }
-  
-  // If complexity matches AND successes AND no critical → 100%
-  if (comparison.timeComplexityMatch && 
-      comparison.spaceComplexityMatch && 
-      comparison.successes.length > 0 && 
-      criticalIssues.length === 0) {
-    logicScore = 100;
-  }
-}
+const logicScore = Math.round(similarityScore * 100); // TAC-only
 ```
 
 #### Algorithm Match Level
@@ -367,31 +330,14 @@ print(c)
 ✓ 4 lines of code
 ```
 
-#### Step 2: Logic Comparison
+#### Step 2: TAC Logic Comparison
 ```
-Successes:
-  ✓ Time complexity matches: O(1)
-  ✓ Space complexity matches: O(1)
-  ✓ Algorithm paradigm correct: Simple Logic
-  ✓ Input is properly read and processed
-  ✓ Approach matches: arithmetic_operation
+TAC:
+  tacMatch: true
+  similarityScore: 1.0
+  mismatchReasons: []
 
-Issues: 0
-Warnings: 0 (or maybe some minor ones)
-
-Logic Score Calculation:
-  Start: 100
-  - Critical issues: 0 * 20 = 0
-  - Medium issues: 0 * 5 = 0
-  - Warnings (Easy mode): 0
-  
-  BEFORE BOOST: 100
-  
-  Easy Problem Boost:
-    ✓ No critical issues
-    ✓ Has successes
-    ✓ Complexity matches
-    → BOOST TO: 100
+Logic Score (TAC-only): round(1.0 * 100) = 100
 ```
 
 #### Step 3: Test Execution
