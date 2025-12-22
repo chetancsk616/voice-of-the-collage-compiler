@@ -27,6 +27,7 @@ import {
   RefreshWarningModal,
   AuthModal,
   VerdictModal,
+  HiddenTestsModal,
 } from './components';
 import LogoutConfirmModal from './components/LogoutConfirmModal';
 
@@ -81,6 +82,7 @@ export default function App() {
   const [submitting, setSubmitting] = useState(false);
   const [verdictResult, setVerdictResult] = useState(null);
   const [showVerdict, setShowVerdict] = useState(false);
+  const [showHiddenTests, setShowHiddenTests] = useState(false);
   const [securityEvents, setSecurityEvents] = useState([]);
   const submitCtrlRef = useRef(null);
 
@@ -1257,6 +1259,16 @@ export default function App() {
             show={showVerdict}
             verdict={verdictResult?.finalVerdict || verdictResult}
             onClose={() => setShowVerdict(false)}
+            onViewHiddenTests={() => {
+              setShowVerdict(false);
+              setShowHiddenTests(true);
+            }}
+          />
+
+          <HiddenTestsModal
+            show={showHiddenTests}
+            testResults={verdictResult?.testResults}
+            onClose={() => setShowHiddenTests(false)}
           />
 
           <ExitConfirmModal

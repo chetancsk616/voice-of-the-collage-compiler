@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default function VerdictModal({ show, verdict, onClose }) {
+export default function VerdictModal({ show, verdict, onClose, onViewHiddenTests }) {
   if (!show || !verdict) return null;
 
   // Debug: Log the verdict object to see what data we have
@@ -41,12 +41,22 @@ export default function VerdictModal({ show, verdict, onClose }) {
                 ? '⚠️ Partial Credit'
                 : '❌ Solution Rejected'}
           </h2>
-          <button
-            onClick={onClose}
-            className="px-4 py-2 border border-purple-500/50 text-purple-300 rounded-lg hover:bg-purple-600/20 font-semibold"
-          >
-            ✕ Close
-          </button>
+          <div className="flex gap-2">
+            {onViewHiddenTests && (
+              <button
+                onClick={onViewHiddenTests}
+                className="px-4 py-2 border border-cyan-500/50 text-cyan-300 rounded-lg hover:bg-cyan-600/20 font-semibold"
+              >
+                🔬 View Hidden Tests
+              </button>
+            )}
+            <button
+              onClick={onClose}
+              className="px-4 py-2 border border-purple-500/50 text-purple-300 rounded-lg hover:bg-purple-600/20 font-semibold"
+            >
+              ✕ Close
+            </button>
+          </div>
         </div>
 
         {/* Score Display */}

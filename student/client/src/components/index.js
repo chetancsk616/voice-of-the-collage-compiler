@@ -14,3 +14,4 @@ export { default as QuestionPanel } from './QuestionPanel';
 export { default as RefreshWarningModal } from './RefreshWarningModal';
 export { default as AuthModal } from './AuthModal';
 export { default as VerdictModal } from './VerdictModal';
+export { default as HiddenTestsModal } from './HiddenTestsModal';
