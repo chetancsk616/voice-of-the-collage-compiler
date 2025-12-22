@@ -161,6 +161,59 @@ function compareLogic(studentFeatures, referenceLogic) {
 
 ### Logic Score Calculation (Difficulty-Aware)
 
+## Stage 3B: AST Intermediate Representation (New)
+
+### What is Stored in the Database
+- Each question now supports **sampleCode** and **expectedCode** fields (optional but recommended)
+- On load, the server builds an **intermediate representation (IR)** using the AST pipeline:
+  - Language normalized (defaults to Python)
+  - AST feature vector extracted (loops, recursion, DP, stacks/queues, paradigms, complexity hints)
+  - Cached on the reference logic object as `sampleIntermediate` / `expectedIntermediate`
+
+### AST Similarity Check
+- Student feature vector is compared to the reference IR using a lightweight similarity metric
+- Similarity thresholds are difficulty-aware:
+  - Easy: high ≥ 0.50, warning ≥ 0.30
+  - Medium: high ≥ 0.65, warning ≥ 0.45
+  - Hard: high ≥ 0.75, warning ≥ 0.55
+- Outcomes:
+  - **High**: adds a success (`ast_similarity_high`)
+  - **Partial**: adds a low-severity warning (`ast_similarity_partial`)
+  - **Low**: adds a medium-severity issue (`ast_similarity_low`) and can flip `matched=false` for non-easy problems
+
+### Sample/Expected Code Structure in Logic JSON
+```json
+{
+  "questionId": "Q002",
+  "title": "Sum of Numbers",
+  "difficulty": "Easy",
+  "expectedAlgorithm": "Basic Addition",
+  "sampleLanguage": "python",
+  "sampleCode": "a = int(input())\nb = int(input())\nprint(a+b)",
+  "expectedCode": "a = int(input())\nb = int(input())\nprint(a+b)"
+}
+```
+
+### Intermediate Representation Example (abridged)
+```json
+{
+  "language": "python",
+  "features": {
+    "loopCount": 0,
+    "nestedLoopCount": 0,
+    "conditionalCount": 0,
+    "recursionDetected": false,
+    "usesSorting": false,
+    "usesHashMap": false,
+    "inputDependentLogic": true,
+    "paradigm": "Simple Logic",
+    "estimatedTimeComplexity": "O(1)",
+    "estimatedSpaceComplexity": "O(1)"
+  }
+}
+```
+
+
 #### Current Formula
 ```javascript
 let logicScore = 100;  // Start at perfect score

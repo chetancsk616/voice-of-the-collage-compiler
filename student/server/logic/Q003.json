@@ -9,6 +9,9 @@
   "expectedTimeComplexity": "O(log n)",
   "expectedSpaceComplexity": "O(1)",
   "paradigm": "Simple Logic",
+  "sampleLanguage": "python",
+  "sampleCode": "n = input().strip()\nif n.startswith('-'):\n    n = n[1:]\nprint(len(n))",
+  "expectedCode": "n = input().strip()\nif n.startswith('-'):\n    n = n[1:]\nprint(len(n))",
   "constraints": {
     "minLineCount": 2,
     "maxLineCount": 15,

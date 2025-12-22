@@ -9,6 +9,9 @@
   "expectedTimeComplexity": "O(1)",
   "expectedSpaceComplexity": "O(1)",
   "paradigm": "Simple Logic",
+  "sampleLanguage": "python",
+  "sampleCode": "print('Hello, World!')",
+  "expectedCode": "print('Hello, World!')",
   "constraints": {
     "minLineCount": 1,
     "maxLineCount": 5,

@@ -9,6 +9,9 @@
   "expectedTimeComplexity": "O(1)",
   "expectedSpaceComplexity": "O(1)",
   "paradigm": "Simple Logic",
+  "sampleLanguage": "python",
+  "sampleCode": "a = int(input())\nb = int(input())\nprint(a + b)",
+  "expectedCode": "a = int(input())\nb = int(input())\nprint(a + b)",
   "constraints": {
     "minLineCount": 3,
     "maxLineCount": 10,

@@ -1,11 +1,104 @@
 const fs = require('fs');
 const path = require('path');
+const {
+  extractFeaturesAST,
+  normalizeLanguage: normalizeAstLanguage,
+} = require('../ast/core/extractorAdapter');
 
 // In-memory cache for loaded reference logic
 const logicCache = new Map();
 
 // Directory containing reference logic files
 const LOGIC_DIR = path.join(__dirname, '..', 'logic');
+
+/**
+ * Builds an intermediate representation for reference code using AST extraction
+ * @param {string} code - Reference code snippet
+ * @param {string} language - Language of the code
+ * @returns {Object|null} - Intermediate representation with feature vector
+ */
+function buildIntermediateRepresentation(code, language) {
+  if (!code || typeof code !== 'string' || !code.trim()) return null;
+
+  const lang = normalizeAstLanguage(language || 'python');
+  const features = extractFeaturesAST(code, lang);
+
+  return {
+    language: lang,
+    features,
+    createdAt: new Date().toISOString(),
+  };
+}
+
+/**
+ * Compute similarity between student features and reference AST feature vector
+ * Uses a simple matching ratio across key structural attributes
+ * @param {Object} studentFeatures
+ * @param {Object} referenceFeatures
+ * @returns {number|null} similarity in [0,1] or null if insufficient data
+ */
+function computeAstFeatureSimilarity(studentFeatures, referenceFeatures) {
+  if (!studentFeatures || !referenceFeatures) return null;
+
+  const numericKeys = ['loopCount', 'nestedLoopCount', 'conditionalCount'];
+  const booleanKeys = [
+    'recursionDetected',
+    'usesSorting',
+    'usesHashMap',
+    'usesStack',
+    'useQueue',
+    'dynamicProgramming',
+    'twoPointers',
+    'graphTraversal',
+    'inputDependentLogic',
+  ];
+  const categoricalKeys = ['paradigm', 'estimatedTimeComplexity', 'estimatedSpaceComplexity'];
+
+  let matches = 0;
+  let total = 0;
+
+  for (const key of numericKeys) {
+    if (
+      typeof studentFeatures[key] === 'number' &&
+      typeof referenceFeatures[key] === 'number'
+    ) {
+      total += 1;
+      const diff = Math.abs(studentFeatures[key] - referenceFeatures[key]);
+      if (diff === 0) {
+        matches += 1;
+      } else if (diff === 1) {
+        matches += 0.75;
+      } else if (diff === 2) {
+        matches += 0.5;
+      }
+    }
+  }
+
+  for (const key of booleanKeys) {
+    if (typeof studentFeatures[key] === 'boolean' && typeof referenceFeatures[key] === 'boolean') {
+      total += 1;
+      if (studentFeatures[key] === referenceFeatures[key]) {
+        matches += 1;
+      } else {
+        matches += 0; // explicit for clarity
+      }
+    }
+  }
+
+  for (const key of categoricalKeys) {
+    if (studentFeatures[key] && referenceFeatures[key]) {
+      total += 1;
+      if (String(studentFeatures[key]).toLowerCase() === String(referenceFeatures[key]).toLowerCase()) {
+        matches += 1;
+      } else {
+        matches += 0.25; // partial credit for having categorical info
+      }
+    }
+  }
+
+  if (total === 0) return null;
+  return Number((matches / total).toFixed(2));
+}
 
 /**
  * Validates required fields in reference logic object
@@ -106,6 +199,17 @@ function normalizeLogicSchema(logic, sourceLabel) {
     logic.testCases = [];
   }
 
+  // Normalize sample/expected code fields (optional for AST comparison)
+  if (!Object.prototype.hasOwnProperty.call(logic, 'sampleCode')) {
+    logic.sampleCode = '';
+  }
+  if (!Object.prototype.hasOwnProperty.call(logic, 'expectedCode')) {
+    logic.expectedCode = logic.sampleCode || '';
+  }
+  if (!Object.prototype.hasOwnProperty.call(logic, 'sampleLanguage')) {
+    logic.sampleLanguage = logic.language || 'python';
+  }
+
   return logic;
 }
 
@@ -138,6 +242,18 @@ function loadReferenceLogicFromFile(questionId) {
       );
       return null;
     }
+
+    // Build intermediate AST representations for sample/expected code if provided
+    const sampleIR = buildIntermediateRepresentation(
+      logic.sampleCode,
+      logic.sampleLanguage || logic.language || 'python'
+    );
+    const expectedIR = buildIntermediateRepresentation(
+      logic.expectedCode,
+      logic.sampleLanguage || logic.language || 'python'
+    );
+    logic.sampleIntermediate = sampleIR;
+    logic.expectedIntermediate = expectedIR;
 
     console.log(
       `[ReferenceLogicLoader] Successfully loaded logic for ${questionId}`
@@ -657,6 +773,45 @@ function compareAgainstReference(studentFeatures, questionId) {
         type: 'approach_match',
         message: `Simple approach matches allowed: ${referenceLogic.allowedApproaches.join(', ')}`,
       });
+    }
+  }
+
+  // AST/intermediate representation similarity check
+  const referenceIntermediate =
+    referenceLogic.sampleIntermediate || referenceLogic.expectedIntermediate;
+  if (referenceIntermediate && referenceIntermediate.features) {
+    const astSimilarity = computeAstFeatureSimilarity(
+      studentFeatures,
+      referenceIntermediate.features
+    );
+    comparison.details.astSimilarity = astSimilarity;
+
+    if (astSimilarity !== null) {
+      const difficulty = (referenceLogic.difficulty || 'medium').toLowerCase();
+      const highThreshold = difficulty === 'hard' ? 0.75 : difficulty === 'medium' ? 0.65 : 0.5;
+      const warnThreshold = difficulty === 'hard' ? 0.55 : difficulty === 'medium' ? 0.45 : 0.3;
+
+      if (astSimilarity >= highThreshold) {
+        comparison.successes.push({
+          type: 'ast_similarity_high',
+          message: `AST similarity high (${astSimilarity}) with reference sample`,
+        });
+      } else if (astSimilarity >= warnThreshold) {
+        comparison.warnings.push({
+          type: 'ast_similarity_partial',
+          severity: 'low',
+          message: `AST similarity partial (${astSimilarity})`,
+        });
+      } else {
+        comparison.issues.push({
+          type: 'ast_similarity_low',
+          severity: 'medium',
+          message: `AST similarity low (${astSimilarity}) compared to reference sample`,
+        });
+        if (difficulty !== 'easy') {
+          comparison.matched = false;
+        }
+      }
     }
   }
 
