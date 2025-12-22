@@ -699,17 +699,36 @@ function compareAgainstReference(studentFeatures, questionId) {
   // Ensure score is between 0-100
   logicScore = Math.max(0, Math.min(100, logicScore));
   
+  // DEBUG LOGGING - Add detailed evaluation info
+  console.log('\n📊 LOGIC EVALUATION DEBUG:');
+  console.log('  Difficulty:', difficulty);
+  console.log('  Issues (High):', criticalIssues.length, criticalIssues.map(i => i.type));
+  console.log('  Issues (Medium):', mediumIssues.length, mediumIssues.map(i => i.type));
+  console.log('  Warnings (Low):', comparison.warnings.length, comparison.warnings.map(w => w.type));
+  console.log('  Successes:', comparison.successes.length, comparison.successes.map(s => s.type || s.message?.substring(0, 30)));
+  console.log('  Time Complexity Match:', comparison.timeComplexityMatch);
+  console.log('  Space Complexity Match:', comparison.spaceComplexityMatch);
+  console.log('  Logic Score (before boost):', logicScore);
+  
   // Special case: For Easy problems with simple correct solutions, boost the score
   if (difficulty === 'easy') {
+    console.log('  🎯 Easy Mode Active - Checking for boost...');
     // If there are no critical issues and at least one success, ensure minimum 90% score
     if (criticalIssues.length === 0 && comparison.successes.length > 0) {
+      const oldScore = logicScore;
       logicScore = Math.max(logicScore, 90);
+      console.log('  ✓ Minimum 90% boost applied:', oldScore, '→', logicScore);
     }
     // If complexity matches perfectly and there are successes, give full marks
     if (comparison.timeComplexityMatch && comparison.spaceComplexityMatch && comparison.successes.length > 0 && criticalIssues.length === 0) {
+      console.log('  ✓ Perfect complexity + successes → 100% boost applied!');
       logicScore = 100;
     }
   }
+  
+  console.log('  Logic Score (FINAL):', logicScore);
+  console.log('  Algorithm Match will be:', comparison.issues.length === 0 ? 'FULL' : (comparison.issues.length <= 2 ? 'PARTIAL' : 'NONE'));
+  console.log('📊 END LOGIC EVALUATION DEBUG\n');
 
   // Set algorithmMatch level with difficulty awareness
   if (comparison.issues.length === 0) {
