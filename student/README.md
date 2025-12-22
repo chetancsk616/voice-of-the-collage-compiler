@@ -1,33 +1,53 @@
 # AI Compiler - Student Portal
 
-Independent student project for the AI Web Compiler learning platform.
+The student portal is part of the unified AI Web Compiler system accessible via a single login portal.
+
+## Access
+
+**Start the entire application** with:
+```bash
+npm run dev
+```
+
+Then visit **http://localhost:3000** to sign in. After authentication as a student, you'll be redirected to the student portal at **http://localhost:3000/student/**.
 
 ## Features
 
-- **Code Editor**: Write and edit code in multiple languages (Python, JavaScript, Java, C++, C)
-- **Real-time Compilation**: Execute code and see results instantly
-- **AI Assistant**: Get help with errors and debugging using Groq AI
-- **Problem Solving**: Access programming questions and submit solutions
-- **Syntax Highlighting**: Enhanced code readability
-- **Firebase Integration**: Authentication and data persistence
+- **Code Editor** - Write and edit code in multiple languages (Python, JavaScript, Java, C++, C)
+- **Real-time Compilation** - Execute code and see results instantly using Piston API
+- **AI Assistant** - Get help with errors and debugging using Groq AI
+- **Problem Solving** - Access programming questions and submit solutions
+- **Syntax Highlighting** - Enhanced code readability with language-specific themes
+- **Progress Tracking** - View submission history and results
 
 ## Project Structure
 
 ```
-student-project/
-├── client/           # React frontend (Vite + React + TailwindCSS)
+student/
+├── client/                     # React frontend (Vite + React + TailwindCSS)
 │   ├── src/
-│   │   ├── App.jsx
-│   │   ├── Editor.jsx
-│   │   ├── QuestionList.jsx
-│   │   └── components/
-│   └── package.json
-├── server/           # Express backend
-│   ├── routes/
-│   ├── executor/     # Piston API integration
-│   ├── ai/          # Groq AI client
-│   ├── ast/         # Code analysis
-│   └── index.js
+│   │   ├── App.jsx             # Main app component with logout modal
+│   │   ├── Home.jsx            # Home page / editor interface
+│   │   ├── Editor.jsx          # Code editor component
+│   │   ├── QuestionList.jsx    # Available problems list
+│   │   ├── AuthContext.jsx     # Student authentication state
+│   │   ├── components/
+│   │   │   ├── EditorHeader.jsx    # Header with logout button
+│   │   │   ├── LogoutConfirmModal.jsx  # Custom logout confirmation
+│   │   │   └── ...
+│   │   ├── api.js              # API client with /student/api prefix
+│   │   ├── firebase.js         # Firebase configuration
+│   │   └── main.jsx
+│   └── vite.config.js          # Dev server config (port 3002, base /student/)
+│
+├── server/                     # Express backend (port 5001, accessed via /student/api)
+│   ├── routes/                 # API endpoints (execute, questions, submit, etc.)
+│   ├── middleware/             # Auth middleware, error handling
+│   ├── executor/               # Piston API integration for code execution
+│   ├── ai/                     # Groq AI client for assistance
+│   ├── ast/                    # Code analysis and parsing
+│   └── index.js                # Express server
+│
 ├── package.json
 └── .env
 ```
@@ -36,19 +56,53 @@ student-project/
 
 - Node.js >= 18.0.0
 - npm or yarn
-- Firebase account with Admin SDK credentials
+- Firebase account for authentication
 - Groq API key (for AI assistance)
 
-## Installation
+## Setup
 
-1. **Clone or copy this project to your machine**
-
-2. **Install all dependencies**:
+1. **Install dependencies** (from root):
    ```bash
    npm run install:all
    ```
 
-3. **Configure environment variables**:
+2. **Configure environment**:
+   
+   **student/server/.env**
+   ```env
+   PORT=5001
+   GROQ_API_KEY=your_groq_api_key_here
+   NODE_ENV=development
+   PISTON_API_URL=https://emkc.org/api/v2/piston
+   ```
+
+3. **Start development**:
+   ```bash
+   npm run dev
+   ```
+   Then visit **http://localhost:3000** and sign in as a student.
+
+## Single-Origin Architecture
+
+The student portal is served as a sub-route under the unified login origin:
+
+```
+Browser → http://localhost:3000/student/
+  ↓
+Vite Proxy (login app)
+  ↓
+Forwards to http://localhost:3002 (student dev server)
+  ↓
+Student client renders with /student/ base path
+```
+
+All API calls are similarly routed:
+- `POST /student/api/execute` → proxied to student backend (5001)
+- Response handled with path rewrite for seamless integration
+
+## API Endpoints
+
+All endpoints require student authentication (Firebase token validation):3. **Configure environment variables**:
    - Copy `.env.example` to `.env`
    - Add your Firebase credentials (base64 encoded service account JSON)
    - Add your Groq API key

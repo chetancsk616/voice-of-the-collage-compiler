@@ -1,30 +1,53 @@
 # AI Compiler - Admin Panel
 
-Independent admin project for managing the AI Web Compiler system.
+The admin panel is part of the unified AI Web Compiler system accessible via a single login portal.
+
+## Access
+
+**Start the entire application** with:
+```bash
+npm run dev
+```
+
+Then visit **http://localhost:3000** to sign in. After authentication with admin role, you'll be redirected to the admin panel at **http://localhost:3000/admin/**.
 
 ## Features
 
-- **Question Management**: Create, edit, and delete programming questions
-- **User Management**: View and manage student accounts
-- **Submission Viewer**: Review student code submissions and results
-- **Firebase Integration**: Real-time database and authentication
+- **Question Management** - Create, edit, and delete programming questions
+- **User Management** - View and manage student accounts  
+- **Submission Viewer** - Review student code submissions and results
+- **Role-Based Access** - Admin-only features protected by custom Firebase claims
+- **Real-time Dashboard** - System statistics and monitoring
 
 ## Project Structure
 
 ```
-admin-project/
-├── client/           # React frontend (Vite + React + TailwindCSS)
+admin/
+├── client/                     # React frontend (Vite + React + TailwindCSS)
 │   ├── src/
 │   │   ├── AdminDashboard.jsx
 │   │   ├── QuestionManager.jsx
 │   │   ├── UserManager.jsx
-│   │   └── SubmissionViewer.jsx
-│   └── package.json
-├── server/           # Express backend
-│   ├── routes/
-│   ├── middleware/
-│   ├── utils/
-│   └── index.js
+│   │   ├── SubmissionViewer.jsx
+│   │   ├── AuthContext.jsx          # Admin authentication state
+│   │   ├── components/
+│   │   │   ├── ProtectedAdminRoute.jsx  # Route protection for admin-only access
+│   │   │   ├── LogoutConfirmModal.jsx   # Custom logout confirmation
+│   │   │   └── ...
+│   │   ├── api.js                   # API client with /admin/api prefix
+│   │   ├── firebase.js              # Firebase configuration
+│   │   └── main.jsx
+│   └── vite.config.js           # Dev server config (port 3001, base /admin/)
+│
+├── server/                     # Express backend (port 4100, accessed via /admin/api)
+│   ├── routes/                 # API endpoints
+│   ├── middleware/             # Auth middleware, error handling
+│   ├── config/
+│   │   └── serviceAccountKey.json   # Firebase Admin SDK credentials
+│   ├── ai/                     # AI integration (Groq)
+│   ├── ast/                    # Code analysis
+│   └── index.js                # Express server
+│
 ├── package.json
 └── .env
 ```
@@ -33,21 +56,60 @@ admin-project/
 
 - Node.js >= 18.0.0
 - npm or yarn
-- Firebase account with Admin SDK credentials
+- Firebase account with Admin SDK configured
 - Groq API key (for AI features)
 
-## Installation
+## Setup
 
-1. **Clone or copy this project to your machine**
-
-2. **Install all dependencies**:
+1. **Install dependencies** (from root):
    ```bash
    npm run install:all
    ```
 
-3. **Configure environment variables**:
-   - Copy `.env.example` to `.env`
-   - Add your Firebase credentials (base64 encoded service account JSON)
+2. **Configure environment**:
+   
+   **admin/server/.env**
+   ```env
+   PORT=4100
+   GROQ_API_KEY=your_groq_api_key_here
+   NODE_ENV=development
+   ```
+
+3. **Set up Firebase Admin SDK**:
+   - Download service account JSON from Firebase Console > Project Settings
+   - Place at `admin/server/config/serviceAccountKey.json`
+   - Set custom admin claim on your user account:
+     ```bash
+     node setAdminRole.js <your_firebase_uid>
+     ```
+
+4. **Start development**:
+   ```bash
+   npm run dev
+   ```
+   Then visit **http://localhost:3000** and sign in with admin role.
+
+## Single-Origin Architecture
+
+The admin panel is served as a sub-route under the unified login origin:
+
+```
+Browser → http://localhost:3000/admin/
+  ↓
+Vite Proxy (login app)
+  ↓
+Forwards to http://localhost:3001 (admin dev server)
+  ↓
+Admin client renders with /admin/ base path
+```
+
+All API calls are similarly routed:
+- `POST /admin/api/questions` → proxied to admin backend (4100)
+- Response handled with path rewrite for seamless integration
+
+## API Endpoints
+
+All endpoints require admin authentication (custom claim validation):
    - Add your Groq API key
 
 4. **Set up Firebase**:

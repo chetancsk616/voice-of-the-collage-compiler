@@ -6,11 +6,12 @@
 npm run dev
 ```
 
-This command starts all four servers simultaneously:
-- ✅ Admin Client → http://localhost:3001
-- ✅ Admin Server → http://localhost:4001
-- ✅ Student Client → http://localhost:3002
-- ✅ Student Server → http://localhost:5001
+This command starts all three frontend servers and two backend services simultaneously:
+- ✅ Login Page → http://localhost:3000 (entry point)
+- ✅ Admin Client → http://localhost:3001 (proxied to 3000/admin/)
+- ✅ Admin Server → http://localhost:4100 (accessed via /admin/api)
+- ✅ Student Client → http://localhost:3002 (proxied to 3000/student/)
+- ✅ Student Server → http://localhost:5001 (accessed via /student/api)
 
 ## 📋 First Time Setup
 
@@ -20,40 +21,56 @@ This command starts all four servers simultaneously:
 npm run install:all
 ```
 
-This installs all packages for both admin and student projects.
+This installs all packages for login, admin, and student projects.
 
 ### 2. Configure Environment
 
-Create `.env` files in both `admin/` and `student/` directories:
-
-**admin/.env**
+#### Login App (`login/.env`)
 ```env
-PORT=4001
-GROQ_API_KEY=your_groq_key_here
-FIREBASE_SERVICE_ACCOUNT_BASE64=your_firebase_base64_here
-AST_ENABLED=true
+VITE_FIREBASE_API_KEY=your_api_key
+VITE_FIREBASE_AUTH_DOMAIN=your_project.firebaseapp.com
+VITE_FIREBASE_PROJECT_ID=your_project_id
+VITE_FIREBASE_STORAGE_BUCKET=your_project.appspot.com
+VITE_FIREBASE_MESSAGING_SENDER_ID=your_sender_id
+VITE_FIREBASE_APP_ID=your_app_id
 ```
 
-**student/.env**
+#### Admin Server (`admin/server/.env`)
+```env
+PORT=4100
+GROQ_API_KEY=your_groq_key_here
+```
+
+#### Student Server (`student/server/.env`)
 ```env
 PORT=5001
 GROQ_API_KEY=your_groq_key_here
-FIREBASE_SERVICE_ACCOUNT_BASE64=your_firebase_base64_here
-AST_ENABLED=true
-PISTON_API_URL=https://emkc.org/api/v2/piston
 ```
 
-### 3. Build Projects
+### 3. Firebase Setup (One-Time)
+
+1. Get Firebase credentials from [Firebase Console](https://console.firebase.google.com)
+2. Enable Email/Password and Google OAuth in Authentication
+3. Download service account JSON for Admin SDK
+4. Place at `admin/server/config/serviceAccountKey.json`
+5. Set admin role on your account:
+   ```bash
+   node setAdminRole.js <your_uid>
+   ```
+
+### 4. Build Projects
 
 ```bash
 npm run build
 ```
 
-### 4. Start Development
+### 5. Start Development
 
 ```bash
 npm run dev
 ```
+
+Access at **http://localhost:3000** and sign in!
 
 ## 🎮 Available Commands
 
@@ -61,17 +78,15 @@ npm run dev
 
 | Command | Description |
 |---------|-------------|
-| `npm run dev` | Start everything (admin + student) |
-| `npm run dev:admin-only` | Start only admin panel |
-| `npm run dev:student-only` | Start only student portal |
+| `npm run dev` | Start everything (login + admin + student) |
+| `npm run dev:admin-only` | Start only admin app |
+| `npm run dev:student-only` | Start only student app |
 
 ### Production
 
 | Command | Description |
 |---------|-------------|
-| `npm run build` | Build both projects |
-| `npm run build:admin` | Build admin only |
-| `npm run build:student` | Build student only |
+| `npm run build` | Build all projects |
 | `npm start` | Start production servers |
 
 ### Maintenance
@@ -84,20 +99,33 @@ npm run dev
 
 | Service | URL | Purpose |
 |---------|-----|---------|
-| Admin Panel | http://localhost:3001 | Question management, user admin |
-| Admin API | http://localhost:4001 | Backend for admin panel |
-| Student Portal | http://localhost:3002 | Code editor, learning platform |
-| Student API | http://localhost:5001 | Backend for student portal |
+| **Unified Login** | **http://localhost:3000** | ⭐ Start here! Sign in with email or Google |
+| Admin Portal | http://localhost:3000/admin/ | Question & user management (redirected after admin sign-in) |
+| Student Portal | http://localhost:3000/student/ | Code editor & learning (redirected after student sign-in) |
+
+**Note**: All requests go through port 3000 for unified authentication. Backend APIs are proxied:
+- Admin APIs: `/admin/api` → admin server (4100)
+- Student APIs: `/student/api` → student server (5001)
 
 ## 📂 Project Structure
 
 ```
 ai-web-compiler/
+├── login/                  ← Unified login app (port 3000)
+│   ├── src/
+│   │   ├── Login.jsx       ← Email & Google sign-in
+│   │   ├── AuthContext.jsx ← Auth state management
+│   │   └── components/
+│   │       └── LogoutConfirmModal.jsx
+│   └── vite.config.js      ← Proxy config for /admin & /student
+│
 ├── admin/
-│   ├── client/    → Vite dev server (3001)
-│   └── server/    → Express server (4001)
+│   ├── client/             ← Admin UI (port 3001, served at /admin/)
+│   └── server/             ← Admin API (port 4100, via /admin/api)
+│
 └── student/
-    ├── client/    → Vite dev server (3002)
+    ├── client/             ← Student UI (port 3002, served at /student/)
+    └── server/             ← Student API (port 5001, via /student/api)
     └── server/    → Express server (5001)
 ```
 
