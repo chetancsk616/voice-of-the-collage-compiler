@@ -1,7 +1,7 @@
 # Logic Evaluation System Documentation
 
-> **Last Updated**: December 22, 2025  
-> **System Version**: 2.0 (AST-based)  
+> **Last Updated**: December 29, 2025  
+> **System Version**: 2.2 (AST-based)  
 > **Status**: Production Ready (28/28 tests passing)
 
 ---
@@ -15,9 +15,8 @@
 5. [Stage 3: Logic Comparison](#stage-3-logic-comparison)
 6. [Stage 4: Test Execution](#stage-4-test-execution)
 7. [Stage 5: Generate Verdict](#stage-5-generate-verdict)
-8. [AI Justification Override System](#ai-justification-override-system)
-9. [Scoring System](#scoring-system)
-10. [FAQ: Intermediate Variables](#faq-intermediate-variables)
+8. [Scoring System](#scoring-system)
+9. [FAQ: Intermediate Variables](#faq-intermediate-variables)
 
 ---
 
@@ -206,88 +205,6 @@ print(c)
   ]
 }
 ```
-
----
-
-## AI Justification Override System
-
-> **🆕 New Feature**: Level-aware AI validation for fairer grading
-
-After deterministic scoring is complete, the **AI Justification Override System** may activate to restore deducted logic marks based on question difficulty level.
-
-### When Does It Trigger?
-
-The AI system activates when ALL conditions are met:
-- ✅ All test cases passed (100%)
-- ✅ Algorithm match is PARTIAL (minor deviations detected)
-- ✅ Score is 80-99 (near perfect but not full marks)
-- ✅ No complexity mismatches
-- ✅ No disallowed patterns
-
-### Example
-
-```python
-# Easy Question: Sum of Numbers
-# Expected solution (100 points):
-a = int(input())
-b = int(input())
-print(a + b)
-
-# Student submission (92 → 100 points after AI override):
-a = int(input())
-b = int(input())
-c = a + b  # Extra variable
-print(c)
-
-# Deterministic Score: 92/100 (8 points deducted for efficiency)
-# AI Analysis: "Extra variable acceptable for Easy level"
-# Final Score: 100/100 (marks restored by AI override)
-```
-
-### Level-Aware Policies
-
-| Level | Override Rate | Philosophy |
-|-------|--------------|------------|
-| **Easy** | ~40-50% | Forgiving for style deviations |
-| **Medium** | ~15-20% | Balanced correctness + efficiency |
-| **Hard** | ~5-10% | Strict - high standards expected |
-
-### What AI Can Override
-
-✅ Extra variables (Easy/Medium)  
-✅ Redundant assignments (Easy)  
-✅ Structural variations (Easy/Medium)  
-✅ Alternate loop forms (Easy)
-
-### What AI Cannot Override
-
-❌ Failed test cases  
-❌ Wrong time/space complexity  
-❌ Disallowed patterns (hardcoding, forbidden built-ins)  
-❌ Syntax/runtime errors
-
-### Verdict Structure with AI Override
-
-```javascript
-{
-  "decision": "CORRECT",
-  "score": 100,  // Restored from 92
-  "aiOverride": {
-    "applied": true,
-    "originalScore": 92,
-    "marksRestored": 8,
-    "reason": "Extra variable acceptable for Easy level",
-    "durationMs": 245,
-    "mismatchTypes": ["extra_variable"]
-  },
-  "components": {
-    "ruleBased": { "algorithmMatch": "PARTIAL" },
-    "testResults": { "passRate": 100 }
-  }
-}
-```
-
-**📚 Complete Documentation**: See [AI_JUSTIFICATION_OVERRIDE.md](AI_JUSTIFICATION_OVERRIDE.md) for detailed implementation, architecture, safety rules, and audit logging.
 
 ---
 

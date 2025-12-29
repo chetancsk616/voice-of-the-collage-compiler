@@ -33,7 +33,6 @@
 |----------|---------|
 | **[SYSTEM_ARCHITECTURE.md](./SYSTEM_ARCHITECTURE.md)** | System architecture diagrams and flow |
 | **[LOGIC_EVALUATION_SYSTEM.md](./LOGIC_EVALUATION_SYSTEM.md)** | Code evaluation pipeline details |
-| **[AI_JUSTIFICATION_OVERRIDE.md](./AI_JUSTIFICATION_OVERRIDE.md)** | 🆕 AI-powered level-aware grading fairness |
 
 ---
 
@@ -152,7 +151,7 @@ Detailed topic-specific documentation:
 - **Core Docs**: 8 files
 - **Specialized Docs**: 15+ files
 - **Total Pages**: ~200 pages of documentation
-- **Last Updated**: December 22, 2025
+- **Last Updated**: December 29, 2025
 
 ---
 

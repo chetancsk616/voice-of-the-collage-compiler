@@ -1,14 +1,11 @@
 {
   "name": "ai-web-compiler",
-  "version": "1.0.0",
+  "version": "2.2.0",
   "private": true,
   "workspaces": [
-    "client",
-    "server",
-    "admin-app",
-    "student-app",
-    "admin-server",
-    "student-server"
+    "login",
+    "admin",
+    "student"
   ],
   "scripts": {
     "dev": "concurrently \"npm run dev:login\" \"npm run dev:admin\" \"npm run dev:student\"",

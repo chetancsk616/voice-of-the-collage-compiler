@@ -39,14 +39,12 @@
 - **AI Assistant** - Groq AI for code help
 - **Test Cases** - Validate solutions
 - **AST Evaluation** - 100% deterministic scoring
-- **🆕 AI Fairness Override** - Level-aware grading for minor deviations
 - **Auto-Save** - Progress tracking in Firestore
 
 ### 👨‍💼 Admin Panel (`/admin/`)
 - **Question Manager** - CRUD operations
 - **User Manager** - Student account management
 - **Submission Viewer** - Detailed evaluation results
-- **🆕 AI Audit Dashboard** - View override statistics and logs
 - **Real-time Dashboard** - Firebase RTDB integration
 
 ---
@@ -220,29 +218,9 @@ FIREBASE_ADMIN_SDK_BASE64=xxx
 | [START.md](./START.md) | Quick start guide |
 | [SYSTEM_ARCHITECTURE.md](./SYSTEM_ARCHITECTURE.md) | System architecture diagrams |
 | [LOGIC_EVALUATION_SYSTEM.md](./LOGIC_EVALUATION_SYSTEM.md) | Evaluation system details |
-| [AI_JUSTIFICATION_OVERRIDE.md](./AI_JUSTIFICATION_OVERRIDE.md) | 🆕 AI-powered fair grading system |
 | [API.md](./API.md) | API endpoints reference |
 | [DEPLOYMENT.md](./DEPLOYMENT.md) | Deployment instructions |
 | [DEVELOPMENT.md](./DEVELOPMENT.md) | Development guidelines |
-
----
-
-## 🧪 Testing
-
-### Test AI Override System
-
-Test the AI Justification Override System with different scenarios:
-
-```bash
-# Make sure GROQ_API_KEY is set in your .env files
-node test-ai-override.js
-```
-
-**Expected Output**:
-- ✅ Easy level extra variable → Override allowed
-- ❌ Hard level extra variable → No override
-- ❌ Test failure → No override (safety rule)
-- ❌ Complexity mismatch → No override (safety rule)
 
 ---
 
@@ -268,15 +246,6 @@ cat login/.env
 ```bash
 node setAdminRole.js your-email@example.com
 # Then log out and log back in
-```
-
-**AI Override not working:**
-```bash
-# Check GROQ_API_KEY is set
-echo $env:GROQ_API_KEY
-
-# Test the system
-node test-ai-override.js
 ```
 
 📘 **[Full Troubleshooting Guide](./DOCUMENTATION.md#troubleshooting)**
@@ -616,7 +585,7 @@ Private - For educational use only
 
 ---
 
-**Version**: 2.0.0  
-**Last Updated**: December 22, 2025  
+**Version**: 2.2.0  
+**Last Updated**: December 29, 2025  
 **Architecture**: Unified Login + Single-Origin Routing + Separate Backend Services
 

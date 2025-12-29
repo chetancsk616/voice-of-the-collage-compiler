@@ -1,7 +1,7 @@
 # AI Web Compiler - Complete Documentation
 
-> **Last Updated**: December 22, 2025  
-> **Version**: 2.0  
+> **Last Updated**: December 29, 2025  
+> **Version**: 2.2  
 > **Status**: Production Ready
 
 ---
@@ -14,11 +14,10 @@
 4. [Features](#features)
 5. [Authentication System](#authentication-system)
 6. [Logic Evaluation System](#logic-evaluation-system)
-7. [AI Justification Override System](#ai-justification-override-system)
-8. [Development Guide](#development-guide)
-9. [Deployment](#deployment)
-10. [API Reference](#api-reference)
-11. [Troubleshooting](#troubleshooting)
+7. [Development Guide](#development-guide)
+8. [Deployment](#deployment)
+9. [API Reference](#api-reference)
+10. [Troubleshooting](#troubleshooting)
 
 ---
 
@@ -329,24 +328,15 @@ Runs code against test cases using Piston API:
 - Execution time and memory tracking
 - Error and output capture
 
-### Stage 5: Generate Verdict (with AI Override)
+### Stage 5: Generate Verdict
 
-Combines all analyses into a comprehensive verdict. If logic marks are deducted but tests pass, the **AI Justification Override System** may restore marks based on question difficulty level.
-
-**🆕 AI Override Feature**: The system uses level-aware AI validation to determine if minor logic deviations should be waived. See [AI_JUSTIFICATION_OVERRIDE.md](AI_JUSTIFICATION_OVERRIDE.md) for complete details.
+Combines all analyses into a comprehensive verdict based on deterministic scoring rules.
 
 ```javascript
 {
   decision: "CORRECT" | "ACCEPTABLE" | "NEEDS_IMPROVEMENT" | "INCORRECT",
-  score: 100,  // 0-100 (may be restored by AI override)
+  score: 100,  // 0-100 (deterministic scoring)
   trustScore: 95,  // Confidence in verdict
-  aiOverride: {  // NEW: Present when AI override applied
-    applied: true,
-    originalScore: 92,
-    marksRestored: 8,
-    reason: "Extra variable acceptable for Easy level",
-    durationMs: 245
-  },
   testResults: {
     passRate: 100,
     totalTests: 4,
@@ -413,86 +403,6 @@ The 8-point difference typically comes from:
 - **Line count** (3 lines vs 4 lines on "Easy" questions)
 - **Efficiency rubric** (questions may prefer minimal code)
 - **Pattern matching** (slight deviation from reference solution)
-
-**🆕 AI Override**: For Easy level questions, the AI Justification Override System may waive these minor deductions and restore full marks. See next section.
-
----
-
-## AI Justification Override System
-
-> **Level-Aware Fairness in Code Evaluation**
-
-The AI Justification Override System provides post-processing validation that can restore deducted logic marks based on question difficulty level. This ensures fairer grading, especially for Easy level questions where minor style variations shouldn't impact correctness scores.
-
-### Quick Overview
-
-**When Does It Activate?**
-- ✅ All test cases passed (100%)
-- ✅ Algorithm match is PARTIAL (minor deviations)
-- ✅ Score is 80-99 (near perfect)
-- ✅ No complexity mismatches
-
-**What Can AI Override?**
-- ✅ Extra variables (Easy/Medium)
-- ✅ Redundant assignments (Easy)
-- ✅ Structural variations (Easy/Medium)
-- ✅ Alternate loop forms (Easy)
-
-**What Can AI NEVER Override?**
-- ❌ Failed test cases
-- ❌ Wrong complexity (O(n) vs O(log n))
-- ❌ Disallowed patterns (hardcoding, forbidden built-ins)
-- ❌ Syntax/runtime errors
-
-### Level-Aware Policies
-
-| Level | Override Rate | Philosophy |
-|-------|--------------|------------|
-| **Easy** | ~40-50% | "If it works and complexity is right, give full marks" |
-| **Medium** | ~15-20% | "Balance correctness with efficiency awareness" |
-| **Hard** | ~5-10% | "Almost never override - high standards expected" |
-
-### Example
-
-```
-Student Submission (Easy Question):
-a = int(input())
-b = int(input())
-c = a + b  # Extra variable
-print(c)
-
-Deterministic Score: 92/100
-Reason: 8 points deducted for efficiency/extra variable
-
-AI Analysis:
-- Question Level: Easy
-- Policy: Extra variables allowed
-- Tests Passed: 100%
-- Decision: Override allowed ✅
-
-Final Score: 100/100
-AI Reason: "Extra variable acceptable for Easy level"
-```
-
-### Audit API Endpoints
-
-View AI override statistics and logs:
-
-```bash
-# Get overall statistics
-GET /admin/api/ai-audit/stats
-
-# View recent audit logs
-GET /admin/api/ai-audit/logs?limit=50
-
-# User-specific logs
-GET /admin/api/ai-audit/user/:userId
-
-# Question-specific logs
-GET /admin/api/ai-audit/question/:questionId
-```
-
-**📚 Complete Documentation**: See [AI_JUSTIFICATION_OVERRIDE.md](AI_JUSTIFICATION_OVERRIDE.md) for detailed implementation, architecture, safety rules, and examples.
 
 ---
 

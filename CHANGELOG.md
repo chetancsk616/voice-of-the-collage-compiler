@@ -45,7 +45,38 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ---
 
-## [2.0.0] - 2025-12-20
+## [2.2.0] - 2025-12-29
+
+### 🗑️ Removed
+- **AI Justification Override System** - Removed level-aware AI validation for fairer grading
+  - Eliminated post-processing validation that could restore deducted logic marks
+  - Removed difficulty-based override policies (Easy/Medium/Hard)
+  - Removed AI audit logging and statistics endpoints
+  - Removed `aiOverride` object from verdict structure
+  - Removed `GET /admin/api/ai-audit/*` endpoints
+
+### 🔧 Changed
+- Verdict engine reverted to synchronous operation (removed async AI validation)
+- Scoring system now purely deterministic without AI intervention
+- Removed AI override references from all documentation
+
+### 🛡️ Safety
+- All scoring decisions now made deterministically without external AI validation
+- Eliminated potential for inconsistent grading due to AI decisions
+
+---
+
+### 🔧 Changed
+- Updated project version to 2.1.1 across all package.json files
+- Corrected workspace configuration in root package.json to match actual project structure
+- Updated all documentation files with current version numbers and last updated dates
+
+### 📝 Documentation
+- Synchronized version numbers across README.md, DOCUMENTATION.md, and other docs
+- Updated last modified dates to December 29, 2025
+- Added missing last updated dates to PERMISSION_SYSTEM.md
+
+---
 
 ### 🆕 Added
 - Complete documentation reorganization
@@ -89,7 +120,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## Key Features by Version
 
-### Version 2.1.0 (Latest)
+### Version 2.2.0 (Latest)
+✅ Removed AI Justification Override System  
+✅ Purely deterministic scoring  
+✅ Simplified evaluation pipeline  
+
+### Version 2.1.0
 ✅ AI Justification Override System  
 ✅ Level-aware fair grading  
 ✅ Audit logging and statistics  
@@ -110,5 +146,5 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ---
 
 **Status**: Production Ready ✅  
-**Latest Version**: 2.1.0  
-**Last Updated**: December 22, 2025
+**Latest Version**: 2.2.0  
+**Last Updated**: December 29, 2025
