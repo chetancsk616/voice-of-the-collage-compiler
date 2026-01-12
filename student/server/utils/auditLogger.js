@@ -1,8 +1,9 @@
 /**
- * Audit Logger
- * 
- * Logs all AI override decisions for auditability and analysis
- * Stores logs in memory with optional file persistence
+ * Audit Logger (DEPRECATED FOR AI OVERRIDES)
+ *
+ * The AI override capability has been removed from the evaluation pipeline.
+ * These utilities remain available for backward compatibility but AI override
+ * logging is effectively a no-op. Other audit helpers return empty results.
  */
 
 const fs = require('fs').promises;
@@ -20,51 +21,10 @@ const LOG_FILE_PATH = path.join(__dirname, '../logs/ai-override-audit.jsonl');
  * @param {Object} logEntry - Log entry data
  */
 async function logAIOverride(logEntry) {
-  const timestamp = new Date().toISOString();
-  
-  const entry = {
-    timestamp,
-    submissionId: logEntry.submissionId,
-    userId: logEntry.userId,
-    userEmail: logEntry.userEmail,
-    questionId: logEntry.questionId,
-    questionTitle: logEntry.questionTitle,
-    questionLevel: logEntry.questionLevel,
-    initialScore: logEntry.initialScore,
-    aiOverrideApplied: logEntry.aiOverrideApplied,
-    finalScore: logEntry.finalScore,
-    marksRestored: logEntry.marksRestored || 0,
-    aiReason: logEntry.aiReason,
-    aiDurationMs: logEntry.aiDurationMs,
-    mismatchTypes: logEntry.mismatchTypes || [],
-    testPassRate: logEntry.testPassRate,
-    algorithmMatch: logEntry.algorithmMatch
-  };
-  
-  // Add to in-memory log
-  auditLog.push(entry);
-  
-  // Maintain max size
-  if (auditLog.length > MAX_LOG_SIZE) {
-    auditLog.shift();
-  }
-  
-  // Log to console
-  console.log('[Audit] AI Override:', {
-    question: entry.questionId,
-    level: entry.questionLevel,
-    applied: entry.aiOverrideApplied,
-    scoreChange: `${entry.initialScore} → ${entry.finalScore}`,
-    reason: entry.aiReason?.substring(0, 80) + '...'
-  });
-  
-  // Optional: Persist to file
-  try {
-    await ensureLogDirectory();
-    await fs.appendFile(LOG_FILE_PATH, JSON.stringify(entry) + '\n', 'utf8');
-  } catch (error) {
-    console.warn('[Audit] Failed to write to log file:', error.message);
-  }
+  // AI override logging is deprecated and disabled. This function intentionally
+  // performs no persistent logging to avoid misleading audit data.
+  console.warn('[Audit] logAIOverride called (student), but AI override logging is disabled. Entry ignored.');
+  return;
 }
 
 /**

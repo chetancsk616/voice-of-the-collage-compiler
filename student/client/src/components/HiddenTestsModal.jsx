@@ -18,15 +18,8 @@ export default function HiddenTestsModal({ show, testResults, onClose }) {
   const displayedTests = showAll ? hiddenTests : hiddenTests.slice(0, 10);
 
   return (
-    <div
-      className="fixed inset-0 bg-black/80 backdrop-blur-lg flex items-center justify-center p-4"
-      style={{ zIndex: 100 }}
-      onClick={onClose}
-    >
-      <div
-        className="vibe-card border-2 border-cyan-500/40 w-full max-w-5xl max-h-[90vh] overflow-y-auto rounded-2xl shadow-2xl p-8"
-        onClick={(e) => e.stopPropagation()}
-      >
+    <div className="fixed inset-0 bg-black/40 flex items-center justify-center p-4" style={{ zIndex: 100 }} onClick={onClose}>
+      <div className="clean-card w-full max-w-5xl max-h-[90vh] overflow-y-auto rounded-2xl p-8 card-accent fade-in-up" onClick={(e) => e.stopPropagation()}>
         {/* Header */}
         <div className="flex items-center justify-between mb-6">
           <div>
@@ -48,7 +41,7 @@ export default function HiddenTestsModal({ show, testResults, onClose }) {
         {/* Summary Stats */}
         <div className="grid grid-cols-4 gap-4 mb-6">
           {/* Base Tests */}
-          <div className="bg-slate-900/50 border border-blue-500/30 rounded-lg p-4">
+          <div className="bg-gray-50 border border-blue-50 rounded-lg p-4">
             <div className="text-xs font-semibold text-blue-400 mb-2">
               BASE TESTS
             </div>
@@ -61,7 +54,7 @@ export default function HiddenTestsModal({ show, testResults, onClose }) {
           </div>
 
           {/* Hidden Tests */}
-          <div className="bg-slate-900/50 border border-cyan-500/30 rounded-lg p-4">
+          <div className="bg-gray-50 border border-cyan-50 rounded-lg p-4">
             <div className="text-xs font-semibold text-cyan-400 mb-2">
               HIDDEN TESTS
             </div>
@@ -74,7 +67,7 @@ export default function HiddenTestsModal({ show, testResults, onClose }) {
           </div>
 
           {/* Hidden Passed */}
-          <div className="bg-slate-900/50 border border-green-500/30 rounded-lg p-4">
+          <div className="bg-gray-50 border border-green-50 rounded-lg p-4">
             <div className="text-xs font-semibold text-green-400 mb-2">
               PASSED
             </div>
@@ -87,7 +80,7 @@ export default function HiddenTestsModal({ show, testResults, onClose }) {
           </div>
 
           {/* Hidden Failed */}
-          <div className="bg-slate-900/50 border border-red-500/30 rounded-lg p-4">
+          <div className="bg-gray-50 border border-red-50 rounded-lg p-4">
             <div className="text-xs font-semibold text-red-400 mb-2">
               FAILED
             </div>

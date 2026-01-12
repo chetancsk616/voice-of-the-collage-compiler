@@ -8,7 +8,7 @@ export default function RefreshWarningModal({ show, onConfirm, onCancel }) {
       onClick={onCancel}
     >
       <div 
-        className="vibe-card border-2 border-yellow-500/50 rounded-2xl p-8 max-w-md shadow-2xl"
+        className="clean-card card-accent accent-yellow rounded-2xl p-8 max-w-md shadow-lg fade-in-up"
         onClick={(e) => e.stopPropagation()}
       >
         <div className="flex items-center gap-3 mb-4">
@@ -24,13 +24,13 @@ export default function RefreshWarningModal({ show, onConfirm, onCancel }) {
         <div className="flex gap-3">
           <button
             onClick={onConfirm}
-            className="flex-1 px-4 py-2 bg-gradient-to-r from-yellow-600 to-yellow-700 hover:from-yellow-500 hover:to-yellow-600 text-white rounded-lg font-bold transition-all"
+            className="flex-1 px-4 py-2 clean-button primary-blue"
           >
             ✓ Refresh
           </button>
           <button
             onClick={onCancel}
-            className="flex-1 px-4 py-2 bg-slate-700/60 hover:bg-slate-700 border border-slate-600 text-slate-300 rounded-lg font-semibold"
+            className="flex-1 px-4 py-2 clean-button"
           >
             ✕ Keep Working
           </button>

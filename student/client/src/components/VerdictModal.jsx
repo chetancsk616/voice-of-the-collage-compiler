@@ -22,7 +22,7 @@ export default function VerdictModal({ show, verdict, onClose, onViewHiddenTests
       onClick={onClose}
     >
       <div
-        className="vibe-card border-2 w-full max-w-4xl max-h-[90vh] overflow-y-auto rounded-2xl shadow-2xl p-8"
+        className="clean-card w-full max-w-4xl max-h-[90vh] overflow-y-auto rounded-2xl p-8 fade-in-up"
         onClick={(e) => e.stopPropagation()}
         style={{
           borderColor: isAccepted
@@ -45,14 +45,14 @@ export default function VerdictModal({ show, verdict, onClose, onViewHiddenTests
             {onViewHiddenTests && (
               <button
                 onClick={onViewHiddenTests}
-                className="px-4 py-2 border border-cyan-500/50 text-cyan-300 rounded-lg hover:bg-cyan-600/20 font-semibold"
+                className="px-4 py-2 clean-button"
               >
                 🔬 View Hidden Tests
               </button>
             )}
             <button
               onClick={onClose}
-              className="px-4 py-2 border border-purple-500/50 text-purple-300 rounded-lg hover:bg-purple-600/20 font-semibold"
+              className="px-4 py-2 clean-button"
             >
               ✕ Close
             </button>
@@ -520,7 +520,7 @@ export default function VerdictModal({ show, verdict, onClose, onViewHiddenTests
         <div className="flex justify-center gap-3">
           <button
             onClick={onClose}
-            className="px-6 py-2 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-500 hover:to-pink-500 text-white rounded-lg font-bold transition-all"
+            className="px-6 py-2 clean-button primary-blue"
           >
             ✓ Got it
           </button>

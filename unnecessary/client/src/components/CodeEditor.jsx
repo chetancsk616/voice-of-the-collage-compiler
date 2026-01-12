@@ -31,7 +31,7 @@ export default function CodeEditor({
   };
 
   return (
-    <div className="vibe-card backdrop-blur-xl border-2 border-purple-500/40 rounded-2xl p-6 flex flex-col">
+    <div className="clean-card backdrop-blur-xl rounded-2xl p-6 flex flex-col">
       {/* Header with Status and Language Selector */}
       <div className="flex items-center justify-between mb-4 gap-3">
         <div className="flex items-center gap-2">
@@ -117,7 +117,7 @@ export default function CodeEditor({
 
       {/* Input/Prompt Grid */}
       <div className="mt-3 grid grid-cols-3 gap-2">
-        <div className="vibe-card border border-purple-500/30 rounded-lg p-2">
+        <div className="clean-card border border-purple-500/30 rounded-lg p-2">
           <label className="block text-xs font-semibold text-purple-300 mb-1">
             💬 Prompt
           </label>
@@ -133,7 +133,7 @@ export default function CodeEditor({
           />
         </div>
 
-        <div className="vibe-card border border-purple-500/30 rounded-lg p-2">
+        <div className="clean-card border border-purple-500/30 rounded-lg p-2">
           <label className="block text-xs font-semibold text-purple-300 mb-1">
             📥 Input
           </label>

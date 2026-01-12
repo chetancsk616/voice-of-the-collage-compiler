@@ -22,7 +22,7 @@ export default function VerdictModal({ show, verdict, onClose }) {
       onClick={onClose}
     >
       <div
-        className="vibe-card border-2 w-full max-w-4xl max-h-[90vh] overflow-y-auto rounded-2xl shadow-2xl p-8"
+        className="clean-card border-2 w-full max-w-4xl max-h-[90vh] overflow-y-auto rounded-2xl shadow-2xl p-8 fade-in-up"
         onClick={(e) => e.stopPropagation()}
         style={{
           borderColor: isAccepted

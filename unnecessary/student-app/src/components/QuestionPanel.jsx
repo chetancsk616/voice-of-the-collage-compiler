@@ -7,7 +7,7 @@ export default function QuestionPanel({ question }) {
 
   return (
     <div
-      className="vibe-card border-2 border-cyan-500/40 rounded-2xl p-6 flex flex-col h-full overflow-auto"
+      className="clean-card p-6 flex flex-col h-full overflow-auto"
       onCopy={handleCopyPaste}
       onCut={handleCopyPaste}
       onPaste={handleCopyPaste}

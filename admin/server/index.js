@@ -708,30 +708,13 @@ Be specific, educational, and constructive. Reference actual test cases, complex
 
       // Create verdict input from all analysis results
       // Decision is based on: test results + logic comparison only
-      // AI is used only for explanation/justification
-      // PHASE 6: Added questionData and submissionData for AI override
+      // AI is used only for explanation/justification (no score overrides)
       const verdictInput = {
         ruleVerdictData: logicComparison || {},
         testVerdictData: testResults || {},
         aiExplanation: aiExplanation || {},
         securityViolations: securityEvents || [],
-        referenceLogic: referenceLogic || {},
-        // PHASE 6: Question metadata for AI validation
-        questionData: referenceLogic ? {
-          questionId: questionId,
-          title: referenceLogic.title,
-          difficulty: referenceLogic.difficulty,
-          expectedAlgorithm: referenceLogic.expectedAlgorithm,
-          expectedTimeComplexity: referenceLogic.expectedTimeComplexity,
-          expectedSpaceComplexity: referenceLogic.expectedSpaceComplexity
-        } : null,
-        // PHASE 6: Submission metadata for audit logging
-        submissionData: {
-          submissionId: submissionId,
-          userId: userId,
-          userEmail: email,
-          language: language
-        }
+        referenceLogic: referenceLogic || {}
       };
 
       finalVerdict = await generateFinalVerdict(verdictInput);

@@ -16,7 +16,7 @@ export default function DiffModal({
       onClick={onClose}
     >
       <div 
-        className="vibe-card border-2 border-purple-500/40 w-full max-w-4xl rounded-2xl shadow-2xl p-6"
+        className="clean-card w-full max-w-4xl rounded-2xl p-6 fade-in-up"
         onClick={(e) => e.stopPropagation()}
       >
         <div className="flex items-center justify-between mb-4">

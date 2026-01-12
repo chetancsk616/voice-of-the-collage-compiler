@@ -23,24 +23,24 @@ export default function Home({
   const getDifficultyColor = (difficulty) => {
     switch (difficulty) {
       case 'Easy':
-        return 'text-green-400 bg-green-500/10 border-green-500/30';
+        return 'badge badge-easy accent-green';
       case 'Medium':
-        return 'text-yellow-400 bg-yellow-500/10 border-yellow-500/30';
+        return 'badge badge-medium accent-yellow';
       case 'Hard':
-        return 'text-red-400 bg-red-500/10 border-red-500/30';
+        return 'badge badge-hard accent-red';
       default:
-        return 'text-purple-400 bg-purple-500/10 border-purple-500/30';
+        return 'badge badge-medium';
     }
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-950 via-purple-900 to-slate-900 p-6">
+    <div className="min-h-screen light-bg p-6">
       <div className="max-w-6xl mx-auto">
         {/* Header */}
         <div className="mb-8 text-center">
           <div className="flex items-center justify-between mb-4">
             <div className="flex-1"></div>
-            <h1 className="text-5xl font-bold bg-gradient-to-r from-purple-400 via-pink-400 to-purple-400 bg-clip-text text-transparent flex-1">
+            <h1 className="text-5xl font-bold text-gray-800 flex-1">
               🚀 Code Challenge Arena
             </h1>
             <div className="flex-1 flex justify-end">
@@ -48,22 +48,22 @@ export default function Home({
                 <div className="flex items-center gap-3">
                   {isAdmin && (
                     <a
-                      href="/admin"
-                      className="px-3 py-2 bg-slate-800/50 hover:bg-slate-800/70 border border-purple-500/30 hover:border-purple-500/60 text-purple-300 rounded-lg font-semibold transition-all text-sm"
+                      href="/admin/"
+                      className="clean-button primary-blue text-sm"
                       title="Admin Panel"
                     >
                       ⚙️ Admin
                     </a>
                   )}
                   <div className="text-right">
-                    <p className="text-purple-300 font-medium text-sm">
+                    <p className="text-gray-700 font-medium text-sm">
                       {user.displayName || 'User'}
                     </p>
-                    <p className="text-purple-400/60 text-xs">{user.email}</p>
+                    <p className="text-gray-500 text-xs">{user.email}</p>
                   </div>
                   <button
                     onClick={onShowLogoutConfirm}
-                    className="px-4 py-2 bg-purple-600/50 hover:bg-purple-600/70 border border-purple-500/50 text-purple-200 rounded-lg font-semibold transition-all text-sm"
+                    className="clean-button accent-red text-sm"
                   >
                     Logout
                   </button>
@@ -71,14 +71,14 @@ export default function Home({
               ) : (
                 <button
                   onClick={onShowAuth}
-                  className="px-6 py-3 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white rounded-lg font-semibold transition-all shadow-lg"
+                  className="clean-button primary-blue"
                 >
                   Login / Sign Up
                 </button>
               )}
             </div>
           </div>
-          <p className="text-purple-300/70 text-lg">
+          <p className="text-gray-600 text-lg">
             Master coding with curated challenges and instant feedback
           </p>
         </div>
@@ -89,10 +89,10 @@ export default function Home({
             <button
               key={difficulty}
               onClick={() => setFilter(difficulty)}
-              className={`px-6 py-2 rounded-lg font-semibold transition-all ${
+              className={`clean-button ${
                 filter === difficulty
-                  ? 'bg-gradient-to-r from-purple-600 to-pink-600 text-white shadow-lg'
-                  : 'bg-slate-800/50 border border-purple-500/30 text-purple-300 hover:border-purple-500/60'
+                  ? 'primary-blue'
+                  : 'bg-gray-100 hover:bg-gray-200 text-gray-700'
               }`}
             >
               {difficulty}
@@ -102,13 +102,13 @@ export default function Home({
 
         {/* Questions Grid */}
         {loading && (
-          <div className="text-center text-purple-200/80 py-10">
+          <div className="text-center text-gray-600 py-10">
             Loading challenges from the cloud...
           </div>
         )}
 
         {error && !loading && (
-          <div className="text-center text-red-300 py-10">
+          <div className="text-center text-red-600 py-10">
             Could not load challenges. Please try again.
           </div>
         )}
@@ -119,27 +119,25 @@ export default function Home({
             <div
               key={question.id}
               onClick={() => onSelectQuestion(question)}
-              className="vibe-card border-2 border-purple-500/40 rounded-2xl p-6 hover:border-purple-500/80 cursor-pointer transition-all hover:shadow-lg hover:shadow-purple-500/20 group"
+              className={`clean-card card-accent cursor-pointer transition-all group ${question.difficulty === 'Easy' ? 'accent-green' : question.difficulty === 'Medium' ? 'accent-yellow' : 'accent-red'}`}
             >
               {/* Question ID and Difficulty */}
               <div className="flex items-center justify-between mb-3">
-                <span className="text-sm font-semibold text-purple-400">
+                <span className="text-sm font-semibold text-gray-600">
                   #{question.id}
                 </span>
-                <span
-                  className={`px-3 py-1 rounded-full text-xs font-bold border ${getDifficultyColor(question.difficulty)}`}
-                >
+                <span className={getDifficultyColor(question.difficulty)}>
                   {question.difficulty}
                 </span>
               </div>
 
               {/* Title */}
-              <h2 className="text-xl font-bold text-purple-300 mb-2 group-hover:text-purple-200 transition-colors">
+              <h2 className="text-xl font-bold text-gray-800 mb-2 group-hover:text-blue-600 transition-colors">
                 {question.title}
               </h2>
 
               {/* Description */}
-              <p className="text-purple-200/70 text-sm mb-4 line-clamp-2">
+              <p className="text-gray-600 text-sm mb-4 line-clamp-2">
                 {question.description}
               </p>
 
@@ -148,7 +146,7 @@ export default function Home({
                 {question.languages.map((lang) => (
                   <span
                     key={lang}
-                    className="text-xs px-2 py-1 bg-slate-800/60 border border-purple-500/30 text-purple-300 rounded"
+                    className="text-xs px-2 py-1 bg-gray-100 text-gray-700 rounded"
                   >
                     {lang === 'python3' ? '🐍' : lang === 'node' ? '⚡' : '🔧'}{' '}
                     {lang === 'python3'
@@ -161,7 +159,7 @@ export default function Home({
               </div>
 
               {/* Start Button */}
-              <button className="w-full px-4 py-2 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-500 hover:to-pink-500 text-white rounded-lg font-bold text-sm transition-all">
+              <button className="w-full clean-button primary-blue text-sm">
                 Start Challenge →
               </button>
             </div>
@@ -172,7 +170,7 @@ export default function Home({
         {/* No Questions */}
         {!loading && !error && filteredQuestions.length === 0 && (
           <div className="text-center py-16">
-            <p className="text-purple-400/60 text-lg">
+            <p className="text-gray-500 text-lg">
               No challenges found for this difficulty level
             </p>
           </div>

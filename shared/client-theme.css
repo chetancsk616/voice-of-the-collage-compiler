@@ -1,10 +1,7 @@
-@import "../../../shared/client-theme.css";
-
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
-html, body, #root { height: 100%; }
+/* Shared client theme variables and utilities
+   - Place common visual tokens and utilities here
+   - Imported by each client: student, admin, login
+*/
 
 :root{
   --bg: #f8fafc;
@@ -17,6 +14,10 @@ html, body, #root { height: 100%; }
   --green: #10b981;
   --red: #ef4444;
   --glass: rgba(255,255,255,0.6);
+  /* Animation tokens */
+  --anim-duration: 0.5s;
+  --anim-easing: cubic-bezier(.2,.9,.2,1);
+  --stagger-step: 0.06s;
 }
 
 /* Base theme */
@@ -37,19 +38,19 @@ body::before{
 }
 
 /* Hero */
-.clean-hero{
+.clean-hero, .admin-hero, .login-hero{
   max-width: 920px;
   margin: 0 auto 24px;
   text-align: center;
 }
-.clean-hero h1{
+.clean-hero h1, .admin-hero h1, .login-hero h1{
   font-size: 3.25rem;
   line-height: 1;
   font-weight: 800;
   color: var(--text);
   margin-bottom: 6px;
 }
-.clean-hero p{
+.clean-hero p, .admin-hero p, .login-hero p{
   color: var(--muted);
   font-size: 1.05rem;
 }
@@ -70,9 +71,7 @@ body::before{
 }
 
 /* card accent stripe */
-.card-accent{
-  position: relative;
-}
+.card-accent{ position: relative }
 .card-accent::before{
   content: "";
   position: absolute;
@@ -91,25 +90,13 @@ body::before{
 .accent-red::before{ background: linear-gradient(180deg, rgba(239,68,68,0.18), rgba(239,68,68,0.05)); }
 
 /* badges */
-.badge{
-  display: inline-block;
-  padding: 6px 10px;
-  border-radius: 999px;
-  font-weight: 700;
-  font-size: 12px;
-  border: 1px solid transparent;
-}
+.badge{ display: inline-block; padding: 6px 10px; border-radius: 999px; font-weight: 700; font-size: 12px; border: 1px solid transparent; }
 .badge-easy{ background: #ecfdf5; color: #065f46; border-color: #bbf7d0; }
 .badge-medium{ background: #fffbeb; color: #92400e; border-color: #fde68a; }
 .badge-hard{ background: #fff1f2; color: #9f1239; border-color: #fecaca; }
 
 /* primary button */
-.clean-button{
-  display:inline-flex;align-items:center;gap:8px;justify-content:center;
-  background: linear-gradient(180deg,var(--primary),var(--primary-600));
-  color: white;padding:10px 14px;border-radius:10px;border:1px solid rgba(0,0,0,0.04);font-weight:700;box-shadow:0 6px 18px rgba(59,130,246,0.12);
-  transition: transform .12s ease, box-shadow .12s ease, opacity .12s ease;
-}
+.clean-button{ display:inline-flex;align-items:center;gap:8px;justify-content:center; background: linear-gradient(180deg,var(--primary),var(--primary-600)); color: white;padding:10px 14px;border-radius:10px;border:1px solid rgba(0,0,0,0.04);font-weight:700;box-shadow:0 6px 18px rgba(59,130,246,0.12); transition: transform .12s ease, box-shadow .12s ease, opacity .12s ease; }
 .clean-button:hover{ transform: translateY(-2px); box-shadow:0 18px 36px rgba(59,130,246,0.14); }
 .clean-button.primary-blue{ background: linear-gradient(180deg,var(--primary),var(--primary-600)); }
 .clean-button.secondary-green{ background: linear-gradient(180deg,var(--green), color-mix(in srgb, var(--green) 85%, black 5%)); }
@@ -118,10 +105,47 @@ body::before{
 /* subtle chip for languages */
 .lang-chip{ display:inline-flex; align-items:center; gap:6px; padding:6px 8px; border-radius:8px; background:#f1f5f9; color:var(--muted); font-weight:600; font-size:12px; border:1px solid #e6eef5; }
 
-/* grid item style for question card */
+/* entry animations */
+.fade-in-up{ transform: translateY(8px); opacity:0; animation:fadeUp var(--anim-duration) forwards var(--anim-easing); }
+.stagger-1{ animation-delay: calc(var(--stagger-step) * 1) }
+.stagger-2{ animation-delay: calc(var(--stagger-step) * 2) }
+.stagger-3{ animation-delay: calc(var(--stagger-step) * 3) }
+.stagger-4{ animation-delay: calc(var(--stagger-step) * 4) }
+.stagger-5{ animation-delay: calc(var(--stagger-step) * 5) }
+.stagger-6{ animation-delay: calc(var(--stagger-step) * 6) }
+
+/* Utility delay classes for one-off elements */
+.delay-1{ animation-delay: calc(var(--stagger-step) * 1) }
+.delay-2{ animation-delay: calc(var(--stagger-step) * 2) }
+.delay-3{ animation-delay: calc(var(--stagger-step) * 3) }
+.delay-4{ animation-delay: calc(var(--stagger-step) * 4) }
+.delay-5{ animation-delay: calc(var(--stagger-step) * 5) }
+.delay-6{ animation-delay: calc(var(--stagger-step) * 6) }
+
+@keyframes fadeUp{ to{ transform: translateY(0); opacity:1 } }
+
+/* Respect user preference for reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .fade-in-up,
+  .stagger-1,
+  .stagger-2,
+  .stagger-3,
+  .stagger-4,
+  .stagger-5,
+  .stagger-6,
+  .delay-1,
+  .delay-2,
+  .delay-3,
+  .delay-4,
+  .delay-5,
+  .delay-6 {
+    animation: none !important;
+    transition: none !important;
+    transform: none !important;
+    opacity: 1 !important;
+  }
+}
+
+/* helpers */
 .question-card{ cursor:pointer }
-
-/* small helper */
 .muted{ color:var(--muted) }
-
-

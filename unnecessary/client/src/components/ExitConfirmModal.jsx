@@ -8,7 +8,7 @@ export default function ExitConfirmModal({ show, onConfirm, onCancel }) {
       onClick={onCancel}
     >
       <div 
-        className="vibe-card border-2 border-red-500/50 rounded-2xl p-8 max-w-md shadow-2xl"
+        className="clean-card card-accent accent-red rounded-2xl p-8 max-w-md shadow-lg fade-in-up"
         onClick={(e) => e.stopPropagation()}
       >
         <div className="flex items-center gap-3 mb-4">

@@ -35,8 +35,8 @@ button {
   @apply hover:shadow-purple-500/50 hover:shadow-xl;
 }
 
-/* Card vibe */
-.vibe-card {
+/* Card vibe (mapped to new clean-card for compatibility) */
+.clean-card {
   @apply bg-slate-800/30 backdrop-blur-md border border-purple-500/30 rounded-xl;
   @apply hover:border-purple-500/60 hover:bg-slate-800/50;
 }

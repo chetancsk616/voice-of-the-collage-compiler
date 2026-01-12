@@ -1,43 +1,61 @@
+@import "../../../shared/client-theme.css";
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 html, body, #root { height: 100%; }
 
-/* Vibe aesthetic */
-body {
-  @apply bg-gradient-to-br from-slate-950 via-purple-900 to-slate-900;
+/* Shared theme imported from shared/client-theme.css */
+
+/* Table styling */
+.clean-table {
+  background-color: #ffffff;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
-/* Neon glow effect */
-.neon-glow {
-  @apply shadow-lg shadow-purple-500/50;
+.clean-table th {
+  background-color: #f8fafc;
+  color: #374151;
+  font-weight: 600;
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid #e5e7eb;
 }
 
-.neon-border {
-  @apply border-purple-500/50;
+.clean-table td {
+  padding: 12px;
+  border-bottom: 1px solid #f3f4f6;
+  color: #374151;
 }
 
-/* Smooth transitions */
-* {
-  @apply transition-all duration-200;
+/* Status badges */
+.status-easy {
+  background-color: #dcfce7;
+  color: #166534;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: 500;
 }
 
-/* Code editor styling */
-textarea {
-  @apply bg-slate-800/50 backdrop-blur text-white font-mono;
+.status-medium {
+  background-color: #fef3c7;
+  color: #92400e;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: 500;
 }
 
-/* Button vibe */
-button {
-  @apply bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-500 hover:to-pink-500;
-  @apply text-white font-semibold rounded-lg shadow-lg;
-  @apply hover:shadow-purple-500/50 hover:shadow-xl;
-}
-
-/* Card vibe */
-.vibe-card {
-  @apply bg-slate-800/30 backdrop-blur-md border border-purple-500/30 rounded-xl;
-  @apply hover:border-purple-500/60 hover:bg-slate-800/50;
+.status-hard {
+  background-color: #fee2e2;
+  color: #991b1b;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: 500;
 }
 

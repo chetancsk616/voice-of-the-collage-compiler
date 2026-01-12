@@ -112,13 +112,16 @@ export default function PermissionManager() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-purple-900 to-gray-900 p-6">
+    <div className="min-h-screen p-6">
       <div className="max-w-7xl mx-auto">
-        <div className="flex justify-between items-center mb-8">
-          <h1 className="text-4xl font-bold text-white">Permission Manager</h1>
+        <div className="flex justify-between items-center mb-8 clean-hero">
+          <div>
+            <h1 className="text-4xl font-bold text-900">Permission Manager</h1>
+            <p className="muted">Grant or revoke permissions for users</p>
+          </div>
           <button
             onClick={() => fetchData(false)}
-            className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
+            className="clean-button primary-blue"
           >
             🔄 Refresh
           </button>
@@ -158,7 +161,7 @@ export default function PermissionManager() {
           {filteredUsers.map((user) => (
             <div
               key={user.id}
-              className="bg-gray-800 rounded-lg p-6 border border-gray-700 hover:border-purple-500 transition"
+              className="clean-card p-6"
             >
               {/* User Header */}
               <div className="flex justify-between items-start mb-4">
@@ -183,13 +186,7 @@ export default function PermissionManager() {
                     <button
                       key={presetName}
                       onClick={() => applyPreset(user.id, presetName)}
-                      className={`px-3 py-1 rounded text-sm font-medium transition ${
-                        presetName === 'admin'
-                          ? 'bg-yellow-600 hover:bg-yellow-700 text-white'
-                          : presetName === 'teacher'
-                          ? 'bg-blue-600 hover:bg-blue-700 text-white'
-                          : 'bg-green-600 hover:bg-green-700 text-white'
-                      }`}
+                      className={`clean-button ${presetName === 'admin' ? 'accent-red' : presetName === 'teacher' ? 'primary-blue' : 'secondary-green'}`}
                       disabled={user.isAdmin}
                     >
                       {presetName.charAt(0).toUpperCase() + presetName.slice(1)}
@@ -206,25 +203,25 @@ export default function PermissionManager() {
                     return (
                       <div
                         key={key}
-                        className="flex items-center justify-between p-3 bg-gray-700/50 rounded-lg"
+                        className="flex items-center justify-between p-3 clean-card"
                       >
                         <div className="flex-1">
-                          <div className="text-white font-medium text-sm">
+                          <div className="text-900 font-medium text-sm">
                             {info.label}
                           </div>
-                          <div className="text-gray-400 text-xs">
+                          <div className="muted text-xs">
                             {info.description}
                           </div>
                         </div>
                         <button
                           onClick={() => togglePermission(user.id, key, hasPermission)}
                           className={`ml-3 w-12 h-6 rounded-full transition ${
-                            hasPermission ? 'bg-green-500' : 'bg-gray-600'
+                            hasPermission ? 'bg-green-500' : 'bg-gray-300'
                           }`}
                         >
                           <div
                             className={`w-4 h-4 rounded-full bg-white transition transform ${
-                              hasPermission ? 'translate-x-7' : 'translate-x-1'
+                              hasPermission ? 'translate-x-6' : 'translate-x-1'
                             }`}
                           />
                         </button>

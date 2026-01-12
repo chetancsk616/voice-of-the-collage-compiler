@@ -7,7 +7,7 @@ export default function AIPanel({
   onShowDiff,
 }) {
   return (
-    <div className="vibe-card border-2 border-pink-500/40 rounded-2xl p-6 flex flex-col">
+    <div className="clean-card p-6 flex flex-col">
       <div className="flex items-center justify-between mb-2">
         <h3 className="text-lg font-bold text-pink-300">🤖 AI</h3>
         {aiModel && (

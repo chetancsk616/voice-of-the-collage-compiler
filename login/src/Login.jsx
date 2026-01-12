@@ -48,7 +48,7 @@ export default function Login() {
 
         const effectiveRole = token.claims.role === 'admin' ? 'admin' : 'student';
         const redirectUrl = effectiveRole === 'admin'
-          ? 'http://localhost:3001/admin'
+          ? 'http://localhost:3001/admin/'
           : 'http://localhost:3002';
         window.location.href = redirectUrl;
       } catch (err) {
@@ -145,11 +145,11 @@ export default function Login() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-600 to-purple-700 flex items-center justify-center p-4">
-      <div className="bg-white rounded-lg shadow-2xl p-8 w-full max-w-md">
-        <div className="text-center mb-8">
-          <h1 className="text-4xl font-bold text-gray-800 mb-2">AI Web Compiler</h1>
-          <p className="text-gray-600">Unified Login Portal</p>
+    <div className="min-h-screen light-bg flex items-center justify-center p-6">
+      <div className="clean-card max-w-md w-full p-8 fade-in-up">
+        <div className="text-center mb-8 login-hero fade-in-up">
+          <h1 className="text-5xl font-extrabold text-gray-800 mb-2">AI Web Compiler</h1>
+          <p className="text-muted">Unified Login Portal</p>
         </div>
 
         <form onSubmit={handleEmailLogin} className="space-y-5">
@@ -158,14 +158,30 @@ export default function Login() {
             <label className="block text-sm font-medium text-gray-700 mb-2">
               Login As
             </label>
-            <select
-              value={userType}
-              onChange={(e) => setUserType(e.target.value)}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition"
-            >
-              <option value="student">👤 Student</option>
-              <option value="admin">👨‍💼 Admin</option>
-            </select>
+            <div className="flex gap-2">
+              <button
+                type="button"
+                onClick={() => setUserType('student')}
+                className={`flex-1 py-2 px-4 rounded-lg font-semibold transition duration-200 ${
+                  userType === 'student'
+                    ? 'primary-blue text-black'
+                    : 'bg-gray-100 hover:bg-gray-200 text-gray-700'
+                }`}
+              >
+                👤 Student
+              </button>
+              <button
+                type="button"
+                onClick={() => setUserType('admin')}
+                className={`flex-1 py-2 px-4 rounded-lg font-semibold transition duration-200 ${
+                  userType === 'admin'
+                    ? 'primary-blue text-black'
+                    : 'bg-gray-100 hover:bg-gray-200 text-gray-700'
+                }`}
+              >
+                👨‍💼 Admin
+              </button>
+            </div>
           </div>
 
           {/* Email Input */}
@@ -202,14 +218,14 @@ export default function Login() {
 
           {/* Logout Message */}
           {logoutMessage && (
-            <div className="bg-green-50 border border-green-200 rounded-lg p-3 text-green-700 text-sm">
+            <div className="secondary-green-bg border border-green-200 rounded-lg p-3 text-green-700 text-sm">
               ✓ {logoutMessage}
             </div>
           )}
 
           {/* Error Message */}
           {error && (
-            <div className="bg-red-50 border border-red-200 rounded-lg p-3 text-red-700 text-sm">
+            <div className="accent-red-bg border border-red-200 rounded-lg p-3 text-red-700 text-sm">
               {error}
             </div>
           )}
@@ -218,7 +234,7 @@ export default function Login() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 text-white font-semibold py-2 rounded-lg transition duration-200"
+            className="w-full clean-button primary-blue disabled:opacity-50"
           >
             {loading ? 'Logging in...' : `Login as ${userType === 'admin' ? 'Admin' : 'Student'}`}
           </button>
@@ -246,7 +262,7 @@ export default function Login() {
         </button>
 
         {/* Info Box */}
-        <div className="mt-8 p-4 bg-blue-50 rounded-lg border border-blue-200">
+        <div className="mt-8 p-4 primary-blue-bg rounded-lg border border-blue-200">
           <p className="text-xs text-gray-700">
             <strong>Demo Credentials:</strong><br />
             • Student: student@test.com / password123<br />

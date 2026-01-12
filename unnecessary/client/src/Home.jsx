@@ -118,7 +118,7 @@ export default function Home({
             <div
               key={question.id}
               onClick={() => onSelectQuestion(question)}
-              className="vibe-card border-2 border-purple-500/40 rounded-2xl p-6 hover:border-purple-500/80 cursor-pointer transition-all hover:shadow-lg hover:shadow-purple-500/20 group"
+              className="clean-card border-2 border-purple-500/40 rounded-2xl p-6 hover:border-purple-500/80 cursor-pointer transition-all hover:shadow-lg hover:shadow-purple-500/20 group"
             >
               {/* Question ID and Difficulty */}
               <div className="flex items-center justify-between mb-3">

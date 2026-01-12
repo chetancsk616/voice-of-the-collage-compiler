@@ -50,28 +50,28 @@ export default function AuthModal({
 
   return (
     <div
-      className="fixed inset-0 bg-black/80 backdrop-blur-lg flex items-center justify-center p-4"
+      className="fixed inset-0 bg-black/50 flex items-center justify-center p-4"
       style={{ zIndex: 200 }}
       onClick={onClose}
     >
-      <div 
-        className="vibe-card border-2 border-purple-500/50 rounded-2xl p-8 max-w-md w-full shadow-2xl"
+      <div
+        className="clean-card max-w-md w-full shadow-2xl"
         onClick={(e) => e.stopPropagation()}
       >
         <div className="flex items-center justify-between mb-6">
-          <h2 className="text-2xl font-bold text-purple-300">
+          <h2 className="text-2xl font-bold text-gray-800">
             {mode === 'login' ? '🔐 Login' : '✨ Sign Up'}
           </h2>
           <button
             onClick={onClose}
-            className="text-purple-300 hover:text-purple-100 text-2xl"
+            className="text-gray-500 hover:text-gray-700 text-2xl"
           >
             ✕
           </button>
         </div>
 
         {error && (
-          <div className="mb-4 p-3 bg-red-500/20 border border-red-500/50 rounded-lg text-red-300 text-sm">
+          <div className="mb-4 p-3 accent-red-bg border border-red-200 text-red-700 rounded-lg text-sm">
             {error}
           </div>
         )}
@@ -79,14 +79,14 @@ export default function AuthModal({
         <form onSubmit={handleSubmit} className="space-y-4">
           {mode === 'signup' && (
             <div>
-              <label className="block text-sm font-semibold text-purple-300 mb-2">
+              <label className="block text-sm font-semibold text-gray-700 mb-2">
                 Display Name
               </label>
               <input
                 type="text"
                 value={displayName}
                 onChange={(e) => setDisplayName(e.target.value)}
-                className="w-full px-4 py-2 bg-slate-800/50 border border-purple-500/30 rounded-lg text-purple-100 focus:border-purple-500/60 focus:outline-none"
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                 placeholder="Your Name"
                 required
               />
@@ -94,28 +94,28 @@ export default function AuthModal({
           )}
 
           <div>
-            <label className="block text-sm font-semibold text-purple-300 mb-2">
+            <label className="block text-sm font-semibold text-gray-700 mb-2">
               Email
             </label>
             <input
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="w-full px-4 py-2 bg-slate-800/50 border border-purple-500/30 rounded-lg text-purple-100 focus:border-purple-500/60 focus:outline-none"
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
               placeholder="you@example.com"
               required
             />
           </div>
 
           <div>
-            <label className="block text-sm font-semibold text-purple-300 mb-2">
+            <label className="block text-sm font-semibold text-gray-700 mb-2">
               Password
             </label>
             <input
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="w-full px-4 py-2 bg-slate-800/50 border border-purple-500/30 rounded-lg text-purple-100 focus:border-purple-500/60 focus:outline-none"
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
               placeholder="••••••••"
               required
               minLength={6}
@@ -125,7 +125,7 @@ export default function AuthModal({
           <button
             type="submit"
             disabled={loading}
-            className="w-full px-4 py-3 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-500 hover:to-pink-500 text-white rounded-lg font-bold shadow-lg hover:shadow-purple-500/50 disabled:opacity-50 transition-all"
+            className="w-full clean-button primary-blue disabled:opacity-50"
           >
             {loading
               ? '⏳ Processing...'
@@ -136,15 +136,15 @@ export default function AuthModal({
         </form>
 
         <div className="my-4 flex items-center gap-2">
-          <div className="flex-1 border-t border-purple-500/30"></div>
-          <span className="text-purple-300/60 text-sm">OR</span>
-          <div className="flex-1 border-t border-purple-500/30"></div>
+          <div className="flex-1 border-t border-gray-300"></div>
+          <span className="text-gray-500 text-sm">OR</span>
+          <div className="flex-1 border-t border-gray-300"></div>
         </div>
 
         <button
           onClick={handleGoogleLogin}
           disabled={loading}
-          className="w-full px-4 py-3 bg-white hover:bg-gray-100 text-gray-800 rounded-lg font-bold shadow-lg transition-all flex items-center justify-center gap-2 disabled:opacity-50"
+          className="w-full px-4 py-3 bg-white hover:bg-gray-100 text-gray-800 rounded-lg font-bold shadow-lg transition-all flex items-center justify-center gap-2 disabled:opacity-50 border border-gray-300"
         >
           <svg className="w-5 h-5" viewBox="0 0 24 24">
             <path
@@ -167,13 +167,13 @@ export default function AuthModal({
           Continue with Google
         </button>
 
-        <div className="mt-4 text-center text-sm text-purple-300/60">
+        <div className="mt-4 text-center text-sm text-gray-600">
           {mode === 'login' ? (
             <>
               Don't have an account?{' '}
               <button
                 onClick={() => setMode('signup')}
-                className="text-purple-400 hover:text-purple-300 font-semibold"
+                className="text-blue-600 hover:text-blue-800 font-semibold"
               >
                 Sign up
               </button>
@@ -183,7 +183,7 @@ export default function AuthModal({
               Already have an account?{' '}
               <button
                 onClick={() => setMode('login')}
-                className="text-purple-400 hover:text-purple-300 font-semibold"
+                className="text-blue-600 hover:text-blue-800 font-semibold"
               >
                 Login
               </button>

@@ -1,6 +1,7 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "../../shared/client-theme.css";
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
 
 * {
   margin: 0;
@@ -14,9 +15,15 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: #f8fafc;
+  color: #1e293b;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
-}
+
+
+/* Hero styles */
+.login-hero{ text-align:center; max-width:820px; margin:0 auto 18px }
+.login-hero h1{ font-size:2.75rem; font-weight:800; color:var(--text); margin-bottom:6px }
+.login-hero p{ color:var(--muted) }
+
+/* Keep login-specific font-family and helpers; shared visual tokens are imported above */

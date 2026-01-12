@@ -89,20 +89,20 @@ const UserManager = () => {
         <div className="flex items-center justify-between">
           <h1 className="text-2xl font-bold">User Management</h1>
           <div className="flex gap-3">
-            <button 
-              onClick={() => navigate('/admin/questions')}
+              <button 
+                onClick={() => navigate('/questions')}
               className="px-4 py-2 bg-green-600 hover:bg-green-700 rounded-lg transition"
             >
               📝 Questions
             </button>
-            <button 
-              onClick={() => navigate('/admin/submissions')}
+              <button 
+                onClick={() => navigate('/submissions')}
               className="px-4 py-2 bg-blue-600 hover:bg-blue-700 rounded-lg transition"
             >
               📊 Submissions
             </button>
             <button 
-              onClick={() => navigate('/admin')}
+              onClick={() => navigate('/')}
               className="px-4 py-2 bg-gray-700 hover:bg-gray-600 rounded-lg transition"
             >
               ← Back
@@ -167,7 +167,7 @@ const UserManager = () => {
                       </button>
                     )}
                     <button
-                      onClick={() => navigate(`/admin/users/${user.id}`)}
+                      onClick={() => navigate(`/users/${user.id}`)}
                       className="px-3 py-1 bg-blue-600 hover:bg-blue-700 rounded text-sm"
                     >
                       View

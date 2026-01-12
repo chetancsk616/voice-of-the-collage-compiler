@@ -16,7 +16,7 @@ export default function DiffModal({
       onClick={onClose}
     >
       <div 
-        className="vibe-card border-2 border-purple-500/40 w-full max-w-4xl rounded-2xl shadow-2xl p-6"
+        className="clean-card w-full max-w-4xl rounded-2xl p-6 fade-in-up"
         onClick={(e) => e.stopPropagation()}
       >
         <div className="flex items-center justify-between mb-4">
@@ -25,7 +25,7 @@ export default function DiffModal({
           </h3>
           <button
             onClick={onClose}
-            className="px-4 py-2 border border-purple-500/50 text-purple-300 rounded-lg hover:bg-purple-600/20 font-semibold"
+            className="px-4 py-2 clean-button"
           >
             ✕ Close
           </button>
@@ -36,13 +36,13 @@ export default function DiffModal({
         <div className="mt-6 flex justify-end gap-3">
           <button
             onClick={onApply}
-            className="px-6 py-2 bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-500 hover:to-emerald-500 text-white rounded-lg font-bold shadow-lg"
+            className="px-6 py-2 clean-button secondary-green"
           >
             ✅ Apply Suggestion
           </button>
           <button
             onClick={onClose}
-            className="px-6 py-2 bg-slate-700/60 hover:bg-slate-700 border border-slate-600 text-slate-300 rounded-lg font-semibold"
+            className="px-6 py-2 clean-button"
           >
             ✕ Cancel
           </button>

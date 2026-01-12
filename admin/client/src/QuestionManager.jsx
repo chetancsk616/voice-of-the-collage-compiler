@@ -81,14 +81,14 @@ const QuestionManager = () => {
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center min-h-screen bg-gray-900">
-        <div className="text-white text-xl">Loading questions...</div>
+      <div className="flex items-center justify-center min-h-screen light-bg">
+        <div className="text-gray-700 text-xl">Loading questions...</div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gray-900 text-white">
+    <div className="min-h-screen light-bg text-gray-900">
       <LogoutConfirmModal
         show={showLogoutConfirm}
         onConfirm={() => {
@@ -97,37 +97,38 @@ const QuestionManager = () => {
         }}
         onCancel={() => setShowLogoutConfirm(false)}
       />
-      <header className="bg-gray-800 border-b border-gray-700 px-6 py-4">
+
+      <header className="bg-white border-b border-gray-200 px-6 py-4 shadow-sm">
         <div className="flex items-center justify-between">
-          <h1 className="text-2xl font-bold">Question Management</h1>
+          <h1 className="text-2xl font-bold text-gray-800">Question Management</h1>
           <div className="flex gap-3">
-            <button 
+            <button
               onClick={handleCreateQuestion}
-              className="px-4 py-2 bg-green-600 hover:bg-green-700 rounded-lg transition"
+              className="clean-button secondary-green"
             >
               ➕ Add Question
             </button>
-            <button 
-              onClick={() => navigate('/admin/submissions')}
-              className="px-4 py-2 bg-blue-600 hover:bg-blue-700 rounded-lg transition"
+            <button
+              onClick={() => navigate('/submissions')}
+              className="clean-button primary-blue"
             >
               📊 View Submissions
             </button>
-            <button 
-              onClick={() => navigate('/admin/users')}
-              className="px-4 py-2 bg-purple-600 hover:bg-purple-700 rounded-lg transition"
+            <button
+              onClick={() => navigate('/users')}
+              className="clean-button primary-blue"
             >
               👥 Manage Users
             </button>
-            <button 
-              onClick={() => navigate('/admin/permissions')}
-              className="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 rounded-lg transition"
+            <button
+              onClick={() => navigate('/permissions')}
+              className="clean-button primary-blue"
             >
               🔐 Permissions
             </button>
-            <button 
+            <button
               onClick={() => setShowLogoutConfirm(true)}
-              className="px-4 py-2 bg-red-600 hover:bg-red-700 rounded-lg transition"
+              className="clean-button accent-red"
             >
               🚪 Logout
             </button>
@@ -137,18 +138,18 @@ const QuestionManager = () => {
 
       <div className="max-w-7xl mx-auto px-6 py-8">
         {/* Filters */}
-        <div className="bg-gray-800 rounded-lg p-4 mb-6 flex gap-4">
+        <div className="clean-card p-4 mb-6 flex gap-4">
           <input
             type="text"
             placeholder="🔍 Search questions..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="flex-1 px-4 py-2 bg-gray-700 border border-gray-600 rounded-lg focus:outline-none focus:border-blue-500"
+            className="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
           <select
             value={difficultyFilter}
             onChange={(e) => setDifficultyFilter(e.target.value)}
-            className="px-4 py-2 bg-gray-700 border border-gray-600 rounded-lg focus:outline-none"
+            className="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
           >
             <option value="">All Difficulties</option>
             <option value="Easy">Easy</option>
@@ -158,28 +159,28 @@ const QuestionManager = () => {
         </div>
 
         {/* Questions Table */}
-        <div className="bg-gray-800 rounded-lg overflow-hidden">
+        <div className="clean-card overflow-hidden">
           <table className="w-full">
-            <thead className="bg-gray-700">
+            <thead className="bg-gray-50">
               <tr>
-                <th className="px-6 py-3 text-left">ID</th>
-                <th className="px-6 py-3 text-left">Title</th>
-                <th className="px-6 py-3 text-left">Difficulty</th>
-                <th className="px-6 py-3 text-left">Tags</th>
-                <th className="px-6 py-3 text-left">Hidden Tests</th>
-                <th className="px-6 py-3 text-right">Actions</th>
+                <th className="px-6 py-3 text-left text-gray-700 font-semibold">ID</th>
+                <th className="px-6 py-3 text-left text-gray-700 font-semibold">Title</th>
+                <th className="px-6 py-3 text-left text-gray-700 font-semibold">Difficulty</th>
+                <th className="px-6 py-3 text-left text-gray-700 font-semibold">Tags</th>
+                <th className="px-6 py-3 text-left text-gray-700 font-semibold">Hidden Tests</th>
+                <th className="px-6 py-3 text-right text-gray-700 font-semibold">Actions</th>
               </tr>
             </thead>
             <tbody>
-              {filteredQuestions.map((q) => (
-                <tr key={q.id} className="border-t border-gray-700 hover:bg-gray-750">
-                  <td className="px-6 py-4">{q.id}</td>
-                  <td className="px-6 py-4 font-medium">{q.title}</td>
+              {filteredQuestions.map((q, i) => (
+                <tr key={q.id} className={`border-t border-gray-200 hover:bg-gray-50 fade-in-up ${i % 3 === 0 ? 'stagger-1' : i % 3 === 1 ? 'stagger-2' : 'stagger-3'}`}>
+                  <td className="px-6 py-4 text-gray-900">{q.id}</td>
+                  <td className="px-6 py-4 font-medium text-gray-900">{q.title}</td>
                   <td className="px-6 py-4">
-                    <span className={`px-2 py-1 rounded text-sm ${
-                      q.difficulty === 'Easy' ? 'bg-green-900/30 text-green-400' :
-                      q.difficulty === 'Medium' ? 'bg-yellow-900/30 text-yellow-400' :
-                      'bg-red-900/30 text-red-400'
+                    <span className={`px-2 py-1 rounded text-sm font-medium ${
+                      q.difficulty === 'Easy' ? 'secondary-green text-green-800' :
+                      q.difficulty === 'Medium' ? 'bg-yellow-100 text-yellow-800' :
+                      'accent-red text-red-800'
                     }`}>
                       {q.difficulty}
                     </span>
@@ -187,7 +188,7 @@ const QuestionManager = () => {
                   <td className="px-6 py-4">
                     <div className="flex gap-1 flex-wrap">
                       {q.tags?.map((tag, i) => (
-                        <span key={i} className="px-2 py-1 bg-gray-700 rounded text-xs">
+                        <span key={i} className="px-2 py-1 bg-gray-100 text-gray-700 rounded text-xs">
                           {tag}
                         </span>
                       ))}
@@ -195,10 +196,10 @@ const QuestionManager = () => {
                   </td>
                   <td className="px-6 py-4">
                     <span
-                      className={`px-2 py-1 rounded text-xs ${
+                      className={`px-2 py-1 rounded text-xs font-medium ${
                         q.requiresHiddenTests !== false
-                          ? 'bg-green-900/30 text-green-300'
-                          : 'bg-yellow-900/30 text-yellow-300'
+                          ? 'secondary-green text-green-800'
+                          : 'bg-gray-100 text-gray-700'
                       }`}
                     >
                       {q.requiresHiddenTests !== false ? 'Yes' : 'No'}
@@ -207,13 +208,13 @@ const QuestionManager = () => {
                   <td className="px-6 py-4 text-right space-x-2">
                     <button
                       onClick={() => handleEditQuestion(q)}
-                      className="px-3 py-1 bg-blue-600 hover:bg-blue-700 rounded text-sm"
+                      className="clean-button primary-blue text-sm px-3 py-1"
                     >
                       Edit
                     </button>
                     <button
                       onClick={() => handleDeleteQuestion(q.id)}
-                      className="px-3 py-1 bg-red-600 hover:bg-red-700 rounded text-sm"
+                      className="clean-button accent-red text-sm px-3 py-1"
                     >
                       Delete
                     </button>
@@ -311,51 +312,51 @@ const QuestionModal = ({ question, onClose, onSave, currentUser, getIdToken }) =
   };
 
   return (
-    <div className="fixed inset-0 bg-black/70 flex items-center justify-center z-50 p-4">
-      <div className="bg-gray-800 rounded-lg max-w-3xl w-full max-h-[90vh] overflow-y-auto">
-        <div className="sticky top-0 bg-gray-800 border-b border-gray-700 px-6 py-4 flex items-center justify-between">
-          <h2 className="text-xl font-bold">
+    <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+      <div className="clean-card max-w-3xl w-full max-h-[90vh] overflow-y-auto">
+        <div className="sticky top-0 bg-white border-b border-gray-200 px-6 py-4 flex items-center justify-between">
+          <h2 className="text-xl font-bold text-gray-800">
             {question ? 'Edit Question' : 'Create New Question'}
           </h2>
-          <button onClick={onClose} className="text-gray-400 hover:text-white text-2xl">
+          <button onClick={onClose} className="text-gray-400 hover:text-gray-600 text-2xl">
             ×
           </button>
         </div>
 
         <form onSubmit={handleSubmit} className="p-6 space-y-4">
           {error && (
-            <div className="bg-red-900/30 border border-red-500 text-red-200 px-4 py-3 rounded">
+            <div className="accent-red-bg border border-red-200 text-red-700 px-4 py-3 rounded">
               {error}
             </div>
           )}
 
           <div>
-            <label className="block text-sm font-medium mb-2">Title</label>
+            <label className="block text-sm font-medium text-gray-700 mb-2">Title</label>
             <input
               type="text"
               value={formData.title}
               onChange={(e) => setFormData({...formData, title: e.target.value})}
-              className="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-lg focus:outline-none focus:border-blue-500"
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
               required
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium mb-2">Description</label>
+            <label className="block text-sm font-medium text-gray-700 mb-2">Description</label>
             <textarea
               value={formData.description}
               onChange={(e) => setFormData({...formData, description: e.target.value})}
-              className="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-lg focus:outline-none focus:border-blue-500 h-32"
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 h-32"
               required
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium mb-2">Difficulty</label>
+            <label className="block text-sm font-medium text-gray-700 mb-2">Difficulty</label>
             <select
               value={formData.difficulty}
               onChange={(e) => setFormData({...formData, difficulty: e.target.value})}
-              className="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-lg focus:outline-none"
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
             >
               <option value="Easy">Easy</option>
               <option value="Medium">Medium</option>
@@ -364,18 +365,18 @@ const QuestionModal = ({ question, onClose, onSave, currentUser, getIdToken }) =
           </div>
 
           <div>
-            <label className="block text-sm font-medium mb-2">Tags (comma separated)</label>
+            <label className="block text-sm font-medium text-gray-700 mb-2">Tags (comma separated)</label>
             <input
               type="text"
               value={formData.tags}
               onChange={(e) => setFormData({...formData, tags: e.target.value})}
               placeholder="arrays, strings, dynamic-programming"
-              className="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-lg focus:outline-none focus:border-blue-500"
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium mb-2">Require Hidden Testcases?</label>
+            <label className="block text-sm font-medium text-gray-700 mb-2">Require Hidden Testcases?</label>
             <select
               value={formData.requiresHiddenTests ? 'yes' : 'no'}
               onChange={(e) =>
@@ -384,7 +385,7 @@ const QuestionModal = ({ question, onClose, onSave, currentUser, getIdToken }) =
                   requiresHiddenTests: e.target.value === 'yes',
                 })
               }
-              className="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-lg focus:outline-none"
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
             >
               <option value="yes">Yes (default)</option>
               <option value="no">No</option>
@@ -392,11 +393,11 @@ const QuestionModal = ({ question, onClose, onSave, currentUser, getIdToken }) =
           </div>
 
           <div>
-            <label className="block text-sm font-medium mb-2">Test Cases (JSON)</label>
+            <label className="block text-sm font-medium text-gray-700 mb-2">Test Cases (JSON)</label>
             <textarea
               value={formData.testCases}
               onChange={(e) => setFormData({...formData, testCases: e.target.value})}
-              className="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-lg focus:outline-none focus:border-blue-500 font-mono text-sm h-48"
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 font-mono text-sm h-48"
               placeholder='[{"input": "5", "expected_output": "120"}]'
             />
           </div>
@@ -405,14 +406,14 @@ const QuestionModal = ({ question, onClose, onSave, currentUser, getIdToken }) =
             <button
               type="submit"
               disabled={saving}
-              className="flex-1 px-6 py-3 bg-green-600 hover:bg-green-700 rounded-lg font-medium disabled:opacity-50"
+              className="flex-1 clean-button secondary-green disabled:opacity-50"
             >
               {saving ? 'Saving...' : 'Save Question'}
             </button>
             <button
               type="button"
               onClick={onClose}
-              className="px-6 py-3 bg-gray-700 hover:bg-gray-600 rounded-lg"
+              className="clean-button bg-gray-100 hover:bg-gray-200 text-gray-700"
             >
               Cancel
             </button>

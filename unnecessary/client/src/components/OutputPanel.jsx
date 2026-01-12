@@ -13,7 +13,7 @@ export default function OutputPanel({
     const allPassed = testCaseResults.every((t) => t.passed);
 
     return (
-      <div className="vibe-card border-2 border-purple-500/40 rounded-2xl p-6 flex flex-col">
+      <div className="clean-card p-6 flex flex-col">
         <h3 className="text-lg font-bold text-purple-300 mb-3">
           📤 {isCustomInput ? 'Custom Input Result' : 'Test Results'}
         </h3>
@@ -143,7 +143,7 @@ export default function OutputPanel({
 
   // Fallback to old display if no test case results
   return (
-    <div className="vibe-card border-2 border-purple-500/40 rounded-2xl p-6 flex flex-col">
+    <div className="clean-card p-6 flex flex-col">
       <h3 className="text-lg font-bold text-purple-300 mb-3">📤 Output</h3>
       <div className="flex flex-col gap-3">
         <div className="flex flex-col">

@@ -8,7 +8,7 @@ export default function TabSwitchWarning({ show, onDismiss }) {
       onClick={onDismiss}
     >
       <div
-        className="vibe-card border-2 border-yellow-500/50 rounded-2xl p-8 max-w-md shadow-2xl animate-pulse"
+        className="clean-card card-accent accent-yellow rounded-2xl p-8 max-w-md shadow-lg fade-in-up"
         onClick={(e) => e.stopPropagation()}
       >
         <div className="flex items-center gap-3 mb-4">
@@ -27,7 +27,7 @@ export default function TabSwitchWarning({ show, onDismiss }) {
         </div>
         <button
           onClick={onDismiss}
-          className="w-full px-6 py-3 bg-gradient-to-r from-yellow-600 to-amber-600 hover:from-yellow-500 hover:to-amber-500 text-white rounded-lg font-bold shadow-lg hover:shadow-yellow-500/50 transition-all"
+          className="w-full px-6 py-3 clean-button primary-blue"
         >
           ✓ Got it, I'm back!
         </button>

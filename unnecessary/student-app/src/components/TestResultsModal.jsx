@@ -8,7 +8,7 @@ export default function TestResultsModal({ testResults, onClose }) {
       onClick={onClose}
     >
       <div 
-        className="vibe-card border-2 border-purple-500/40 rounded-2xl p-8 max-w-2xl max-h-[80vh] overflow-auto shadow-2xl"
+        className="clean-card border-2 border-purple-500/40 rounded-2xl p-8 max-w-2xl max-h-[80vh] overflow-auto shadow-2xl fade-in-up"
         onClick={(e) => e.stopPropagation()}
       >
         <div className="flex items-center gap-3 mb-6">

@@ -24,9 +24,9 @@ ReactDOM.createRoot(document.getElementById('root')).render(
         <Routes>
           {/* Redirect /login to login page, but let all other routes through */}
           <Route path="/login" element={<RedirectToLogin />} />
-          
+
           <Route 
-            path="/admin" 
+            path="/" 
             element={
               <ProtectedAdminRoute>
                 <QuestionManager />
@@ -34,7 +34,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
             } 
           />
           <Route 
-            path="/admin/questions" 
+            path="/questions" 
             element={
               <ProtectedAdminRoute>
                 <QuestionManager />
@@ -42,7 +42,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
             } 
           />
           <Route 
-            path="/admin/submissions" 
+            path="/submissions" 
             element={
               <ProtectedAdminRoute>
                 <SubmissionViewer />
@@ -50,7 +50,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
             } 
           />
           <Route 
-            path="/admin/users" 
+            path="/users" 
             element={
               <ProtectedAdminRoute>
                 <UserManager />
@@ -58,16 +58,16 @@ ReactDOM.createRoot(document.getElementById('root')).render(
             } 
           />
           <Route 
-            path="/admin/permissions" 
+            path="/permissions" 
             element={
               <ProtectedAdminRoute>
                 <PermissionManager />
               </ProtectedAdminRoute>
             } 
           />
-          {/* Catch-all for root — redirect to /admin with protection */}
+          {/* Catch-all for any paths under the admin basename */}
           <Route 
-            path="/" 
+            path="/*" 
             element={
               <ProtectedAdminRoute>
                 <QuestionManager />

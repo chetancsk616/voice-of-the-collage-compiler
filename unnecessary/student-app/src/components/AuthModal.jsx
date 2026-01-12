@@ -55,7 +55,7 @@ export default function AuthModal({
       onClick={onClose}
     >
       <div 
-        className="vibe-card border-2 border-purple-500/50 rounded-2xl p-8 max-w-md w-full shadow-2xl"
+        className="clean-card border-2 border-purple-500/50 rounded-2xl p-8 max-w-md w-full shadow-lg fade-in-up"
         onClick={(e) => e.stopPropagation()}
       >
         <div className="flex items-center justify-between mb-6">

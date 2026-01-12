@@ -7,7 +7,7 @@ export default function AIPanel({
   onShowDiff,
 }) {
   return (
-    <div className="vibe-card border-2 border-pink-500/40 rounded-2xl p-6 flex flex-col">
+    <div className="clean-card p-6 flex flex-col">
       <div className="flex items-center justify-between mb-2">
         <h3 className="text-lg font-bold text-pink-300">🤖 AI</h3>
         {aiModel && (
@@ -19,7 +19,7 @@ export default function AIPanel({
       {suggestedCode && (
         <button
           onClick={onShowDiff}
-          className="mb-2 px-2 py-1 text-xs bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-500 hover:to-emerald-500 text-white rounded-lg font-semibold w-fit"
+          className="mb-2 px-2 py-1 text-xs clean-button secondary-green w-fit"
         >
           👀 Suggestion
         </button>

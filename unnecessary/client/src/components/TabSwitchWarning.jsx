@@ -8,7 +8,7 @@ export default function TabSwitchWarning({ show, onDismiss }) {
       onClick={onDismiss}
     >
       <div
-        className="vibe-card border-2 border-yellow-500/50 rounded-2xl p-8 max-w-md shadow-2xl animate-pulse"
+        className="clean-card card-accent accent-yellow rounded-2xl p-8 max-w-md shadow-lg fade-in-up animate-pulse"
         onClick={(e) => e.stopPropagation()}
       >
         <div className="flex items-center gap-3 mb-4">

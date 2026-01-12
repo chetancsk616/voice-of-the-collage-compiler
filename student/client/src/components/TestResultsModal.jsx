@@ -2,15 +2,8 @@ export default function TestResultsModal({ testResults, onClose }) {
   if (!testResults) return null;
 
   return (
-    <div
-      className="fixed inset-0 bg-black/80 backdrop-blur-lg flex items-center justify-center p-4"
-      style={{ zIndex: 90 }}
-      onClick={onClose}
-    >
-      <div 
-        className="vibe-card border-2 border-purple-500/40 rounded-2xl p-8 max-w-2xl max-h-[80vh] overflow-auto shadow-2xl"
-        onClick={(e) => e.stopPropagation()}
-      >
+    <div className="fixed inset-0 bg-black/40 flex items-center justify-center p-4" style={{ zIndex: 90 }} onClick={onClose}>
+      <div className="clean-card rounded-2xl p-8 max-w-2xl max-h-[80vh] overflow-auto fade-in-up" onClick={(e) => e.stopPropagation()}>
         <div className="flex items-center gap-3 mb-6">
           <span className="text-4xl">{testResults.passed ? '🎉' : '❌'}</span>
           <h2 className="text-2xl font-bold text-purple-300">

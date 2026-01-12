@@ -556,49 +556,26 @@ router.get('/stats', async (req, res) => {
 
 // AI Override Audit Statistics
 router.get('/ai-audit/stats', authenticateUser, requireAdmin, async (req, res) => {
-  try {
-    const stats = getAuditStatistics();
-    res.json({ success: true, stats });
-  } catch (error) {
-    console.error('Error fetching AI audit stats:', error);
-    res.status(500).json({ error: 'Failed to fetch AI audit statistics' });
-  }
+  // Deprecated: AI override feature removed; audit statistics unavailable
+  res.status(410).json({ success: false, error: 'AI override audit statistics deprecated' });
 });
 
 // Recent AI Override Audit Logs
 router.get('/ai-audit/logs', authenticateUser, requireAdmin, async (req, res) => {
-  try {
-    const limit = parseInt(req.query.limit) || 100;
-    const logs = getRecentAuditLogs(limit);
-    res.json({ success: true, logs, count: logs.length });
-  } catch (error) {
-    console.error('Error fetching AI audit logs:', error);
-    res.status(500).json({ error: 'Failed to fetch AI audit logs' });
-  }
+  // Deprecated: AI override logs disabled
+  res.status(410).json({ success: false, error: 'AI override audit logs deprecated' });
 });
 
 // AI Override Audit Logs by User
 router.get('/ai-audit/user/:userId', authenticateUser, requireAdmin, async (req, res) => {
-  try {
-    const { userId } = req.params;
-    const logs = getUserAuditLogs(userId);
-    res.json({ success: true, logs, count: logs.length, userId });
-  } catch (error) {
-    console.error('Error fetching user AI audit logs:', error);
-    res.status(500).json({ error: 'Failed to fetch user AI audit logs' });
-  }
+  // Deprecated: AI override logs disabled
+  res.status(410).json({ success: false, error: 'AI override audit logs deprecated' });
 });
 
 // AI Override Audit Logs by Question
 router.get('/ai-audit/question/:questionId', authenticateUser, requireAdmin, async (req, res) => {
-  try {
-    const { questionId } = req.params;
-    const logs = getQuestionAuditLogs(questionId);
-    res.json({ success: true, logs, count: logs.length, questionId });
-  } catch (error) {
-    console.error('Error fetching question AI audit logs:', error);
-    res.status(500).json({ error: 'Failed to fetch question AI audit logs' });
-  }
+  // Deprecated: AI override logs disabled
+  res.status(410).json({ success: false, error: 'AI override audit logs deprecated' });
 });
 
 // ============================================================================

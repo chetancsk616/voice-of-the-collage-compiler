@@ -3,32 +3,24 @@ export default function LogoutConfirmModal({ show, onConfirm, onCancel }) {
 
   return (
     <div
-      className="fixed inset-0 bg-black/80 backdrop-blur-lg flex items-center justify-center p-4"
+      className="fixed inset-0 bg-black/60 flex items-center justify-center p-4 fade-in-up"
       style={{ zIndex: 90 }}
       onClick={onCancel}
     >
-      <div 
-        className="vibe-card border-2 border-purple-500/50 rounded-2xl p-8 max-w-md shadow-2xl"
+      <div
+        className="clean-card max-w-md w-full card-accent"
         onClick={(e) => e.stopPropagation()}
       >
         <div className="flex items-center gap-3 mb-4">
           <span className="text-4xl">👋</span>
-          <h2 className="text-2xl font-bold text-purple-300">Logout?</h2>
+          <h2 className="text-2xl font-bold text-gray-800">Logout?</h2>
         </div>
-        <p className="text-purple-100/80 mb-6">
-          Are you sure you want to logout?
-        </p>
+        <p className="text-gray-600 mb-6">Are you sure you want to logout?</p>
         <div className="flex gap-3">
-          <button
-            onClick={onConfirm}
-            className="flex-1 px-4 py-2 bg-gradient-to-r from-red-600 to-red-700 hover:from-red-500 hover:to-red-600 text-white rounded-lg font-bold transition-all"
-          >
+          <button onClick={onConfirm} className="flex-1 clean-button accent-red">
             ✓ Logout
           </button>
-          <button
-            onClick={onCancel}
-            className="flex-1 px-4 py-2 bg-slate-700/60 hover:bg-slate-700 border border-slate-600 text-slate-300 rounded-lg font-semibold"
-          >
+          <button onClick={onCancel} className="flex-1 clean-button bg-gray-100 hover:bg-gray-200 text-gray-700">
             ✕ Cancel
           </button>
         </div>
