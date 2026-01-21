@@ -1,10 +1,8 @@
 const path = require('path');
 const fs = require('fs');
-// Load .env (prefer local student-server/.env, fallback to project root)
-const localEnv = path.resolve(__dirname, '.env');
-const rootEnv = path.resolve(__dirname, '..', '.env');
-const envPath = fs.existsSync(localEnv) ? localEnv : rootEnv;
-require('dotenv').config({ path: envPath });
+// Load .env from project root
+const rootEnv = path.resolve(__dirname, '..', '..', '.env');
+require('dotenv').config({ path: rootEnv });
 // Log whether the GROQ_API_KEY env var is present (do not print the key)
 console.info('GROQ_API_KEY set:', Boolean(process.env.GROQ_API_KEY));
 const express = require('express');
